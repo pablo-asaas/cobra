@@ -2,7 +2,6 @@
 <p align="center">Plataforma de Gestão de Cobranças</p>
 <p align="center">
     <a href="#sobre-o-projeto">Sobre</a> •
-    <a href="#funcionalidades">Funcionalidades</a> •
     <a href="#tecnologias">Tecnologias</a> •
     <a href="#autor">Autor</a>
 </p>
