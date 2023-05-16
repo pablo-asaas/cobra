@@ -12,9 +12,12 @@ Sendo parte do programa de estágios, este projeto possui o objetivo de colocar 
 
 ### Funcionalidades
 
-- Cadastro de clientes
+- Cadastro de pagadores
 - Cadastro de cobranças
-- ...
+- Confirmar um pagamento
+- Vencer uma cobrança
+- Esteira de notificações Email
+- Gestão multi usuário
 
 ## Tecnologias
 
