@@ -21,6 +21,7 @@ Sendo parte do programa de estágios, este projeto possui o objetivo de colocar 
 - [Grails](https://grails.org/)
 - [MySQL](https://www.mysql.com/)
 
-## Autor
+## Autores
 
-[Pablo Guilherme Bayerl](https://github.com/pablo-asaas)
+- [Hugo Santana Rodrigues Cruz](https://github.com/HugoSRCruz)
+- [Pablo Guilherme Bayerl](https://github.com/pablo-asaas)
