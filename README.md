@@ -22,8 +22,8 @@ Sendo parte do programa de estágios, este projeto possui o objetivo de colocar 
 
 ## Tecnologias
 
-- [Grails](https://grails.org/)
-- [MySQL](https://www.mysql.com/)
+- [Grails 5](https://grails.org/)
+- [MySQL 8](https://www.mysql.com/)
 
 ## Autores
 
