@@ -1,6 +1,8 @@
 package payer
 
-class Payer {
+import cobra.BaseDomain
+
+class Payer extends BaseDomain{
 
     String name
     String email
