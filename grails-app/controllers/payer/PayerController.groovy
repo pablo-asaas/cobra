@@ -9,7 +9,7 @@ class PayerController {
     def newPayer(){}
 
     def index() {
-        respond payerService.findAll(), formats: ['json']
+        return [params: payerService.findAll()]
     }
 
     def save(params) {
