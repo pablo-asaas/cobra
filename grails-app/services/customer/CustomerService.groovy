@@ -1,6 +1,6 @@
 package customer
 
-
+import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
 @Transactional
@@ -14,5 +14,10 @@ class CustomerService {
         if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
 
         customer.save()
+    }
+
+    @ReadOnly
+    List<Customer> findAll() {
+        return Customer.where {}.findAll()
     }
 }
