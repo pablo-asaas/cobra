@@ -1,6 +1,6 @@
 package cobra.domain
 
-class Person {
+abstract class BasePerson extends BaseDomain {
 
     String name
     String email
