@@ -5,6 +5,7 @@
     </head>
 
     <body>
+        <g:link action="create">New customer</g:link>
         <h1>Customers</h1>
         <table>
             <thead>
