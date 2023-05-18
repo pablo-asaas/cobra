@@ -2,6 +2,8 @@ package payer
 
 import grails.gorm.transactions.Transactional
 
+import java.time.LocalDate
+
 @Transactional
 class PayerService {
 
@@ -26,6 +28,7 @@ class PayerService {
         payer.name = params.name
         payer.email = params.email
         payer.cpfCnpj = params.cpfCnpj
+        payer.createdAt = LocalDate.now()
         payer.save()
     }
 }
