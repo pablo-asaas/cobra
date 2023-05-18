@@ -2,7 +2,9 @@ package customer
 
 class CustomerController {
 
-    def customerService
+    CustomerService customerService
 
-    def index() { }
+    def index() {
+        return [customers: customerService.findAll()]
+    }
 }
