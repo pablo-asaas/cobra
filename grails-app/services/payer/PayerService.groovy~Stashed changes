@@ -1,0 +1,33 @@
+package payer
+
+import grails.gorm.transactions.ReadOnly
+import grails.gorm.transactions.Transactional
+
+import java.time.LocalDate
+
+@Transactional
+class PayerService {
+
+    @ReadOnly
+    List<Payer> findAll(){
+        return Payer.where {}.findAll()
+    }
+
+    void save(Map params){
+
+        if (!params.name)
+            throw new RuntimeException("Name is mandatory!")
+        if (!params.email)
+            throw new RuntimeException("Name is mandatory!")
+        if (!params.cpfCnpj)
+            throw new RuntimeException("Name is mandatory!")
+
+        Payer payer = new Payer(name: params.name, email: params.email, cpfCnpj: params.cpfCnpj)
+        payer.name = params.name
+        payer.email = params.email
+        payer.cpfCnpj = params.cpfCnpj
+        payer.createdAt = LocalDate.now()
+        println payer.properties
+        payer.save()
+    }
+}
