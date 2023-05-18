@@ -7,4 +7,8 @@ class CustomerController {
     def index() {
         return [customers: customerService.findAll()]
     }
+
+    def create() {
+        return [:]
+    }
 }
