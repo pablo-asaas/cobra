@@ -13,7 +13,7 @@ class CustomerService {
         if (params.email) customer.email = params.email
         if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
 
-        customer.save()
+        customer.save(failOnError: true)
     }
 
     @ReadOnly
