@@ -17,11 +17,14 @@
         <label for="name">Name</label>
         <g:textField name="name"/>
 
-        <label for="name">Email</label>
+        <label for="email">Email</label>
         <g:textField name="email"/>
 
-        <label for="name">Cpf/Cnpj</label>
+        <label for="cpfCnpj">Cpf/Cnpj</label>
         <g:textField name="cpfCnpj"/>
+
+        <label for="phoneNumber">Celular</label>
+        <g:textField name="phoneNumber"/>
 
         <button type="submit">Enviar</button>
     </g:form>
