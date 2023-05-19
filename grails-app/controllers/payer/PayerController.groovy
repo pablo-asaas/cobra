@@ -6,20 +6,21 @@ class PayerController {
 
     static allowedMethods = [index: 'GET', save: 'POST']
 
-    def newPayer(){}
+    def create() {
+        return [:]
+    }
 
     def index() {
         return [params: payerService.findAll()]
     }
 
-    def save(params) {
+    def save() {
         try {
             payerService.save(params)
+            redirect action: "index"
         }catch (Exception e) {
-            Map message = [message: e.message]
-            respond message, formats: ['json']
-            return
+            e.printStackTrace()
+            redirect action: "create"
         }
-        redirect action: "index"
     }
 }
