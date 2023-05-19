@@ -28,6 +28,7 @@ class PayerService {
         payer.name = params.name
         payer.email = params.email
         payer.cpfCnpj = params.cpfCnpj
+        payer.phoneNumber = params.phoneNumber
         payer.save()
     }
 }

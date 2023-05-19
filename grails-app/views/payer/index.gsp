@@ -31,7 +31,7 @@
                     <td>${payer.name}</td>
                     <td>${payer.email}</td>
                     <td>${payer.cpfCnpj}</td>
-                    <td>${payer.celular}</td>
+                    <td>${payer.phoneNumber}</td>
                     <td>${payer.createdAt}</td>
                 </tr>
             </g:each>
