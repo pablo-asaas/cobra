@@ -17,10 +17,11 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Nome</th>
                 <th>Email</th>
                 <th>CPF/CNPJ</th>
-                <th>Created at</th>
+                <th>Celular</th>
+                <th>Criado em</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@
                     <td>${payer.name}</td>
                     <td>${payer.email}</td>
                     <td>${payer.cpfCnpj}</td>
+                    <td>${payer.celular}</td>
                     <td>${payer.createdAt}</td>
                 </tr>
             </g:each>
