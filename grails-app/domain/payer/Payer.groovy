@@ -1,18 +1,12 @@
 package payer
 
-import cobra.BaseDomain
+import cobra.domain.BasePerson
 
-class Payer extends BaseDomain{
+class Payer extends BasePerson{
 
-    String name
-    String email
-    String cpfCnpj
+    String phoneNumber
 
-    static mapping = {
-        cpfCnpj unique: true, length: 14
-    }
     static constraints = {
-        name blank: false
-        email blank: false, email: true
+        phoneNumber blank: false, size: 13..13
     }
 }
