@@ -7,15 +7,15 @@ import java.time.LocalDate
 @Transactional
 class PayerService {
 
-    List<Payer> findAll(){
+    public List<Payer> findAll(){
         return Payer.list()
     }
 
-    Payer findById(Long id){
+    public Payer findById(Long id){
         return Payer.get(id)
     }
 
-    void save(params){
+    public void save(params){
 
         if (!params.name)
             throw new RuntimeException("Name is mandatory!")
