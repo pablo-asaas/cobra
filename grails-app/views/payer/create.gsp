@@ -6,7 +6,7 @@
 
 <body>
     <h1>New Payer</h1>
-    <g:form name="newPayer" method="POST" url="[controller: 'payer', action: 'save']">
+    <g:form name="create" method="POST" url="[controller: 'payer', action: 'save']">
         <label for="name">Name</label>
         <g:textField name="name"/>
 
