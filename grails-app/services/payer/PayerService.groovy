@@ -28,7 +28,6 @@ class PayerService {
         payer.name = params.name
         payer.email = params.email
         payer.cpfCnpj = params.cpfCnpj
-        payer.createdAt = LocalDate.now()
         payer.save()
     }
 }
