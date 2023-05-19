@@ -2,20 +2,20 @@
 <html>
     <head>
         <meta name="layout" content="main"/>
-        <title>Customer</title>
+        <title>Cliente</title>
     </head>
 
     <body>
-        <g:link action="create">New customer</g:link>
-        <h1>Customers</h1>
+        <g:link action="create">Novo cliente</g:link>
+        <h1>Clientes</h1>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Nome</th>
                     <th>Email</th>
                     <th>CPF/CNPJ</th>
-                    <th>Created at</th>
+                    <th>Criado em</th>
                 </tr>
             </thead>
             <tbody>
