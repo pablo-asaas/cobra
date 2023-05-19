@@ -6,7 +6,7 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class CustomerService {
 
-    void save(Map params) {
+    public void save(Map params) {
         Customer customer = new Customer()
 
         if (params.name) customer.name = params.name
@@ -17,7 +17,7 @@ class CustomerService {
     }
 
     @ReadOnly
-    List<Customer> findAll() {
+    public List<Customer> findAll() {
         return Customer.where {}.findAll()
     }
 }
