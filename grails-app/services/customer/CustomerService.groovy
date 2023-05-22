@@ -25,4 +25,10 @@ class CustomerService {
     public Customer findById(Long id) {
         return Customer.query([id: id]).get()
     }
+
+    public void delete(Long id ) {
+        Customer customer = findById(id);
+        customer.deleted = true
+        customer.save(failOnError: true)
+    }
 }
