@@ -26,9 +26,19 @@ class CustomerService {
         return Customer.query([id: id]).get()
     }
 
-    public void delete(Long id ) {
+    public void delete(Long id) {
         Customer customer = findById(id);
         customer.deleted = true
+        customer.save(failOnError: true)
+    }
+
+    public void update(Long id, Map params) {
+        Customer customer = findById(id)
+
+        if (params.name) customer.name = params.name
+        if (params.email) customer.email = params.email
+        if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
+
         customer.save(failOnError: true)
     }
 }
