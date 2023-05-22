@@ -18,6 +18,11 @@ class CustomerService {
 
     @ReadOnly
     public List<Customer> findAll() {
-        return Customer.where {}.findAll()
+        return Customer.query([:]).list()
+    }
+
+    @ReadOnly
+    public Customer findById(Long id) {
+        return Customer.query([id: id]).get()
     }
 }
