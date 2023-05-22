@@ -1,5 +1,7 @@
 package customer
 
+import grails.validation.ValidationException
+
 class CustomerController {
 
     CustomerService customerService
@@ -18,6 +20,9 @@ class CustomerController {
         try {
             customerService.save(params)
             redirect action: 'index'
+        } catch (ValidationException validationException) {
+            validationException.printStackTrace()
+            respond validationException.errors, view: 'create'
         } catch (Exception exception) {
             exception.printStackTrace()
             redirect action: 'create'
