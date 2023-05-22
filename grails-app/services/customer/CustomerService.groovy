@@ -23,7 +23,11 @@ class CustomerService {
 
     @ReadOnly
     public Customer findById(Long id) {
-        return Customer.query([id: id]).get()
+        Customer customer = Customer.query([id: id]).get()
+
+        if (!customer) throw new RuntimeException("Cliente não encontrado")
+
+        return customer
     }
 
     public void delete(Long id) {
