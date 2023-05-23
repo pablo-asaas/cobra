@@ -8,9 +8,9 @@ class Payment extends BaseDomain {
 
     Customer owner
     Payer payer
-    BillingType billingType
+    PaymentType type
     BigDecimal value
-    BillingStatus status
+    PaymentStatus status
     Date expiresAt
 
     static constraints = {

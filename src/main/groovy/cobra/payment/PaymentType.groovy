@@ -1,6 +1,6 @@
 package cobra.payment
 
-enum BillingType {
+enum PaymentType {
 
     PAYMENT_SLIP,
     CREDIT_CARD,

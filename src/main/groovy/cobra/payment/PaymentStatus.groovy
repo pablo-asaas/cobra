@@ -1,6 +1,6 @@
 package cobra.payment
 
-enum BillingStatus {
+enum PaymentStatus {
 
     PENDING,
     PAID,
