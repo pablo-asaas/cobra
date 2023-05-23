@@ -6,7 +6,7 @@ import cobra.payer.Payer
 
 class Payment extends BaseDomain {
 
-    Customer owner
+    Customer customer
     Payer payer
     PaymentType type
     BigDecimal value
