@@ -10,11 +10,12 @@ class Payment extends BaseDomain {
     Payer payer
     PaymentType type
     BigDecimal value
-    PaymentStatus status
+    PaymentStatus status = PaymentStatus.PENDING
     Date expiresAt
 
     static constraints = {
         value min: BigDecimal.ZERO
+        expiresAt min: new Date()
     }
 
     static namedQueries = {
