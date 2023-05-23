@@ -1,20 +1,15 @@
-package payer
+package cobra.customer
 
-import cobra.domain.BasePerson
+import cobra.base.BasePerson
 
-class Payer extends BasePerson{
-
-    String phoneNumber
-
-    static constraints = {
-        phoneNumber blank: false, size: 13..13
-    }
+class Customer extends BasePerson {
 
     static namedQueries = {
         query { Map search ->
             if (!Boolean.valueOf(search.includeDeleted)) {
                 eq("deleted", false)
             }
+
             if (search.containsKey("id")) {
                 eq("id", search.id)
             }

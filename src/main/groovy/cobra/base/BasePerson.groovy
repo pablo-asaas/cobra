@@ -1,4 +1,6 @@
-package cobra.domain
+package cobra.base
+
+import cobra.base.BaseDomain
 
 abstract class BasePerson extends BaseDomain {
 

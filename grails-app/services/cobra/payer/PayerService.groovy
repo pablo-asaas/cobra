@@ -1,4 +1,4 @@
-package payer
+package cobra.payer
 
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional

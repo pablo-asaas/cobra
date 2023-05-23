@@ -1,4 +1,4 @@
-package cobra.domain
+package cobra.base
 
 abstract class BaseDomain {
 

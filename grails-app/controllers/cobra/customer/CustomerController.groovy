@@ -1,5 +1,6 @@
-package customer
+package cobra.customer
 
+import cobra.customer.CustomerService
 import grails.validation.ValidationException
 
 class CustomerController {
