@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <meta name="layout" content="main"/>
     <title>Index</title>
 </head>
 
 <body>
-    <h1>Payers</h1>
+    <h1>Pagadores</h1>
+    <g:link action="create">Novo pagador</g:link>
     <table>
         <thead>
             <tr>
