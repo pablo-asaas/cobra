@@ -1,4 +1,4 @@
-package payer
+package cobra.payer
 
 class PayerController {
 
