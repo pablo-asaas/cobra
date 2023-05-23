@@ -1,4 +1,4 @@
-package customer
+package cobra.customer
 
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
