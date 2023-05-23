@@ -23,4 +23,14 @@ class PayerController {
             redirect action: "create"
         }
     }
+
+    def delete(Long id) {
+        try {
+            payerService.delete(id)
+            redirect action: "index"
+        }catch (Exception e) {
+            e.printStackTrace()
+            redirect action: "index"
+        }
+    }
 }

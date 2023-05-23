@@ -17,6 +17,7 @@
                 <th>CPF/CNPJ</th>
                 <th>Celular</th>
                 <th>Criado em</th>
+                <th>Acões</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,10 @@
                     <td>${payer.cpfCnpj}</td>
                     <td>${payer.phoneNumber}</td>
                     <td>${payer.createdAt}</td>
+                    <td>
+                        <g:link controller="payer" action="delete" id="${payer.id}">Deletar</g:link>
+                        <g:link action="update">Editar</g:link>
+                    </td>
                 </tr>
             </g:each>
         </tbody>
