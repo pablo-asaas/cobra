@@ -1,6 +1,6 @@
 package payer
 
-import cobra.domain.BasePerson
+import cobra.base.BasePerson
 
 class Payer extends BasePerson{
 

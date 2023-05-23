@@ -1,6 +1,6 @@
 package customer
 
-import cobra.domain.BasePerson
+import cobra.base.BasePerson
 
 class Customer extends BasePerson {
 
