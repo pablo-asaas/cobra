@@ -14,8 +14,16 @@ class Payment extends BaseDomain {
     Date dueDate
 
     static constraints = {
-        value min: BigDecimal.ZERO
-        dueDate min: new Date()
+        value validator: { val, obj, errors ->
+            if (val <= BigDecimal.ZERO) {
+                errors.rejectValue("value", null)
+            }
+        }
+        dueDate validator: { val, obj, errors ->
+            if (val <= obj.createdAt) {
+                errors.rejectValue("dueDate", null)
+            }
+        }
     }
 
     static namedQueries = {
