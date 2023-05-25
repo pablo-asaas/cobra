@@ -4,14 +4,14 @@ class PayerController {
 
     def payerService
 
-    static allowedMethods = [index: 'GET', save: 'POST']
+    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT']
 
     def create() {
         return [:]
     }
 
     def index() {
-        return [params: payerService.findAll()]
+        return [payers: payerService.findAll()]
     }
 
     def save() {
@@ -20,13 +20,27 @@ class PayerController {
             redirect action: "index"
         }catch (Exception e) {
             e.printStackTrace()
-            redirect action: "create"
+            redirect action: "index"
         }
     }
 
     def delete(Long id) {
         try {
             payerService.delete(id)
+            redirect action: "index"
+        }catch (Exception e) {
+            e.printStackTrace()
+            redirect action: "index"
+        }
+    }
+
+    def show (Long id) {
+        return [payer: payerService.findById(id)]
+    }
+
+    def update() {
+        try {
+            payerService.update(params.id as Long, params)
             redirect action: "index"
         }catch (Exception e) {
             e.printStackTrace()
