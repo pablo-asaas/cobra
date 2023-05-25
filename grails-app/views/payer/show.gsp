@@ -6,24 +6,28 @@
 </head>
 
 <body>
-    <h1>Cadastrar pagador</h1>
-    <g:link action="index">Voltar</g:link>
-    <g:form method="POST" url="[controller: 'payer', action: 'save']">
+    <h1>Editar pagador</h1>
+    <g:link  action="index">
+        <button class="btn btn-primary">Voltar</button>
+    </g:link>
+    <g:form method="PUT" url="[controller: 'payer', action: 'update']">
         <fieldset class="form">
-            <label for="name">Name</label>
-            <g:field type="text" name="name" required="true"/>
+            <g:field name="id" value="${payer.id}" required="true" type="hidden"/>
 
-            <label for="email">Email</label>
-            <g:field type="email" name="email" required="true"/>
+            <label class="col-form-label" for="name">Name</label>
+            <g:field class="form-control" type="text" name="name" value="${payer.name}" required="true"/>
 
-            <label for="cpfCnpj">Cpf/Cnpj</label>
-            <g:field type="text" name="cpfCnpj" maxLength="14" required="true"/>
+            <label class="col-form-label" for="email">Email</label>
+            <g:field class="form-control" type="email" name="email" value="${payer.email}" required="true"/>
 
-            <label for="phoneNumber">Celular</label>
-            <g:field type="text" name="phoneNumber" maxLength="13" required="true"/>
+            <label class="col-form-label" for="cpfCnpj">Cpf/Cnpj</label>
+            <g:field class="form-control" type="text" name="cpfCnpj" value="${payer.cpfCnpj}" maxLength="14" required="true"/>
+
+            <label class="col-form-label" for="phoneNumber">Celular</label>
+            <g:field class="form-control" type="text" name="phoneNumber" value="${payer.phoneNumber}" maxLength="13" required="true"/>
         </fieldset>
         <fieldset>
-            <g:submitButton name="save" class="save" value="Salvar"/>
+            <g:submitButton name="save" class="btn btn-primary" value="Salvar"/>
         </fieldset>
     </g:form>
 </body>
