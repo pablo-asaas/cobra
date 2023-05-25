@@ -29,13 +29,13 @@ class PayerService {
     public void delete(Long id){
         Payer payer = findById(id)
         payer.deleted = true
-        payer.save(flush: true, failOnError: true)
+        payer.save(failOnError: true)
     }
 
     public void update(Long id, Map params){
         Payer payer = findById(id)
         bind(payer, params)
-        payer.save(flush: true, failOnError: true)
+        payer.save(failOnError: true)
     }
 
     private void bind(Payer payer, Map params){
