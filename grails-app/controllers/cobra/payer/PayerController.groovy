@@ -11,7 +11,7 @@ class PayerController {
     }
 
     def index() {
-        return [payers: payerService.findAll()]
+        return [payerList: payerService.findAll()]
     }
 
     def save() {

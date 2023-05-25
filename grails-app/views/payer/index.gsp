@@ -54,7 +54,7 @@
             </tr>
         </thead>
         <tbody>
-            <g:each var="payer" in="${payers}">
+            <g:each var="payer" in="${payerList}">
                 <tr>
                     <td>${payer.id}</td>
                     <td>${payer.name}</td>
