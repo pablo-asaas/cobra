@@ -1,7 +1,9 @@
 package cobra.base
 
 import cobra.base.BaseDomain
+import grails.gorm.dirty.checking.DirtyCheck
 
+@DirtyCheck
 abstract class BasePerson extends BaseDomain {
 
     String name
