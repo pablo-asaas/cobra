@@ -35,7 +35,7 @@ class PayerService {
     public void update(Long id, Map params){
         Payer payer = findById(id)
         bind(payer, params)
-        payer.save(failOnError: true)
+        payer.save(flush: true, failOnError: true)
     }
 
     private void bind(Payer payer, Map params){
