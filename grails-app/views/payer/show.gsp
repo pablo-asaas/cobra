@@ -27,7 +27,8 @@
             <g:field class="form-control" type="text" name="phoneNumber" value="${payer.phoneNumber}" maxLength="13" required="true"/>
         </fieldset>
         <fieldset>
-            <g:submitButton name="save" class="btn btn-primary" value="Salvar"/>
+            <g:actionSubmit action="delete" class="btn btn-danger" value="Deletar"/>
+            <g:actionSubmit action="update" class="btn btn-primary" value="Salvar"/>
         </fieldset>
     </g:form>
 </body>
