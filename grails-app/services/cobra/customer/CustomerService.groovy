@@ -6,14 +6,14 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class CustomerService {
 
-    public void save(Map params) {
+    public Customer save(Map params) {
         Customer customer = new Customer()
 
         if (params.name) customer.name = params.name
         if (params.email) customer.email = params.email
         if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
 
-        customer.save(failOnError: true)
+        return customer.save(failOnError: true)
     }
 
     @ReadOnly
