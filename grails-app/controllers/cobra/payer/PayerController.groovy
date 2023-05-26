@@ -1,8 +1,15 @@
 package cobra.payer
 
+import cobra.customer.Customer
+import cobra.user.User
+import grails.plugin.springsecurity.SpringSecurityService
+import grails.plugin.springsecurity.annotation.Secured
+
+@Secured('ROLE_USER')
 class PayerController {
 
     def payerService
+    SpringSecurityService springSecurityService
 
     static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT']
 
@@ -11,12 +18,12 @@ class PayerController {
     }
 
     def index() {
-        return [payerList: payerService.findAll()]
+        return [payerList: payerService.findAll(getCurrentCustomer())]
     }
 
     def save() {
         try {
-            payerService.save(params)
+            payerService.save(getCurrentCustomer(), params)
             redirect action: "index"
         }catch (Exception e) {
             e.printStackTrace()
@@ -26,7 +33,7 @@ class PayerController {
 
     def delete(Long id) {
         try {
-            payerService.delete(id)
+            payerService.delete(getCurrentCustomer(), id)
             redirect action: "index"
         }catch (Exception e) {
             e.printStackTrace()
@@ -35,16 +42,21 @@ class PayerController {
     }
 
     def show (Long id) {
-        return [payer: payerService.findById(id)]
+        return [payer: payerService.findById(getCurrentCustomer(), id)]
     }
 
     def update() {
         try {
-            payerService.update(params.id as Long, params)
+            payerService.update(getCurrentCustomer(), params.id as Long, params)
             redirect action: "index"
         }catch (Exception e) {
             e.printStackTrace()
             redirect action: "index"
         }
+    }
+
+    private Customer getCurrentCustomer() {
+        User user = springSecurityService.currentUser
+        return user.customer
     }
 }
