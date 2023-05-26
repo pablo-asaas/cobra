@@ -1,8 +1,10 @@
 package cobra.customer
 
 import cobra.customer.CustomerService
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 
+@Secured('ROLE_USER')
 class CustomerController {
 
     CustomerService customerService
