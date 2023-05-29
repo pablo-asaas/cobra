@@ -23,11 +23,6 @@ class Payment extends BaseDomain {
             if (val <= obj.createdAt) {
                 errors.rejectValue("dueDate", null)
             }
-
-//            if (val < new Date()) {
-//                errors.rejectValue("dueDate", null)
-//                return false
-//            }
         }
     }
 
