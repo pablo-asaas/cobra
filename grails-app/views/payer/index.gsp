@@ -7,7 +7,40 @@
 
 <body>
     <h1>Pagadores</h1>
-    <g:link action="create">Novo pagador</g:link>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPayerModal">Adicionar</button>
+
+    <div class="modal fade" id="newPayerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newPayerModalLabel">Adicionar pagador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <g:form method="POST" url="[controller: 'payer', action: 'save']">
+                        <fieldset class="form">
+                            <label class="col-form-label" for="name">Nome</label>
+                            <g:field class="form-control" type="text" name="name" required="true"/>
+
+                            <label class="col-form-label" for="email">Email</label>
+                            <g:field class="form-control" type="email" name="email" required="true"/>
+
+                            <label class="col-form-label" for="cpfCnpj">Cpf/Cnpj</label>
+                            <g:field class="form-control" type="text" name="cpfCnpj" maxLength="14" required="true"/>
+
+                            <label class="col-form-label" for="phoneNumber">Celular</label>
+                            <g:field class="form-control" type="text" name="phoneNumber" maxLength="13" required="true"/>
+                        </fieldset>
+                        <fieldset>
+                            <g:submitButton class="btn btn-primary" name="save" value="Salvar"/>
+                        </fieldset>
+                    </g:form>
+                </div>
+            </div>
+        </div>
+    </div>
     <table>
         <thead>
             <tr>
@@ -17,10 +50,11 @@
                 <th>CPF/CNPJ</th>
                 <th>Celular</th>
                 <th>Criado em</th>
+                <th>Acões</th>
             </tr>
         </thead>
         <tbody>
-            <g:each var="payer" in="${params}">
+            <g:each var="payer" in="${payerList}">
                 <tr>
                     <td>${payer.id}</td>
                     <td>${payer.name}</td>
@@ -28,6 +62,11 @@
                     <td>${payer.cpfCnpj}</td>
                     <td>${payer.phoneNumber}</td>
                     <td>${payer.createdAt}</td>
+                    <td>
+                        <g:link action="show" id="${payer.id}">
+                            <button class="btn btn-primary">Editar</button>
+                        </g:link>
+                    </td>
                 </tr>
             </g:each>
         </tbody>
