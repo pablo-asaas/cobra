@@ -29,7 +29,7 @@ class PayerService {
     public void delete(Long id){
         Payer payer = findById(id)
         payer.deleted = true
-        payer.save(FailOnError: true)
+        payer.save(failOnError: true)
     }
 
     public void update(Long id, Map params){
