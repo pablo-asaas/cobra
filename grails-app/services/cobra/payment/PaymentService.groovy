@@ -3,7 +3,6 @@ package cobra.payment
 import cobra.customer.Customer
 import cobra.payer.Payer
 import cobra.payer.PayerService
-
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -19,7 +18,6 @@ class PaymentService {
         return Payment.query([customer: customer]).list()
     }
 
-    @ReadOnly
     public Payment findById(Customer customer, Long id) {
         Payment payment = Payment.query([customer: customer, id: id]).get()
 
@@ -48,8 +46,17 @@ class PaymentService {
             throw new RuntimeException("Não é possível alterar um pagamento que já esteja pago")
         }
 
-        if (payment.status == PaymentStatus.PENDING) updatePendingPayment(payment, params)
-        if (payment.status == PaymentStatus.OVERDUE) updateOverduePayment(payment, params)
+        if (params.dueDate) {
+            Date updatedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
+
+            if (updatedDueDate <= new Date()) {
+                throw new RuntimeException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
+            }
+
+            payment.dueDate = updatedDueDate
+        }
+
+        if (params.value) payment.value = new BigDecimal(params.value)
 
         payment.save(failOnError: true)
     }
@@ -82,10 +89,6 @@ class PaymentService {
             throw new RuntimeException("Este pagamento já está pago")
         }
 
-        if (payment.status == PaymentStatus.OVERDUE) {
-            throw new RuntimeException("Não é possível definir como pago um pagamento que esteja vencido")
-        }
-
         payment.status = PaymentStatus.PAID
         payment.save(failOnError: true)
     }
@@ -101,22 +104,11 @@ class PaymentService {
             throw new RuntimeException("Não é possível definir como vencido um pagamento que esteja pago")
         }
 
+        if (new Date() < payment.dueDate) {
+            throw new RuntimeException("Este pagamento ainda não atingiu a data de vencimento")
+        }
+
         payment.status = PaymentStatus.OVERDUE
         payment.save(failOnError: true)
-    }
-
-    private void updatePendingPayment(Payment payment, Map params) {
-        if (params.dueDate) payment.dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
-        if (params.value) payment.value = new BigDecimal(params.value)
-    }
-
-    private void updateOverduePayment(Payment payment, Map params) {
-        if (params.dueDate) {
-            if (params.dueDate <= payment.dueDate) {
-                throw new RuntimeException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
-            }
-
-            payment.dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
-        }
     }
 }
