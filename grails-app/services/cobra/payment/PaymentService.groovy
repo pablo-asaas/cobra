@@ -133,11 +133,23 @@ class PaymentService {
         }
 
         if (!params.value) {
-            throw new BusinessException("É obrigatório informar valor")
+            throw new BusinessException("É obrigatório informar um valor")
+        }
+
+        BigDecimal parsedValue = new BigDecimal(params.value)
+
+        if (parsedValue <= BigDecimal.ZERO) {
+            throw new BusinessException("O valor não pode ser menor ou igual a zero")
         }
 
         if (!params.dueDate) {
             throw new BusinessException("É obrigatório informar uma data de vencimento")
+        }
+
+        Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
+
+        if (parsedDueDate <= new Date()) {
+            throw new BusinessException("A data de vencimento não pode ser anterior ou igual ao dia de hoje")
         }
     }
 }
