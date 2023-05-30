@@ -11,6 +11,9 @@
 
 Sendo parte do programa de estágios, este projeto possui o objetivo de colocar em prática o conhecimento adquirido durante a trilha de cursos [Alura](https://www.alura.com.br/). Assim, será realizado o desenvolvimento de uma plataforma baseada no [Asaas](https://www.asaas.com/), contando com cadastro de clientes, cobranças e outras mais funcionalidades.
 
+- Board: https://trello.com/b/qfNUUx78/projeto
+- Definições: https://docs.google.com/document/d/11qYvML5VgBpBsFQDlxInzdxn3R8ymV90CIzGky1cAus
+
 ## Funcionalidades
 
 - Cadastro de pagadores
