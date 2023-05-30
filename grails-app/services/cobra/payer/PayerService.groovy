@@ -12,7 +12,6 @@ class PayerService {
         return Payer.query([:]).list()
     }
 
-    @ReadOnly
     public Payer findById(Long id){
         Payer payer = Payer.query([id: id]).get()
 
