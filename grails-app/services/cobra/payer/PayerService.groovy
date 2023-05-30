@@ -1,5 +1,6 @@
 package cobra.payer
 
+import cobra.exception.BusinessException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -21,8 +22,14 @@ class PayerService {
     }
 
     public void save(Map params){
+        validateParams(params)
+
         Payer payer = new Payer()
-        bind(payer, params)
+        payer.name = params.name
+        payer.email = params.email
+        payer.cpfCnpj = params.cpfCnpj
+        payer.phoneNumber = params.phoneNumber
+
         payer.save(failOnError: true)
     }
 
@@ -33,15 +40,29 @@ class PayerService {
     }
 
     public void update(Long id, Map params){
+        validateParams(params)
+
         Payer payer = findById(id)
-        bind(payer, params)
+        payer.name = params.name
+        payer.email = params.email
+        payer.cpfCnpj = params.cpfCnpj
+        payer.phoneNumber = params.phoneNumber
+
         payer.save(failOnError: true)
     }
 
-    private void bind(Payer payer, Map params){
-        if (params.name) payer.name = params.name
-        if (params.email) payer.email = params.email
-        if (params.cpfCnpj) payer.cpfCnpj = params.cpfCnpj
-        if (params.phoneNumber) payer.phoneNumber = params.phoneNumber
+    private void validateParams(Map params) {
+        if (!params.name) {
+            throw new BusinessException("Nome é obrigatóio")
+        }
+        if(!params.email){
+            throw new BusinessException("Email é obrigatóio")
+        }
+        if (!params.cpfCnpj) {
+            throw new BusinessException("Cpf/Cnpj é obrigatóio")
+        }
+        if (!params.phoneNumber) {
+            throw new BusinessException("Numero de Telefone é obrigatóio")
+        }
     }
 }
