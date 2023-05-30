@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:javascript src="application.js"/>
     <title>Index</title>
 </head>
 
@@ -19,7 +20,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <g:form method="POST" url="[controller: 'payer', action: 'save']">
+                    <g:form name="createPayerForm" method="POST" url="[controller: 'payer', action: 'save']">
                         <fieldset class="form">
                             <label class="col-form-label" for="name">Nome</label>
                             <g:field class="form-control" type="text" name="name" required="true"/>
@@ -71,5 +72,27 @@
             </g:each>
         </tbody>
     </table>
+<g:javascript>
+    function handleFormSubmit(event){
+        event.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "/payer/save",
+            data: $(event.target).serialize(),
+            dataType: "json",
+            success: (data) => {
+                alert(data.message)
+                location.reload()
+            },
+            error: (error) => {
+                alert(error.responseJSON.message)
+            }
+        });
+    }
+    $(document).ready(() => {
+        $("#createPayerForm").on("submit", handleFormSubmit)
+    });
+</g:javascript>
 </body>
 </html>

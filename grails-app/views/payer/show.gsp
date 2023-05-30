@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:javascript src="application.js"/>
     <title>Novo pagador</title>
 </head>
 
@@ -10,7 +11,7 @@
     <g:link  action="index">
         <button class="btn btn-primary">Voltar</button>
     </g:link>
-    <g:form method="PUT" url="[controller: 'payer', action: 'update']">
+    <g:form name="updatePayerForm" method="PUT" url="[controller: 'payer', action: 'update']">
         <fieldset class="form">
             <g:field name="id" value="${payer.id}" required="true" type="hidden"/>
 
@@ -27,9 +28,33 @@
             <g:field class="form-control" type="text" name="phoneNumber" value="${payer.phoneNumber}" maxLength="13" required="true"/>
         </fieldset>
         <fieldset>
-            <g:actionSubmit action="delete" class="btn btn-danger" value="Deletar"/>
-            <g:actionSubmit action="update" class="btn btn-primary" value="Salvar"/>
+            <g:link action="delete"  id="${payer.id}">
+                <button type="button" class="btn btn-danger">Deletar</button>
+            </g:link>
+            <g:submitButton name="update" class="btn btn-primary" value="Salvar"/>
         </fieldset>
     </g:form>
+<g:javascript>
+    function handleFormSubmit(event){
+        event.preventDefault();
+
+        $.ajax({
+            type: "PUT",
+            url: "/payer/update",
+            data: $(event.target).serialize(),
+            dataType: "json",
+            success: (data) => {
+                alert(data.message)
+                window.location.replace(window.location.origin + "/payer/index")
+            },
+            error: (error) => {
+                alert(error.responseJSON.message)
+            }
+        });
+    }
+    $(document).ready(() => {
+        $("#updatePayerForm").on("submit", handleFormSubmit)
+    });
+</g:javascript>
 </body>
 </html>
