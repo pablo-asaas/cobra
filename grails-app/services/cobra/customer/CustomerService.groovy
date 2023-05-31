@@ -1,5 +1,6 @@
 package cobra.customer
 
+import cobra.exception.ResourceNotFoundException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -25,7 +26,7 @@ class CustomerService {
     public Customer findById(Long id) {
         Customer customer = Customer.query([id: id]).get()
 
-        if (!customer) throw new RuntimeException("Cliente não encontrado")
+        if (!customer) throw new ResourceNotFoundException("Cliente não encontrado")
 
         return customer
     }
