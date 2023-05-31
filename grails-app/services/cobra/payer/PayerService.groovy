@@ -1,6 +1,7 @@
 package cobra.payer
 
 import cobra.exception.BusinessException
+import cobra.exception.ResourceNotFoundException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -15,7 +16,7 @@ class PayerService {
     public Payer findById(Long id){
         Payer payer = Payer.query([id: id]).get()
 
-        if (!payer) throw new RuntimeException("Pagador não encontrado")
+        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
 
         return payer
     }
