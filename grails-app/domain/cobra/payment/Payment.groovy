@@ -28,9 +28,11 @@ class Payment extends BaseDomain {
 
     static namedQueries = {
         query { Map search ->
-            if (!search.containsKey("customer")) {
+            if (!Boolean.valueOf(search.ignoreCustomer) && !search.customer) {
                 throw new RuntimeException("É obrigatório informar um cliente para executar a consulta")
-            } else {
+            }
+
+            if (search.containsKey("customer")) {
                 eq("customer", search.customer)
             }
 
@@ -40,6 +42,10 @@ class Payment extends BaseDomain {
 
             if (search.containsKey("id")) {
                 eq("id", search.id)
+            }
+
+            if (search.containsKey("dueDate[lt]")) {
+                lt("dueDate", search."dueDate[lt]")
             }
         }
     }
