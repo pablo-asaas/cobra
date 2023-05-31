@@ -28,6 +28,12 @@ class Payment extends BaseDomain {
 
     static namedQueries = {
         query { Map search ->
+            if (!search.containsKey("customer")) {
+                throw new RuntimeException("É obrigatório informar um cliente para executar a consulta")
+            } else {
+                eq("customer", search.customer)
+            }
+
             if (!Boolean.valueOf(search.includeDeleted)) {
                 eq("deleted", false)
             }
@@ -35,12 +41,6 @@ class Payment extends BaseDomain {
             if (search.containsKey("id")) {
                 eq("id", search.id)
             }
-
-            if (!search.containsKey("customer")) {
-                throw new RuntimeException("É obrigatório informar um cliente para executar a consulta")
-            }
-
-            eq("customer", search.customer)
         }
     }
 }

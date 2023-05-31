@@ -74,51 +74,6 @@ class PaymentService {
         payment.save(failOnError: true)
     }
 
-    public void setPendingStatus(Customer customer, Long id) {
-        Payment payment = findById(customer, id)
-
-        if (payment.status == PaymentStatus.PENDING) {
-            throw new BusinessException("Este pagamento já está pendente")
-        }
-
-        if (payment.status == PaymentStatus.PAID) {
-            throw new BusinessException("Não é possível definir como pendente um pagamento que esteja pago")
-        }
-
-        payment.status = PaymentStatus.PENDING
-        payment.save(failOnError: true)
-    }
-
-    public void setPaidStatus(Customer customer, Long id) {
-        Payment payment = findById(customer, id)
-
-        if (payment.status == PaymentStatus.PAID) {
-            throw new BusinessException("Este pagamento já está pago")
-        }
-
-        payment.status = PaymentStatus.PAID
-        payment.save(failOnError: true)
-    }
-
-    public void setOverdueStatus(Customer customer, Long id) {
-        Payment payment = findById(customer, id)
-
-        if (payment.status == PaymentStatus.OVERDUE) {
-            throw new BusinessException("Este pagamento já está vencido")
-        }
-
-        if (payment.status == PaymentStatus.PAID) {
-            throw new BusinessException("Não é possível definir como vencido um pagamento que esteja pago")
-        }
-
-        if (new Date() < payment.dueDate) {
-            throw new BusinessException("Este pagamento ainda não atingiu a data de vencimento")
-        }
-
-        payment.status = PaymentStatus.OVERDUE
-        payment.save(failOnError: true)
-    }
-
     private void validateSaveParams(Customer customer, Map params) {
         if (!customer) {
             throw new BusinessException("É obrigatório informar um cliente")
