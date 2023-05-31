@@ -1,5 +1,6 @@
 package cobra.customer
 
+import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
@@ -8,11 +9,13 @@ import grails.gorm.transactions.Transactional
 class CustomerService {
 
     public void save(Map params) {
-        Customer customer = new Customer()
 
-        if (params.name) customer.name = params.name
-        if (params.email) customer.email = params.email
-        if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
+        validateParams(params)
+
+        Customer customer = new Customer()
+        customer.name = params.name
+        customer.email = params.email
+        customer.cpfCnpj = params.cpfCnpj
 
         customer.save(failOnError: true)
     }
@@ -45,5 +48,17 @@ class CustomerService {
         if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
 
         customer.save(failOnError: true)
+    }
+
+    private void validateParams(Map params) {
+        if (!params.name) {
+            throw new BusinessException("Nome é obrigatóio")
+        }
+        if(!params.email){
+            throw new BusinessException("Email é obrigatóio")
+        }
+        if (!params.cpfCnpj) {
+            throw new BusinessException("Cpf/Cnpj é obrigatóio")
+        }
     }
 }
