@@ -12,6 +12,7 @@
                 <ul class="col-12 errors">
                     <li>Error: Page Not Found (404)</li>
                     <li>Path: ${request.forwardURI}</li>
+                    <li>${message}</li>
                 </ul>
             </section>
         </div>
