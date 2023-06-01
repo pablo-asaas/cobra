@@ -7,7 +7,7 @@ class ProcessOverduePaymentsJob {
     PaymentService paymentService
 
     static triggers = {
-        cron cronExpression: "0 0 0 * * ?"
+        cron name: "ProcessOverduePaymentsJobTrigger", startDelay: 10000, cronExpression: "0 0 0 * * ?"
     }
 
     void execute() {
