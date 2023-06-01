@@ -75,7 +75,15 @@ class PaymentService {
     }
 
     public void processToOverdue() {
-        List<Payment> paymentList = Payment.query("dueDate[lt]": new Date(),
+        Calendar calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+
+        Date yesterdayDate = calendar.getTime()
+
+        List<Payment> paymentList = Payment.query("dueDate[lt]": yesterdayDate,
                                                   ignoreCustomer: true,
                                                   status: PaymentStatus.PENDING).list()
 
