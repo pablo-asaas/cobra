@@ -37,7 +37,7 @@ class PayerController {
             payerService.delete(id)
             redirect action: "index"
         }catch(ResourceNotFoundException e){
-            render view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code
+            render(view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code)
         }catch (Exception e) {
             e.printStackTrace()
             redirect action: "index"
@@ -48,7 +48,7 @@ class PayerController {
         try {
             return [payer: payerService.findById(id)]
         }catch (ResourceNotFoundException e){
-            render view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code
+            render(view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code)
         }catch (Exception e) {
             e.printStackTrace()
             redirect action: "index"
@@ -60,7 +60,7 @@ class PayerController {
             payerService.update(params.id as Long, params)
             render([message: "Editado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
         }catch (ResourceNotFoundException e){
-            render view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code
+            render(view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code)
         }catch (BusinessException e) {
             e.printStackTrace()
             render([message: e.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
