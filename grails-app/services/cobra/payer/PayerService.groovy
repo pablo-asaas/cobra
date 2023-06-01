@@ -53,16 +53,16 @@ class PayerService {
 
     private void validateParams(Map params) {
         if (!params.name) {
-            throw new BusinessException("Nome é obrigatóio")
+            throw new BusinessException("Nome é obrigatório")
         }
         if(!params.email){
-            throw new BusinessException("Email é obrigatóio")
+            throw new BusinessException("Email é obrigatório")
         }
         if (!params.cpfCnpj) {
-            throw new BusinessException("Cpf/Cnpj é obrigatóio")
+            throw new BusinessException("Cpf/Cnpj é obrigatório")
         }
         if (!params.phoneNumber) {
-            throw new BusinessException("Numero de Telefone é obrigatóio")
+            throw new BusinessException("Numero de Telefone é obrigatório")
         }
     }
 }
