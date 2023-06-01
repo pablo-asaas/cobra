@@ -47,6 +47,10 @@ class Payment extends BaseDomain {
             if (search.containsKey("dueDate[lt]")) {
                 lt("dueDate", search."dueDate[lt]")
             }
+
+            if (search.containsKey("status")) {
+                eq("status", search.status)
+            }
         }
     }
 }
