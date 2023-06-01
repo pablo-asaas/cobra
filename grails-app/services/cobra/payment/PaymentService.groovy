@@ -79,7 +79,7 @@ class PaymentService {
                                                   ignoreCustomer: true,
                                                   status: PaymentStatus.PENDING).list()
 
-        paymentList.each { payment ->
+        for (Payment payment : paymentList) {
             payment.status = PaymentStatus.OVERDUE
 
             try {
