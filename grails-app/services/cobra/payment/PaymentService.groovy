@@ -4,6 +4,7 @@ import cobra.customer.Customer
 import cobra.exception.BusinessException
 import cobra.payer.Payer
 import cobra.payer.PayerService
+import cobra.util.DateUtils
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -75,15 +76,7 @@ class PaymentService {
     }
 
     public void processToOverdue() {
-        Calendar calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -1)
-        calendar.set(Calendar.HOUR_OF_DAY, 23)
-        calendar.set(Calendar.MINUTE, 59)
-        calendar.set(Calendar.SECOND, 59)
-
-        Date yesterdayDate = calendar.getTime()
-
-        List<Payment> paymentList = Payment.query("dueDate[lt]": yesterdayDate,
+        List<Payment> paymentList = Payment.query("dueDate[lt]": DateUtils.getStartOfDay(),
                                                   ignoreCustomer: true,
                                                   status: PaymentStatus.PENDING).list()
 
