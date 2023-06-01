@@ -69,4 +69,8 @@ class PayerController {
             render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.BAD_REQUEST.code)
         }
     }
+
+    def deleted() {
+        return [deletedPayerList: payerService.findAllDeleted()]
+    }
 }
