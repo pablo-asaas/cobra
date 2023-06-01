@@ -52,13 +52,13 @@ class CustomerService {
 
     private void validateParams(Map params) {
         if (!params.name) {
-            throw new BusinessException("Nome é obrigatóio")
+            throw new BusinessException("Nome é obrigatório")
         }
         if(!params.email){
-            throw new BusinessException("Email é obrigatóio")
+            throw new BusinessException("Email é obrigatório")
         }
         if (!params.cpfCnpj) {
-            throw new BusinessException("Cpf/Cnpj é obrigatóio")
+            throw new BusinessException("Cpf/Cnpj é obrigatório")
         }
     }
 }
