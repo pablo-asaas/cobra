@@ -44,6 +44,14 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
+    public void restore(Long id) {
+        Payer payer = Payer.query([id: id, onlyDeleted: true]).get()
+
+        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
+        payer.deleted = false
+        payer.save(failOnError: true)
+    }
+
     public void update(Long id, Map params){
         validateParams(params)
 
