@@ -9,6 +9,9 @@
 <body>
     <h1>Pagadores</h1>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPayerModal">Adicionar</button>
+    <g:link action="restore">
+        <button type="button" class="btn btn-primary">Restaurar</button>
+    </g:link>
 
     <div class="modal fade" id="newPayerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
