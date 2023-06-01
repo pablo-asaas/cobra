@@ -10,10 +10,10 @@ import com.sendgrid.helpers.mail.objects.Email
 class MailSenderService {
 
     private SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_API_KEY"))
-    private Email senderEmail = new Email("SENDGRID_FROM_EMAIL_ADDRESS")
+    private Email senderEmail = new Email(System.getenv("SENDGRID_FROM_EMAIL_ADDRESS"))
 
-    public void send(String recipient, String subject, String contentBody) {
-        Email recipientEmail = new Email(recipient)
+    public void send(String recipientEmailAddress, String subject, String contentBody) {
+        Email recipientEmail = new Email(recipientEmailAddress)
         Content content = new Content("text/plain", contentBody)
         Mail mail = new Mail(senderEmail, subject, recipientEmail, content)
 
