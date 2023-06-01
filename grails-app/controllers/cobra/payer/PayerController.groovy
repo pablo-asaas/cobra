@@ -73,4 +73,16 @@ class PayerController {
     def deleted() {
         return [deletedPayerList: payerService.findAllDeleted()]
     }
+
+    def restore(Long id) {
+        try{
+            payerService.restore(id)
+            render([message: "Restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        }catch (ResourceNotFoundException e){
+            render(view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code)
+        }catch (Exception e){
+            e.printStackTrace()
+            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.BAD_REQUEST.code)
+        }
+    }
 }
