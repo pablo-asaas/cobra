@@ -9,7 +9,7 @@
 <body>
     <h1>Pagadores</h1>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPayerModal">Adicionar</button>
-    <g:link action="restore">
+    <g:link action="deleted">
         <button type="button" class="btn btn-primary">Restaurar</button>
     </g:link>
 
