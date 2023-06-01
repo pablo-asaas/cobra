@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:javascript src="application.js"/>
     <title>Restaurar pagador</title>
 </head>
 
@@ -28,13 +29,33 @@
                 <td>${payer.phoneNumber}</td>
                 <td>${payer.createdAt}</td>
                 <td>
-                    <g:link action="show" id="${payer.id}">
-                        <button class="btn btn-primary">Editar</button>
-                    </g:link>
+                    <button type="button" data-id="${payer.id}" class="restore-button btn btn-primary">Restaurar</button>
                 </td>
             </tr>
         </g:each>
         </tbody>
     </table>
+    <g:javascript>
+        function restorePayer(event){
+
+            const id = $(event.target).data("id")
+
+            $.ajax({
+                type: "POST",
+                url: "/payer/restore/" + id,
+                dataType: "json",
+                success: (data) => {
+                    alert(data.message)
+                    location.reload()
+                },
+                error: (error) => {
+                    alert(error.responseJSON.message)
+                }
+            });
+        }
+        $(document).ready(() => {
+            $(".restore-button").on("click", restorePayer)
+        });
+    </g:javascript>
 </body>
 </html>
