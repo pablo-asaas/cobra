@@ -21,13 +21,12 @@ class CpfCnpjValidator {
             (cpf.length() != 11))
             return(false)
 
+        char dig10, dig11
+        int soma, resultado, peso
 
         try{
-            char dig10, dig11
-            int soma = 0
-            int resultado = 0
-            int peso = 10
-
+            soma = 0
+            peso = 10
             for (int i =0; i < 9; i++) {
                 int num = (int)(cpf.charAt(i) - 48)
                 soma += (num * peso)
@@ -73,13 +72,13 @@ class CpfCnpjValidator {
                 (cnpj.length() != 14))
             return(false)
 
+        char dig13, dig14
+        int soma, resultado, peso
 
         try{
-            char dig13, dig14
-            int soma = 0
-            int resultado = 0
-            int peso = 2
 
+            soma = 0
+            peso = 2
             for (int i = 11; i >= 0; i--) {
                 int num = (int)(cnpj.charAt(i) - 48)
                 soma += (num * peso)
