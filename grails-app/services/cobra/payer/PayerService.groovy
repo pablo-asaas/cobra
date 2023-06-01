@@ -13,6 +13,11 @@ class PayerService {
         return Payer.query([:]).list()
     }
 
+    @ReadOnly
+    public List<Payer> findAllDeleted(){
+        return Payer.query([onlyDeleted: true]).list()
+    }
+
     public Payer findById(Long id){
         Payer payer = Payer.query([id: id]).get()
 
