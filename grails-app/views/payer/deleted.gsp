@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <g:each var="payer" in="${payerList}">
+        <g:each var="payer" in="${deletedPayerList}">
             <tr>
                 <td>${payer.id}</td>
                 <td>${payer.name}</td>
