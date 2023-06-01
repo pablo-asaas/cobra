@@ -1,5 +1,7 @@
 package cobra.payer
 
+import cobra.exception.BusinessException
+import cobra.exception.ResourceNotFoundException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -11,18 +13,23 @@ class PayerService {
         return Payer.query([:]).list()
     }
 
-    @ReadOnly
     public Payer findById(Long id){
         Payer payer = Payer.query([id: id]).get()
 
-        if (!payer) throw new RuntimeException("Pagador não encontrado")
+        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
 
         return payer
     }
 
     public void save(Map params){
+        validateParams(params)
+
         Payer payer = new Payer()
-        bind(payer, params)
+        payer.name = params.name
+        payer.email = params.email
+        payer.cpfCnpj = params.cpfCnpj
+        payer.phoneNumber = params.phoneNumber
+
         payer.save(failOnError: true)
     }
 
@@ -33,15 +40,29 @@ class PayerService {
     }
 
     public void update(Long id, Map params){
+        validateParams(params)
+
         Payer payer = findById(id)
-        bind(payer, params)
+        payer.name = params.name
+        payer.email = params.email
+        payer.cpfCnpj = params.cpfCnpj
+        payer.phoneNumber = params.phoneNumber
+
         payer.save(failOnError: true)
     }
 
-    private void bind(Payer payer, Map params){
-        if (params.name) payer.name = params.name
-        if (params.email) payer.email = params.email
-        if (params.cpfCnpj) payer.cpfCnpj = params.cpfCnpj
-        if (params.phoneNumber) payer.phoneNumber = params.phoneNumber
+    private void validateParams(Map params) {
+        if (!params.name) {
+            throw new BusinessException("Nome é obrigatório")
+        }
+        if(!params.email){
+            throw new BusinessException("Email é obrigatório")
+        }
+        if (!params.cpfCnpj) {
+            throw new BusinessException("Cpf/Cnpj é obrigatório")
+        }
+        if (!params.phoneNumber) {
+            throw new BusinessException("Numero de Telefone é obrigatório")
+        }
     }
 }
