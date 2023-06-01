@@ -9,7 +9,7 @@ class PayerController {
 
     def payerService
 
-    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT']
+    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', restore: 'POST']
 
     def create() {
         return [:]
