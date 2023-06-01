@@ -74,6 +74,22 @@ class PaymentService {
         payment.save(failOnError: true)
     }
 
+    public void processToOverdue() {
+        List<Payment> paymentList = Payment.query("dueDate[lt]": new Date(),
+                                                  ignoreCustomer: true,
+                                                  status: PaymentStatus.PENDING).list()
+
+        paymentList.each { payment ->
+            payment.status = PaymentStatus.OVERDUE
+
+            try {
+                payment.save(failOnError: true)
+            } catch (Exception exception) {
+                exception.printStackTrace()
+            }
+        }
+    }
+
     private void validateSaveParams(Customer customer, Map params) {
         if (!customer) {
             throw new BusinessException("É obrigatório informar um cliente")
