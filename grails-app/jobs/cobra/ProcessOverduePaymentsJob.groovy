@@ -2,7 +2,7 @@ package cobra
 
 import cobra.payment.PaymentService
 
-class OverduePaymentsJob {
+class ProcessOverduePaymentsJob {
 
     PaymentService paymentService
 
