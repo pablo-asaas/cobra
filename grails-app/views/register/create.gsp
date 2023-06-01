@@ -2,11 +2,12 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:javascript src="application.js"/>
     <title>Criar conta</title>
 </head>
 
 <body>
-    <g:form method="POST" action="save">
+    <g:form name="registerForm" method="POST" action="save">
         <fieldset class="form">
             <label class="col-form-label" for="username"><g:message code='springSecurity.login.username.label'/>:</label>
             <g:field class="form-control" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none"/>
@@ -27,5 +28,18 @@
             <g:submitButton class="btn btn-primary" name="save" value="Criar conta"/>
         </fieldset>
     </g:form>
+    <g:javascript>
+        function validateCpfCnpj(event){
+
+            const cpfCnpj = $(event.target.cpfCnpj).val()
+            if(!cpfCnpj.match(/[0-9]{11}/) || !cpfCnpj.match(/[0-9]{14}/)){
+                event.preventDefault();
+                alert("CPF ou CNPJ inválido")
+            }
+        }
+        $(document).ready(() => {
+            $("#registerForm").on("submit", validateCpfCnpj)
+        });
+    </g:javascript>
 </body>
 </html>
