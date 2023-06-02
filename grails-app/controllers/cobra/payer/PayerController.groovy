@@ -16,6 +16,9 @@ class PayerController {
     }
 
     def index() {
+        if (params.deleted) {
+            return [payerList: payerService.findAllDeleted()]
+        }
         return [payerList: payerService.findAll()]
     }
 
