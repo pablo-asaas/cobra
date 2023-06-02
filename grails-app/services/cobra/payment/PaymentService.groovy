@@ -4,6 +4,7 @@ import cobra.customer.Customer
 import cobra.exception.BusinessException
 import cobra.payer.Payer
 import cobra.payer.PayerService
+import cobra.util.DateUtils
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -72,6 +73,22 @@ class PaymentService {
         Payment payment = findById(customer, id)
         payment.deleted = true
         payment.save(failOnError: true)
+    }
+
+    public void processToOverdue() {
+        List<Payment> paymentList = Payment.query("dueDate[lt]": DateUtils.getStartOfDay(),
+                                                  ignoreCustomer: true,
+                                                  status: PaymentStatus.PENDING).list()
+
+        for (Payment payment : paymentList) {
+            payment.status = PaymentStatus.OVERDUE
+
+            try {
+                payment.save(failOnError: true)
+            } catch (Exception exception) {
+                exception.printStackTrace()
+            }
+        }
     }
 
     private void validateSaveParams(Customer customer, Map params) {
