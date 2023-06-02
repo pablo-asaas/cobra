@@ -21,16 +21,14 @@ class RegisterController {
     }
 
     def create() {
-
         if (springSecurityService.isLoggedIn()) {
             redirect uri: 'index'
             return
         }
-
         return [:]
     }
 
-    def save(){
+    def save() {
         registerService.save(params)
         redirect view: 'index'
     }
