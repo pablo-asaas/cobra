@@ -2,6 +2,7 @@ package cobra.payment
 
 import cobra.customer.Customer
 import cobra.exception.BusinessException
+import cobra.mail.MailSenderService
 import cobra.payer.Payer
 import cobra.payer.PayerService
 import cobra.util.DateUtils
@@ -14,6 +15,7 @@ import java.text.SimpleDateFormat
 class PaymentService {
 
     PayerService payerService
+    MailSenderService mailSenderService
 
     @ReadOnly
     public List<Payment> findAll(Customer customer) {
@@ -43,6 +45,9 @@ class PaymentService {
         payment.dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
 
         payment.save(failOnError: true)
+
+        mailSenderService.send(payment.customer.email, "Cobrança criada", "Foi criada uma cobrança no valor de R\$ ${payment.value} para ${payment.payer.name}")
+        mailSenderService.send(payment.payer.email, "Cobrança recebida", "Você recebeu uma cobrança no valor de R\$ ${payment.value} enviada por ${payment.customer.name}")
     }
 
     public void update(Customer customer, Long id, Map params) {
@@ -72,7 +77,11 @@ class PaymentService {
     public void delete(Customer customer, Long id) {
         Payment payment = findById(customer, id)
         payment.deleted = true
+
         payment.save(failOnError: true)
+
+        mailSenderService.send(payment.customer.email, "Cobrança excluída", "A cobrança para ${payment.payer.name} no valor de R\$ ${payment.value} foi excluída")
+        mailSenderService.send(payment.payer.email, "Cobrança excluída", "A cobrança de ${payment.customer.name} no valor de R\$ ${payment.value} foi excluída")
     }
 
     public void processToOverdue() {
@@ -88,6 +97,9 @@ class PaymentService {
             } catch (Exception exception) {
                 exception.printStackTrace()
             }
+
+            mailSenderService.send(payment.customer.email, "Cobrança vencida", "A cobrança para ${payment.payer.name} no valor de R\$ ${payment.value} está vencida")
+            mailSenderService.send(payment.payer.email, "Cobrança vencida", "A cobrança de ${payment.customer.name} no valor de R\$ ${payment.value} está vencida")
         }
     }
 
