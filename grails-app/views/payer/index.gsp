@@ -9,8 +9,11 @@
 <body>
     <h1>Pagadores</h1>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPayerModal">Adicionar</button>
-    <g:link action="deleted">
-        <button type="button" class="btn btn-primary">Restaurar</button>
+    <g:link action="index">
+        <button type="button" class="btn btn-primary">Ativos</button>
+    </g:link>
+    <g:link action="index" params="[deleted: true]">
+        <button type="button" class="btn btn-primary">Inativos</button>
     </g:link>
 
     <div class="modal fade" id="newPayerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,9 +70,14 @@
                     <td>${payer.phoneNumber}</td>
                     <td>${payer.createdAt}</td>
                     <td>
-                        <g:link action="show" id="${payer.id}">
-                            <button class="btn btn-primary">Editar</button>
-                        </g:link>
+                        <g:if test="${payer.deleted}">
+                            <button type="button" data-id="${payer.id}" class="restore-button btn btn-primary">Restaurar</button>
+                        </g:if>
+                        <g:else>
+                            <g:link action="show" id="${payer.id}">
+                                <button class="btn btn-primary">Editar</button>
+                            </g:link>
+                        </g:else>
                     </td>
                 </tr>
             </g:each>
@@ -93,8 +101,25 @@
             }
         });
     }
+    function restorePayer(event){
+        const id = $(event.target).data("id")
+
+        $.ajax({
+            type: "POST",
+            url: "/payer/restore/" + id,
+            dataType: "json",
+            success: (data) => {
+                alert(data.message)
+                location.reload()
+            },
+            error: (error) => {
+                alert(error.responseJSON.message)
+            }
+        });
+    }
     $(document).ready(() => {
         $("#createPayerForm").on("submit", handleFormSubmit)
+        $(".restore-button").on("click", restorePayer)
     });
 </g:javascript>
 </body>
