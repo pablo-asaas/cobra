@@ -73,10 +73,6 @@ class PayerController {
         }
     }
 
-    def deleted() {
-        return [deletedPayerList: payerService.findAllDeleted()]
-    }
-
     def restore(Long id) {
         try{
             payerService.restore(id)
