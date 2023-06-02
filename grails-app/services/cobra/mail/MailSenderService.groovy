@@ -6,7 +6,9 @@ import com.sendgrid.SendGrid
 import com.sendgrid.helpers.mail.Mail
 import com.sendgrid.helpers.mail.objects.Content
 import com.sendgrid.helpers.mail.objects.Email
+import grails.gorm.transactions.Transactional
 
+@Transactional
 class MailSenderService {
 
     private SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_API_KEY"))
