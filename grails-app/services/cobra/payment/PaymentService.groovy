@@ -43,8 +43,6 @@ class PaymentService {
         payment.value = new BigDecimal(params.value)
         payment.dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
 
-        println payment.publicId
-
         payment.save(failOnError: true)
 
         paymentNotificationService.onSave(payment)
