@@ -2,12 +2,19 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:javascript src="application.js"/>
     <title>Index</title>
 </head>
 
 <body>
     <h1>Pagadores</h1>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPayerModal">Adicionar</button>
+    <g:link action="index">
+        <button type="button" class="btn btn-primary">Ativos</button>
+    </g:link>
+    <g:link action="index" params="[deleted: true]">
+        <button type="button" class="btn btn-primary">Inativos</button>
+    </g:link>
 
     <div class="modal fade" id="newPayerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -19,7 +26,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <g:form method="POST" url="[controller: 'payer', action: 'save']">
+                    <g:form name="createPayerForm" method="POST" url="[controller: 'payer', action: 'save']">
                         <fieldset class="form">
                             <label class="col-form-label" for="name">Nome</label>
                             <g:field class="form-control" type="text" name="name" required="true"/>
@@ -63,13 +70,57 @@
                     <td>${payer.phoneNumber}</td>
                     <td>${payer.createdAt}</td>
                     <td>
-                        <g:link action="show" id="${payer.id}">
-                            <button class="btn btn-primary">Editar</button>
-                        </g:link>
+                        <g:if test="${payer.deleted}">
+                            <button type="button" data-id="${payer.id}" class="restore-button btn btn-primary">Restaurar</button>
+                        </g:if>
+                        <g:else>
+                            <g:link action="show" id="${payer.id}">
+                                <button class="btn btn-primary">Editar</button>
+                            </g:link>
+                        </g:else>
                     </td>
                 </tr>
             </g:each>
         </tbody>
     </table>
+<g:javascript>
+    function handleFormSubmit(event){
+        event.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "/payer/save",
+            data: $(event.target).serialize(),
+            dataType: "json",
+            success: (data) => {
+                alert(data.message)
+                location.reload()
+            },
+            error: (error) => {
+                alert(error.responseJSON.message)
+            }
+        });
+    }
+    function restorePayer(event){
+        const id = $(event.target).data("id")
+
+        $.ajax({
+            type: "POST",
+            url: "/payer/restore/" + id,
+            dataType: "json",
+            success: (data) => {
+                alert(data.message)
+                location.reload()
+            },
+            error: (error) => {
+                alert(error.responseJSON.message)
+            }
+        });
+    }
+    $(document).ready(() => {
+        $("#createPayerForm").on("submit", handleFormSubmit)
+        $(".restore-button").on("click", restorePayer)
+    });
+</g:javascript>
 </body>
 </html>

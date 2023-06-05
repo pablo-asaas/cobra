@@ -1,6 +1,8 @@
 package cobra.payer
 
 import cobra.customer.Customer
+import cobra.exception.BusinessException
+import cobra.exception.ResourceNotFoundException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -13,17 +15,29 @@ class PayerService {
     }
 
     @ReadOnly
+    public List<Payer> findAllDeleted(Customer customer){
+        return Payer.query([customer: customer, onlyDeleted: true]).list()
+    }
+
     public Payer findById(Customer customer, Long id){
         Payer payer = Payer.query([id: id, customer: customer]).get()
 
-        if (!payer) throw new RuntimeException("Pagador não encontrado")
+        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
 
         return payer
     }
 
+
     public void save(Customer customer, Map params){
+        validateParams(params)
+
         Payer payer = new Payer()
-        bind(customer, payer, params)
+        payer.name = params.name
+        payer.email = params.email
+        payer.cpfCnpj = params.cpfCnpj
+        payer.phoneNumber = params.phoneNumber
+        payer.customer = customer
+
         payer.save(failOnError: true)
     }
 
@@ -34,16 +48,38 @@ class PayerService {
     }
 
     public void update(Customer customer, Long id, Map params){
+        validateParams(params)
+
         Payer payer = findById(customer, id)
-        bind(customer, payer, params)
+        payer.name = params.name
+        payer.email = params.email
+        payer.cpfCnpj = params.cpfCnpj
+        payer.phoneNumber = params.phoneNumber
+
         payer.save(failOnError: true)
     }
 
-    private void bind(Customer customer, Payer payer, Map params){
-        if (params.name) payer.name = params.name
-        if (params.email) payer.email = params.email
-        if (params.cpfCnpj) payer.cpfCnpj = params.cpfCnpj
-        if (params.phoneNumber) payer.phoneNumber = params.phoneNumber
-        if (customer) payer.customer = customer
+    public void restore(Customer customer, Long id) {
+        Payer payer = Payer.query([customer: customer, id: id, onlyDeleted: true]).get()
+
+        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
+
+        payer.deleted = false
+        payer.save(failOnError: true)
+    }
+
+    private void validateParams(Map params) {
+        if (!params.name) {
+            throw new BusinessException("Nome é obrigatório")
+        }
+        if(!params.email){
+            throw new BusinessException("Email é obrigatório")
+        }
+        if (!params.cpfCnpj) {
+            throw new BusinessException("Cpf/Cnpj é obrigatório")
+        }
+        if (!params.phoneNumber) {
+            throw new BusinessException("Numero de Telefone é obrigatório")
+        }
     }
 }

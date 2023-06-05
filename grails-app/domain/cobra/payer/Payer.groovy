@@ -14,7 +14,10 @@ class Payer extends BasePerson{
 
     static namedQueries = {
         query { Map search ->
-            if (!Boolean.valueOf(search.includeDeleted)) {
+
+            if (Boolean.valueOf(search.onlyDeleted)) {
+                eq("deleted", true)
+            } else if (!Boolean.valueOf(search.includeDeleted)) {
                 eq("deleted", false)
             }
             if (search.containsKey("id")) {

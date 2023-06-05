@@ -31,7 +31,7 @@
     <g:javascript>
         function validateCpfCnpj(event){
 
-            const cpfCnpj = $(event.target.cpfCnpj).val()
+            const cpfCnpj = parseInt($(event.target.cpfCnpj).val())
             if(!cpfCnpj.match(/[0-9]{11}/) || !cpfCnpj.match(/[0-9]{14}/)){
                 event.preventDefault();
                 alert("CPF ou CNPJ inválido")
