@@ -1,11 +1,12 @@
 package cobra.customer
 
 import cobra.customer.CustomerService
+import grails.plugin.springsecurity.annotation.Secured
 import cobra.exception.BusinessException
 import grails.converters.JSON
-import grails.validation.ValidationException
 import io.micronaut.http.HttpStatus
 
+@Secured('ROLE_USER')
 class CustomerController {
 
     CustomerService customerService

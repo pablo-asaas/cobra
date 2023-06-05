@@ -8,7 +8,8 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class CustomerService {
 
-    public void save(Map params) {
+
+    public Customer save(Map params) {
 
         validateParams(params)
 
@@ -17,7 +18,7 @@ class CustomerService {
         customer.email = params.email
         customer.cpfCnpj = params.cpfCnpj
 
-        customer.save(failOnError: true)
+        return customer.save(failOnError: true)
     }
 
     @ReadOnly
@@ -25,7 +26,6 @@ class CustomerService {
         return Customer.query([:]).list()
     }
 
-    @ReadOnly
     public Customer findById(Long id) {
         Customer customer = Customer.query([id: id]).get()
 
