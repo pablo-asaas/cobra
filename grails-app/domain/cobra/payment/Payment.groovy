@@ -6,12 +6,17 @@ import cobra.payer.Payer
 
 class Payment extends BaseDomain {
 
+    String publicId = UUID.randomUUID().toString()
     Customer customer
     Payer payer
     PaymentType type
     BigDecimal value
     PaymentStatus status = PaymentStatus.PENDING
     Date dueDate
+
+    static mapping = {
+        publicId unique: true, length: 36
+    }
 
     static constraints = {
         value validator: { val, obj, errors ->

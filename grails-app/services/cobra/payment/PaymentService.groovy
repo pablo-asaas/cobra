@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat
 class PaymentService {
 
     PayerService payerService
+    PaymentNotificationService paymentNotificationService
 
     @ReadOnly
     public List<Payment> findAll(Customer customer) {
@@ -43,6 +44,8 @@ class PaymentService {
         payment.dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
 
         payment.save(failOnError: true)
+
+        paymentNotificationService.onSave(payment)
     }
 
     public void update(Customer customer, Long id, Map params) {
@@ -67,12 +70,17 @@ class PaymentService {
         }
 
         payment.save(failOnError: true)
+
+        paymentNotificationService.onUpdate(payment)
     }
 
     public void delete(Customer customer, Long id) {
         Payment payment = findById(customer, id)
         payment.deleted = true
+
         payment.save(failOnError: true)
+
+        paymentNotificationService.onDelete(payment)
     }
 
     public void processToOverdue() {
@@ -88,6 +96,8 @@ class PaymentService {
             } catch (Exception exception) {
                 exception.printStackTrace()
             }
+
+            paymentNotificationService.onOverdue(payment)
         }
     }
 
