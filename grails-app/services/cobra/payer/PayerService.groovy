@@ -13,6 +13,11 @@ class PayerService {
         return Payer.query([:]).list()
     }
 
+    @ReadOnly
+    public List<Payer> findAllDeleted(){
+        return Payer.query([onlyDeleted: true]).list()
+    }
+
     public Payer findById(Long id){
         Payer payer = Payer.query([id: id]).get()
 
@@ -36,6 +41,14 @@ class PayerService {
     public void delete(Long id){
         Payer payer = findById(id)
         payer.deleted = true
+        payer.save(failOnError: true)
+    }
+
+    public void restore(Long id) {
+        Payer payer = Payer.query([id: id, onlyDeleted: true]).get()
+
+        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
+        payer.deleted = false
         payer.save(failOnError: true)
     }
 

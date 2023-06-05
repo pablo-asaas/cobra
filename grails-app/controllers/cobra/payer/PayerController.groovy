@@ -9,13 +9,16 @@ class PayerController {
 
     def payerService
 
-    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT']
+    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', restore: 'POST']
 
     def create() {
         return [:]
     }
 
     def index() {
+        if (params.deleted) {
+            return [payerList: payerService.findAllDeleted()]
+        }
         return [payerList: payerService.findAll()]
     }
 
@@ -64,6 +67,18 @@ class PayerController {
         }catch (BusinessException e) {
             e.printStackTrace()
             render([message: e.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
+        }catch (Exception e){
+            e.printStackTrace()
+            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.BAD_REQUEST.code)
+        }
+    }
+
+    def restore(Long id) {
+        try{
+            payerService.restore(id)
+            render([message: "Restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        }catch (ResourceNotFoundException e){
+            render(view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code)
         }catch (Exception e){
             e.printStackTrace()
             render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.BAD_REQUEST.code)
