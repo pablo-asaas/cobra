@@ -6,7 +6,7 @@ import cobra.payer.Payer
 
 class Payment extends BaseDomain {
 
-    UUID publicId = UUID.randomUUID()
+    String publicId = UUID.randomUUID().toString()
     Customer customer
     Payer payer
     PaymentType type
@@ -15,7 +15,7 @@ class Payment extends BaseDomain {
     Date dueDate
 
     static mapping = {
-        publicId unique: true, length: 16
+        publicId unique: true, length: 36
     }
 
     static constraints = {
