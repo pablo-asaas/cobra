@@ -1,20 +1,14 @@
-package cobra.authentication
+package cobra.user
 
 import cobra.customer.Customer
-import cobra.customer.CustomerService
-import cobra.user.Role
-import cobra.user.User
-import cobra.user.UserRole
 import grails.gorm.transactions.Transactional
 
 @Transactional
-class RegisterService {
+class UserService {
 
-    CustomerService customerService
 
-    def save(Map params) {
+    public void save(Customer customer, Map params) {
 
-        Customer customer = customerService.save(params)
         Role role = Role.find {authority == "ROLE_USER"}
 
         User user = new User()
