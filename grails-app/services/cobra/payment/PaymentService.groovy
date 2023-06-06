@@ -35,7 +35,7 @@ class PaymentService {
         validateSaveParams(customer, params)
 
         Payment payment = new Payment()
-        Payer payer = payerService.findById(params.payer as Long)
+        Payer payer = payerService.findById(customer, params.payer as Long)
 
         payment.customer = customer
         payment.payer = payer
