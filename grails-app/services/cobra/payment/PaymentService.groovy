@@ -83,6 +83,28 @@ class PaymentService {
         paymentNotificationService.onDelete(payment)
     }
 
+    public void restore(Customer customer, Long id, Map params) {
+        if (!params.dueDate) {
+            throw new BusinessException("É obrigatório informar uma nova data de vencimento")
+        }
+
+        Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
+
+        if (parsedDueDate <= DateUtils.getEndOfDay()) {
+            throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
+        }
+
+        Payment payment = findById(customer, id)
+
+        payment.deleted = false
+        payment.dueDate = parsedDueDate
+        payment.status = PaymentStatus.PENDING
+
+        payment.save(failOnError: true)
+
+        paymentNotificationService.onRestore(payment)
+    }
+
     public void processToOverdue() {
         List<Payment> paymentList = Payment.query("dueDate[lt]": DateUtils.getStartOfDay(),
                                                   ignoreCustomer: true,
