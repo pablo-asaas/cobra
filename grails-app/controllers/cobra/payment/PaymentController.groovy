@@ -74,9 +74,9 @@ class PaymentController {
         }
     }
 
-    def restore(Long id) {
+    def restore() {
         try {
-            paymentService.restore(getCurrentCustomer(), id, params)
+            paymentService.restore(getCurrentCustomer(), params.id as Long, params)
             render([message: "Pagamento restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
         } catch (BusinessException exception) {
             render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
