@@ -2,6 +2,7 @@ package cobra.payment
 
 import cobra.customer.Customer
 import cobra.exception.BusinessException
+import cobra.exception.ResourceNotFoundException
 import cobra.payer.Payer
 import cobra.payer.PayerService
 import cobra.util.DateUtils
@@ -19,6 +20,11 @@ class PaymentService {
     @ReadOnly
     public List<Payment> findAll(Customer customer) {
         return Payment.query([customer: customer]).list()
+    }
+
+    @ReadOnly
+    public List<Payment> findAllDeleted(Customer customer) {
+        return Payment.query([customer: customer, onlyDeleted: true]).list()
     }
 
     public Payment findById(Customer customer, Long id) {
@@ -84,6 +90,12 @@ class PaymentService {
     }
 
     public void restore(Customer customer, Long id, Map params) {
+        Payment payment = Payment.query([customer: customer, id: id, onlyDeleted: true]).get()
+
+        if (!payment) {
+            throw new ResourceNotFoundException("Cobrança não encontrada")
+        }
+
         if (!params.dueDate) {
             throw new BusinessException("É obrigatório informar uma nova data de vencimento")
         }
@@ -93,8 +105,6 @@ class PaymentService {
         if (parsedDueDate <= DateUtils.getEndOfDay()) {
             throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
         }
-
-        Payment payment = findById(customer, id)
 
         payment.deleted = false
         payment.dueDate = parsedDueDate
