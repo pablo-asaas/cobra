@@ -2,6 +2,7 @@ package cobra.payment
 
 import cobra.customer.Customer
 import cobra.exception.BusinessException
+import cobra.exception.ResourceNotFoundException
 import cobra.payer.Payer
 import cobra.payer.PayerService
 import cobra.util.DateUtils
@@ -99,6 +100,19 @@ class PaymentService {
 
             paymentNotificationService.onOverdue(payment)
         }
+    }
+
+    @ReadOnly
+    public Payment getPaymentReceipt(String publicId) {
+        Payment payment = Payment.query([publicId: publicId,
+                                         ignoreCustomer: true,
+                                         status: PaymentStatus.PAID]).get()
+
+        if (!payment) {
+            throw new ResourceNotFoundException("Comprovante não encontrado")
+        }
+
+        return payment
     }
 
     private void validateSaveParams(Customer customer, Map params) {
