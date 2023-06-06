@@ -11,7 +11,7 @@ class UserController {
     SpringSecurityService springSecurityService
 
     def index() {
-        redirect(view: 'create')
+        return [userList: userService.findAll(getCurrentCustomer()), currentUser: springSecurityService.getCurrentUser().username]
     }
 
     def create() {
@@ -21,7 +21,7 @@ class UserController {
     def save() {
         println params
         println getCurrentCustomer()
-        userService.save(getCurrentCustomer(), params)
+        userService.save(getCurrentCustomer(), Map params)
         redirect(view: 'create')
     }
 

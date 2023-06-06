@@ -23,4 +23,8 @@ class UserService {
             it.clear()
         }
     }
+
+    public List<User> findAll(Customer customer) {
+        User.findAllByCustomer(customer)
+    }
 }
