@@ -70,6 +70,20 @@ class PaymentController {
         }
     }
 
+    def restore(Long id) {
+        try {
+            paymentService.restore(getCurrentCustomer(), id, params)
+            render([message: "Pagamento restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        } catch (BusinessException exception) {
+            render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
+        } catch (ResourceNotFoundException exception) {
+            render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
+        } catch (Exception exception) {
+            exception.printStackTrace()
+            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
+        }
+    }
+
     private Customer getCurrentCustomer() {
         User user = springSecurityService.currentUser
         return user.customer
