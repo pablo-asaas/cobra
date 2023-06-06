@@ -18,6 +18,14 @@ class CustomerService {
         customer.email = params.email
         customer.cpfCnpj = params.cpfCnpj
 
+        customer.postalCode = params.postalCode
+        customer.streetName = params.streetName
+        customer.buildingNumber = params.buildingNumber
+        if(params.complement) customer.complement = params.complement
+        customer.neighborhood = params.neighborhood
+        customer.city = params.city
+        customer.state = params.state
+
         return customer.save(failOnError: true)
     }
 
@@ -47,6 +55,14 @@ class CustomerService {
         if (params.email) customer.email = params.email
         if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
 
+        customer.postalCode = params.postalCode
+        customer.streetName = params.streetName
+        customer.buildingNumber = params.buildingNumber
+        if(params.complement) customer.complement = params.complement
+        customer.neighborhood = params.neighborhood
+        customer.city = params.city
+        customer.state = params.state
+
         customer.save(failOnError: true)
     }
 
@@ -59,6 +75,24 @@ class CustomerService {
         }
         if (!params.cpfCnpj) {
             throw new BusinessException("Cpf/Cnpj é obrigatório")
+        }
+        if (!params.postalCode) {
+            throw new BusinessException("CEP é obrigatório")
+        }
+        if(!params.streetName){
+            throw new BusinessException("Nome da Rua é obrigatório")
+        }
+        if (!params.buildingNumber) {
+            throw new BusinessException("Numero é obrigatório")
+        }
+        if (!params.neighborhood) {
+            throw new BusinessException("Bairro é obrigatório")
+        }
+        if (!params.city) {
+            throw new BusinessException("Cidade é obrigatório")
+        }
+        if (!params.state) {
+            throw new BusinessException("Estado é obrigatório")
         }
     }
 }
