@@ -26,6 +26,27 @@
 
             <label class="col-form-label" for="phoneNumber">Celular</label>
             <g:field class="form-control" type="text" name="phoneNumber" value="${payer.phoneNumber}" maxLength="13" required="true"/>
+
+            <label class="col-form-label" for="postalCode">CEP</label>
+            <g:field class="form-control" type="text" name="postalCode" value="${payer.postalCode}" required="true"/>
+
+            <label class="col-form-label" for="streetName">Rua</label>
+            <g:field class="form-control" type="text" name="streetName" value="${payer.streetName}" required="true"/>
+
+            <label class="col-form-label" for="buildingNumber">Número</label>
+            <g:field class="form-control" type="text" name="buildingNumber" value="${payer.buildingNumber}" required="true"/>
+
+            <label class="col-form-label" for="complement">Complemento</label>
+            <g:field class="form-control" type="text" name="complement" value="${payer.complement}"/>
+
+            <label class="col-form-label" for="state">Estado</label>
+            <g:field class="form-control" type="text" name="state" value="${payer.state}" required="true"/>
+
+            <label class="col-form-label" for="city">Cidade</label>
+            <g:field class="form-control" type="text" name="city" value="${payer.city}" required="true"/>
+
+            <label class="col-form-label" for="neighborhood">Bairro</label>
+            <g:field class="form-control" type="text" name="neighborhood" value="${payer.neighborhood}" required="true"/>
         </fieldset>
         <fieldset>
             <g:link action="delete"  id="${payer.id}">

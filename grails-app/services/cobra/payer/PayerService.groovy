@@ -38,6 +38,14 @@ class PayerService {
         payer.phoneNumber = params.phoneNumber
         payer.customer = customer
 
+        payer.postalCode = params.postalCode
+        payer.streetName = params.streetName
+        payer.buildingNumber = params.buildingNumber
+        if(params.complement) payer.complement = params.complement
+        payer.neighborhood = params.neighborhood
+        payer.city = params.city
+        payer.state = params.state
+
         payer.save(failOnError: true)
     }
 
@@ -80,6 +88,24 @@ class PayerService {
         }
         if (!params.phoneNumber) {
             throw new BusinessException("Numero de Telefone é obrigatório")
+        }
+        if (!params.postalCode) {
+            throw new BusinessException("CEP é obrigatório")
+        }
+        if(!params.streetName){
+            throw new BusinessException("Nome da Rua é obrigatório")
+        }
+        if (!params.buildingNumber) {
+            throw new BusinessException("Numero é obrigatório")
+        }
+        if (!params.neighborhood) {
+            throw new BusinessException("Bairro é obrigatório")
+        }
+        if (!params.city) {
+            throw new BusinessException("Cidade é obrigatório")
+        }
+        if (!params.state) {
+            throw new BusinessException("Estado é obrigatório")
         }
     }
 }
