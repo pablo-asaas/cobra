@@ -89,7 +89,7 @@ class PayerService {
         if (!CpfCnpjValidator.validate(cpfCnpj)) {
             throw new BusinessException("CPF/CNPJ inválido")
         }
-        if (Payer.countByCpfCnpj(cpfCnpj) > 0) {
+        if (Payer.query([exists: true, cpfCnpj: cpfCnpj]).get().asBoolean()) {
             throw new BusinessException("CPF/CNPJ já cadastrado")
         }
     }
