@@ -18,6 +18,10 @@ class PaymentController {
     static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE']
 
     def index() {
+        if (params.deleted) {
+            return [paymentList: paymentService.findAllDeleted(getCurrentCustomer())]
+        }
+
         return [paymentList: paymentService.findAll(getCurrentCustomer())]
     }
 

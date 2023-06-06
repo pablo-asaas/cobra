@@ -7,7 +7,7 @@
         <asset:javascript src="application.js"/>
 
         <g:javascript>
-            function handleFormSubmit(event) {
+            function handleCreateSubmit(event) {
                 event.preventDefault();
 
                 $.ajax({
@@ -25,14 +25,51 @@
                 });
             }
 
+            function handleRestoreSubmit(event) {
+                event.preventDefault()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/payment/restore/",
+                    data: $(event.target).serialize(),
+                    dataType: "json",
+                    success: (data) => {
+                        alert(data.message)
+                        location.reload()
+                    },
+                    error: (error) => {
+                        alert(error.responseJSON.message)
+                    }
+                });
+            }
+
             $(document).ready(() => {
-                $("#createPaymentForm").on("submit", handleFormSubmit)
+                $("#createPaymentForm").on("submit", handleCreateSubmit)
+                $("#restorePaymentForm").on("submit", handleRestoreSubmit)
+
+                $('#restorePaymentModal').on('show.bs.modal', (event) => {
+                    const button = $(event.relatedTarget)
+
+                    const id = button.data('id')
+                    const dueDate = button.data('due-date')
+
+                    $('#restorePaymentForm input[name=id]').val(id)
+                    $('#restorePaymentForm input[name=dueDate]').val(dueDate)
+                })
             });
         </g:javascript>
     </head>
 
     <body>
         <h1>Cobranças</h1>
+
+        <g:link action="index" class="btn btn-primary">
+            Ativas
+        </g:link>
+
+        <g:link action="index" params="[deleted: true]" class="btn btn-primary">
+            Excluídas
+        </g:link>
 
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPaymentModal">
             Nova cobrança
@@ -46,7 +83,7 @@
                 <div class="col">Status</div>
                 <div class="col">Tipo</div>
                 <div class="col">Criada em</div>
-                <div class="col">Aćões</div>
+                <div class="col">Ações</div>
             </div>
             <g:each var="payment" in="${paymentList}">
                 <div class="row link-row py-3">
@@ -57,9 +94,16 @@
                     <div class="col">${payment.type}</div>
                     <div class="col">${payment.createdAt}</div>
                     <div class="col">
-                        <g:link action="show" id="${payment.id}">
-                            Editar
-                        </g:link>
+                        <g:if test="${payment.deleted}">
+                            <button type="button" data-id="${payment.id}" data-due-date="${dateFieldFormat([value: payment.dueDate])}" class="btn btn-primary" data-toggle="modal" data-target="#restorePaymentModal">
+                                Restaurar
+                            </button>
+                        </g:if>
+                        <g:else>
+                            <g:link action="show" id="${payment.id}">
+                                Editar
+                            </g:link>
+                        </g:else>
                     </div>
                 </div>
             </g:each>
@@ -95,6 +139,33 @@
                             <div class="float-end">
                                 <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-success">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="restorePaymentModal" tabindex="-1" aria-labelledby="restorePaymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="restorePaymentModalLabel">Restaurar cobrança</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" id="restorePaymentForm">
+                            <g:hiddenField name="id"/>
+                            <div class="mb-3">
+                                <label for="dueDate">Vence em</label>
+                                <g:field type="date" name="dueDate" required="true" class="form-control"/>
+                                <small class="form-text text-muted">Informe uma nova data de vencimento</small>
+                            </div>
+                            <div class="float-end">
+                                <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Restaurar</button>
                             </div>
                         </form>
                     </div>
