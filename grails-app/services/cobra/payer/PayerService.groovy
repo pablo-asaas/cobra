@@ -64,6 +64,14 @@ class PayerService {
         payer.cpfCnpj = params.cpfCnpj
         payer.phoneNumber = params.phoneNumber
 
+        payer.postalCode = params.postalCode
+        payer.streetName = params.streetName
+        payer.buildingNumber = params.buildingNumber
+        if(params.complement) payer.complement = params.complement
+        payer.neighborhood = params.neighborhood
+        payer.city = params.city
+        payer.state = params.state
+
         payer.save(failOnError: true)
     }
 
