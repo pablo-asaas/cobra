@@ -33,6 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/payer">Pagadores</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/payment">Cobranças</a>
+                        </li>
                     </ul>
                 </div>
             </div>
