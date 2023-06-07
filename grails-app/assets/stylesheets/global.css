@@ -1,0 +1,7 @@
+:root {
+    --cobra-dark: #181818;
+}
+
+.bg-dark {
+    background-color: var(--cobra-dark) !important;
+}
