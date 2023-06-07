@@ -41,7 +41,7 @@ class PayerService {
         payer.postalCode = params.postalCode
         payer.streetName = params.streetName
         payer.buildingNumber = params.buildingNumber
-        if(params.complement) payer.complement = params.complement
+        if (params.complement) payer.complement = params.complement
         payer.neighborhood = params.neighborhood
         payer.city = params.city
         payer.state = params.state
@@ -67,7 +67,7 @@ class PayerService {
         payer.postalCode = params.postalCode
         payer.streetName = params.streetName
         payer.buildingNumber = params.buildingNumber
-        if(params.complement) payer.complement = params.complement
+        if (params.complement) payer.complement = params.complement
         payer.neighborhood = params.neighborhood
         payer.city = params.city
         payer.state = params.state
@@ -88,7 +88,7 @@ class PayerService {
         if (!params.name) {
             throw new BusinessException("Nome é obrigatório")
         }
-        if(!params.email){
+        if (!params.email){
             throw new BusinessException("Email é obrigatório")
         }
         if (!params.cpfCnpj) {
@@ -100,7 +100,7 @@ class PayerService {
         if (!params.postalCode) {
             throw new BusinessException("CEP é obrigatório")
         }
-        if(!params.streetName){
+        if (!params.streetName){
             throw new BusinessException("Nome da Rua é obrigatório")
         }
         if (!params.buildingNumber) {

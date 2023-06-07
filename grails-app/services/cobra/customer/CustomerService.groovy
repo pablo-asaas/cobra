@@ -21,7 +21,7 @@ class CustomerService {
         customer.postalCode = params.postalCode
         customer.streetName = params.streetName
         customer.buildingNumber = params.buildingNumber
-        if(params.complement) customer.complement = params.complement
+        if (params.complement) customer.complement = params.complement
         customer.neighborhood = params.neighborhood
         customer.city = params.city
         customer.state = params.state
@@ -58,7 +58,7 @@ class CustomerService {
         customer.postalCode = params.postalCode
         customer.streetName = params.streetName
         customer.buildingNumber = params.buildingNumber
-        if(params.complement) customer.complement = params.complement
+        if (params.complement) customer.complement = params.complement
         customer.neighborhood = params.neighborhood
         customer.city = params.city
         customer.state = params.state
@@ -70,7 +70,7 @@ class CustomerService {
         if (!params.name) {
             throw new BusinessException("Nome é obrigatório")
         }
-        if(!params.email){
+        if (!params.email){
             throw new BusinessException("Email é obrigatório")
         }
         if (!params.cpfCnpj) {
@@ -79,7 +79,7 @@ class CustomerService {
         if (!params.postalCode) {
             throw new BusinessException("CEP é obrigatório")
         }
-        if(!params.streetName){
+        if (!params.streetName){
             throw new BusinessException("Nome da Rua é obrigatório")
         }
         if (!params.buildingNumber) {
