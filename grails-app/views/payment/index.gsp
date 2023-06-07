@@ -43,9 +43,32 @@
                 });
             }
 
+            function handleDepositClick(event){
+                if(!confirm("Deseja realmente confirmar o pagamento?")){
+                    return
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/payment/confirmPayment/",
+                    data: {
+                        id: $(event.target).data("id"),
+                        deposit: true
+                    },
+                    dataType: "json",
+                    success: (data) => {
+                        alert(data.message)
+                        location.reload()
+                    },
+                    error: (error) => {
+                        alert(error.responseJSON.message)
+                    }
+                });
+            }
+
             $(document).ready(() => {
                 $("#createPaymentForm").on("submit", handleCreateSubmit)
                 $("#restorePaymentForm").on("submit", handleRestoreSubmit)
+                $(".deposit-button").on("click", handleDepositClick)
 
                 $('#restorePaymentModal').on('show.bs.modal', (event) => {
                     const button = $(event.relatedTarget)
@@ -100,6 +123,11 @@
                             </button>
                         </g:if>
                         <g:else>
+                            <g:if test="${payment.status == cobra.payment.PaymentStatus.PENDING}">
+                                <button type="button" data-id="${payment.id}" class="deposit-button btn btn-primary">
+                                    Dinheiro
+                                </button>
+                            </g:if>
                             <g:link action="show" id="${payment.id}">
                                 Editar
                             </g:link>
