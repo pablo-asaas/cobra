@@ -19,9 +19,7 @@ class UserController {
     }
 
     def save() {
-        println params
-        println getCurrentCustomer()
-        userService.save(getCurrentCustomer(), Map params)
+        userService.save(getCurrentCustomer(), params)
         redirect(view: 'create')
     }
 
