@@ -1,14 +1,12 @@
 package cobra
 
 import cobra.user.Role
-import grails.gorm.transactions.Transactional
 
 class BootStrap {
 
     def init = {
         verifyRoleUser()
     }
-    @Transactional
     void verifyRoleUser() {
         Role role = Role.find{authority == "ROLE_USER"}
 
