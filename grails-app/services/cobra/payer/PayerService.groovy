@@ -30,7 +30,7 @@ class PayerService {
 
 
     public void save(Customer customer, Map params){
-        validateParams(params)
+        validateParams(params, customer)
 
         Payer payer = new Payer()
         payer.name = params.name
@@ -49,7 +49,7 @@ class PayerService {
     }
 
     public void update(Customer customer, Long id, Map params){
-        validateParams(params)
+        validateParams(params, customer)
 
         Payer payer = findById(customer, id)
         payer.name = params.name
@@ -69,7 +69,7 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
-    private void validateParams(Map params) {
+    private void validateParams(Map params, Customer customer) {
         if (!params.name) {
             throw new BusinessException("Nome é obrigatório")
         }
@@ -79,17 +79,17 @@ class PayerService {
         if (!params.phoneNumber) {
             throw new BusinessException("Numero de Telefone é obrigatório")
         }
-        validateCpfCnpj(params.cpfCnpj)
+        validateCpfCnpj(params.cpfCnpj, customer)
     }
 
-    private void validateCpfCnpj(String cpfCnpj) {
+    private void validateCpfCnpj(String cpfCnpj, Customer customer) {
         if (!cpfCnpj) {
             throw new BusinessException("CPF/CNPJ é obrigatório")
         }
         if (!CpfCnpjValidator.validate(cpfCnpj)) {
             throw new BusinessException("CPF/CNPJ inválido")
         }
-        if (Payer.query([exists: true, cpfCnpj: cpfCnpj]).get().asBoolean()) {
+        if (Payer.query([exists: true, cpfCnpj: cpfCnpj, customer: customer]).get().asBoolean()) {
             throw new BusinessException("CPF/CNPJ já cadastrado")
         }
     }
