@@ -52,4 +52,12 @@ class PaymentNotificationService {
         mailSenderService.send(payment.customer.email, subject, contentBody)
         mailSenderService.send(payment.payer.email, subject, contentBody)
     }
+
+    public void onPaid(Payment payment) {
+        String subject = "Cobrança paga"
+        String contentBody = "A cobrança ${payment.publicId} foi paga"
+
+        mailSenderService.send(payment.customer.email, subject, contentBody)
+        mailSenderService.send(payment.payer.email, subject, contentBody)
+    }
 }
