@@ -7,7 +7,7 @@
 
 <body>
     <h1>Pagadores</h1>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPayerModal">Adicionar</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPayerModal">Adicionar</button>
     <g:link action="index">
         <button type="button" class="btn btn-primary">Ativos</button>
     </g:link>
@@ -20,9 +20,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="newPayerModalLabel">Adicionar pagador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <g:form name="createPayerForm" method="POST" url="[controller: 'payer', action: 'save']">

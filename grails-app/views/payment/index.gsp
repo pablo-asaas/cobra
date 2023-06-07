@@ -71,7 +71,7 @@
             Excluídas
         </g:link>
 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPaymentModal">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPaymentModal">
             Nova cobrança
         </button>
 
@@ -95,7 +95,7 @@
                     <div class="col">${payment.createdAt}</div>
                     <div class="col">
                         <g:if test="${payment.deleted}">
-                            <button type="button" data-id="${payment.id}" data-due-date="${dateFieldFormat([value: payment.dueDate])}" class="btn btn-primary" data-toggle="modal" data-target="#restorePaymentModal">
+                            <button type="button" data-id="${payment.id}" data-due-date="${dateFieldFormat([value: payment.dueDate])}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#restorePaymentModal">
                                 Restaurar
                             </button>
                         </g:if>
@@ -114,9 +114,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createPaymentModalLabel">Nova cobrança</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
                         <form method="POST" id="createPaymentForm">
@@ -151,9 +149,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="restorePaymentModalLabel">Restaurar cobrança</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
                         <form method="POST" id="restorePaymentForm">
