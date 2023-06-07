@@ -5,7 +5,6 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
 
-@GrailsCompileStatic
 @EqualsAndHashCode(includes='username')
 @ToString(includes='username', includeNames=true, includePackage=false)
 class User implements Serializable {
@@ -31,5 +30,18 @@ class User implements Serializable {
 
     static mapping = {
 	    password column: '`password`'
+    }
+
+    static namedQueries = {
+        query { Map search ->
+            if (search.exists) {
+                projections {
+                    property "id"
+                }
+            }
+            if (search.containsKey("username")) {
+                eq("username", search.username)
+            }
+        }
     }
 }
