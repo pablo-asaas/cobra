@@ -2,7 +2,6 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <asset:javascript src="application.js"/>
     <title>Index</title>
 </head>
 
