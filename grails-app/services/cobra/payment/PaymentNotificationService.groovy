@@ -37,6 +37,14 @@ class PaymentNotificationService {
         mailSenderService.send(payment.payer.email, subject, contentBody)
     }
 
+    public void onRestore(Payment payment) {
+        String subject = "Cobrança restaurada"
+        String contentBody = "A cobrança ${payment.publicId} foi restaurada"
+
+        mailSenderService.send(payment.customer.email, subject, contentBody)
+        mailSenderService.send(payment.payer.email, subject, contentBody)
+    }
+
     public void onOverdue(Payment payment) {
         String subject = "Cobrança vencida"
         String contentBody = "A cobrança ${payment.publicId} está vencida"

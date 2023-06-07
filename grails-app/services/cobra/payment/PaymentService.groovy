@@ -22,6 +22,11 @@ class PaymentService {
         return Payment.query([customer: customer]).list()
     }
 
+    @ReadOnly
+    public List<Payment> findAllDeleted(Customer customer) {
+        return Payment.query([customer: customer, onlyDeleted: true]).list()
+    }
+
     public Payment findById(Customer customer, Long id) {
         Payment payment = Payment.query([customer: customer, id: id]).get()
 
@@ -36,7 +41,7 @@ class PaymentService {
         validateSaveParams(customer, params)
 
         Payment payment = new Payment()
-        Payer payer = payerService.findById(params.payer as Long)
+        Payer payer = payerService.findById(customer, params.payer as Long)
 
         payment.customer = customer
         payment.payer = payer
@@ -82,6 +87,32 @@ class PaymentService {
         payment.save(failOnError: true)
 
         paymentNotificationService.onDelete(payment)
+    }
+
+    public void restore(Customer customer, Long id, Map params) {
+        Payment payment = Payment.query([customer: customer, id: id, onlyDeleted: true]).get()
+
+        if (!payment) {
+            throw new ResourceNotFoundException("Cobrança não encontrada")
+        }
+
+        if (!params.dueDate) {
+            throw new BusinessException("É obrigatório informar uma nova data de vencimento")
+        }
+
+        Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
+
+        if (parsedDueDate <= DateUtils.getEndOfDay()) {
+            throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
+        }
+
+        payment.deleted = false
+        payment.dueDate = parsedDueDate
+        payment.status = PaymentStatus.PENDING
+
+        payment.save(failOnError: true)
+
+        paymentNotificationService.onRestore(payment)
     }
 
     public void processToOverdue() {
