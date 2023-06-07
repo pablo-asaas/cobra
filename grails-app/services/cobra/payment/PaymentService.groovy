@@ -75,6 +75,10 @@ class PaymentService {
             payment.value = new BigDecimal(params.value)
         }
 
+        if (payment.status == PaymentStatus.OVERDUE) {
+            payment.status = PaymentStatus.PENDING
+        }
+
         payment.save(failOnError: true)
 
         paymentNotificationService.onUpdate(payment)
