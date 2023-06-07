@@ -31,7 +31,7 @@ class PaymentService {
         Payment payment = Payment.query([customer: customer, id: id]).get()
 
         if (!payment) {
-            throw new RuntimeException("Pagamento não encontrado")
+            throw new ResourceNotFoundException("Cobrança não encontrada")
         }
 
         return payment
@@ -64,7 +64,7 @@ class PaymentService {
         if (params.dueDate) {
             Date updatedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
 
-            if (updatedDueDate <= new Date()) {
+            if (updatedDueDate <= DateUtils.getEndOfDay()) {
                 throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
             }
 
@@ -175,7 +175,7 @@ class PaymentService {
 
         Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
 
-        if (parsedDueDate <= new Date()) {
+        if (parsedDueDate <= DateUtils.getEndOfDay()) {
             throw new BusinessException("A data de vencimento não pode ser anterior ou igual ao dia de hoje")
         }
     }
