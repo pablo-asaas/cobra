@@ -21,7 +21,7 @@
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
+            <div class="container">
                 <span class="navbar-brand mb-0 h1">Cobra</span>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
