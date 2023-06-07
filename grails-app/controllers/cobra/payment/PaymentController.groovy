@@ -47,7 +47,7 @@ class PaymentController {
     def delete(Long id) {
         try {
             paymentService.delete(getCurrentCustomer(), id)
-            render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+            render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.OK.code)
         } catch (ResourceNotFoundException exception) {
             render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
         } catch (Exception exception) {
@@ -59,7 +59,7 @@ class PaymentController {
     def update() {
         try {
             paymentService.update(getCurrentCustomer(), params.id as Long, params)
-            render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+            render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.OK.code)
         } catch (ResourceNotFoundException exception) {
             render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
         } catch (BusinessException exception) {
