@@ -7,43 +7,45 @@
     </head>
 
     <body>
-        <div class="card p-3 mt-5 mx-auto" style="max-width: 576px">
-            <h1 class="mb-3 h2">Comprovante de pagamento</h1>
-            <div class="d-flex justify-content-between">
-                <strong>Data de pagamento</strong>
-                <span>${payment.paymentDate}</span>
-            </div>
-            <div class="d-flex justify-content-between">
-                <strong>Valor</strong>
-                <span>R$ ${CurrencyUtils.format(payment.value)}</span>
-            </div>
-            <div class="d-flex justify-content-between">
-                <strong>Tipo de pagamento</strong>
-                <span>${payment.type}</span>
-            </div>
-            <div class="d-flex justify-content-between">
-                <strong>Data de vencimento</strong>
-                <span>${payment.dueDate}</span>
-            </div>
+        <div class="card mt-5 mx-auto" style="max-width: 576px">
+            <div class="card-body">
+                <h1 class="mb-3 h2">Comprovante de pagamento</h1>
+                <div class="d-flex justify-content-between">
+                    <strong>Data de pagamento</strong>
+                    <span>${payment.paymentDate}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <strong>Valor</strong>
+                    <span>R$ ${CurrencyUtils.format(payment.value)}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <strong>Tipo de pagamento</strong>
+                    <span>${payment.type}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <strong>Data de vencimento</strong>
+                    <span>${payment.dueDate}</span>
+                </div>
 
-            <h2 class="h3 mt-3">Dados do pagador</h2>
-            <div class="d-flex justify-content-between">
-                <strong>Nome</strong>
-                <span>${payment.payer.name}</span>
-            </div>
-            <div class="d-flex justify-content-between">
-                <strong>CPF/CNPJ</strong>
-                <span>${payment.payer.cpfCnpj}</span>
-            </div>
+                <h2 class="h3 mt-3">Dados do pagador</h2>
+                <div class="d-flex justify-content-between">
+                    <strong>Nome</strong>
+                    <span>${payment.payer.name}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <strong>CPF/CNPJ</strong>
+                    <span>${payment.payer.cpfCnpj}</span>
+                </div>
 
-            <h2 class="h3 mt-3">Dados do cobrador</h2>
-            <div class="d-flex justify-content-between">
-                <strong>Nome</strong>
-                <span>${payment.customer.name}</span>
-            </div>
-            <div class="d-flex justify-content-between">
-                <strong>CPF/CNPJ</strong>
-                <span>${payment.customer.cpfCnpj}</span>
+                <h2 class="h3 mt-3">Dados do cobrador</h2>
+                <div class="d-flex justify-content-between">
+                    <strong>Nome</strong>
+                    <span>${payment.customer.name}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <strong>CPF/CNPJ</strong>
+                    <span>${payment.customer.cpfCnpj}</span>
+                </div>
             </div>
         </div>
     </body>
