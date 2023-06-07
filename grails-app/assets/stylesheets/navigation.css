@@ -1,0 +1,7 @@
+.navigation-link {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.navigation-link:hover {
+    color: rgba(0, 0, 0, 0.85);
+}
