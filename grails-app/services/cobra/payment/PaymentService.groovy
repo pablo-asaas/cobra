@@ -146,6 +146,20 @@ class PaymentService {
         return payment
     }
 
+    public confirmDeposit(Customer customer, Long id) {
+        Payment payment = findById(customer, id)
+
+        if (payment.status != PaymentStatus.PENDING) {
+            throw new BusinessException("Só é possível confirmar um pagamento se estiver pendente")
+        }
+
+        payment.status = PaymentStatus.PAID
+        payment.paymentDate = new Date()
+        payment.save(failOnError: true)
+
+        paymentNotificationService.onPaid(payment)
+    }
+
     private void validateSaveParams(Customer customer, Map params) {
         if (!customer) {
             throw new BusinessException("É obrigatório informar um cliente")
