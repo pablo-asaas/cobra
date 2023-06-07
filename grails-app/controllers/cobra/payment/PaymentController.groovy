@@ -18,6 +18,10 @@ class PaymentController {
     static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE']
 
     def index() {
+        if (params.deleted) {
+            return [paymentList: paymentService.findAllDeleted(getCurrentCustomer())]
+        }
+
         return [paymentList: paymentService.findAll(getCurrentCustomer())]
     }
 
@@ -64,6 +68,20 @@ class PaymentController {
             render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
         } catch (BusinessException exception) {
             render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
+        } catch (Exception exception) {
+            exception.printStackTrace()
+            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
+        }
+    }
+
+    def restore() {
+        try {
+            paymentService.restore(getCurrentCustomer(), params.id as Long, params)
+            render([message: "Pagamento restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        } catch (BusinessException exception) {
+            render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
+        } catch (ResourceNotFoundException exception) {
+            render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
         } catch (Exception exception) {
             exception.printStackTrace()
             render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
