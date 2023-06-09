@@ -1,5 +1,3 @@
-<%@ page import="cobra.util.CurrencyUtils" %>
-
 <html>
     <head>
         <meta name="layout" content="main"/>
@@ -12,19 +10,27 @@
                 <h1 class="mb-3 h2">Comprovante de pagamento</h1>
                 <div class="d-flex justify-content-between">
                     <strong>Data de pagamento</strong>
-                    <span>${payment.paymentDate}</span>
+                    <span>
+                        <g:dateFormat value="${payment.paymentDate}"/>
+                    </span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <strong>Valor</strong>
-                    <span>R$ ${CurrencyUtils.format(payment.value)}</span>
+                    <span>
+                        <g:currencyFormat value="${payment.value}"/>
+                    </span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <strong>Tipo de pagamento</strong>
-                    <span>${payment.type}</span>
+                    <span>
+                        <g:message code="PaymentType.${payment.type}"/>
+                    </span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <strong>Data de vencimento</strong>
-                    <span>${payment.dueDate}</span>
+                    <span>
+                        <g:dateFormat value="${payment.dueDate}"/>
+                    </span>
                 </div>
 
                 <h2 class="h3 mt-3">Dados do pagador</h2>
@@ -34,7 +40,9 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <strong>CPF/CNPJ</strong>
-                    <span>${payment.payer.cpfCnpj}</span>
+                    <span>
+                        <g:cpfCnpjFormat value="${payment.payer.cpfCnpj}"/>
+                    </span>
                 </div>
 
                 <h2 class="h3 mt-3">Dados do cobrador</h2>
@@ -44,7 +52,9 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <strong>CPF/CNPJ</strong>
-                    <span>${payment.customer.cpfCnpj}</span>
+                    <span>
+                        <g:cpfCnpjFormat value="${payment.customer.cpfCnpj}"/>
+                    </span>
                 </div>
             </div>
         </div>
