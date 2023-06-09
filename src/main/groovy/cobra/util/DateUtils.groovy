@@ -1,5 +1,7 @@
 package cobra.util
 
+import java.text.SimpleDateFormat
+
 class DateUtils {
 
     public static Date getStartOfDay() {
@@ -20,5 +22,14 @@ class DateUtils {
         calendar.set(Calendar.SECOND, 59)
 
         return calendar.getTime()
+    }
+
+    public static String format(Date date) {
+        try {
+            return new SimpleDateFormat("dd/MM/yyyy").format(date)
+        } catch (Exception exception) {
+            exception.printStackTrace()
+            return ''
+        }
     }
 }
