@@ -18,7 +18,7 @@
                 </g:link>
 
                 <g:link action="index" params="[deleted: true]" class="btn btn-light border-start">
-                    Inativos
+                    Excluídos
                 </g:link>
             </div>
             <button type="button" class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#newPayerModal">
@@ -26,41 +26,56 @@
             </button>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>CPF/CNPJ</th>
-                    <th>Celular</th>
-                    <th>Criado em</th>
-                    <th>Acões</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="container-fluid border rounded">
+            <div class="row header-row fw-bold border-bottom py-3">
+                <div class="col">ID</div>
+                <div class="col">Nome</div>
+                <div class="col">Email</div>
+                <div class="col">CPF/CNPJ</div>
+                <div class="col">Celular</div>
+                <div class="col">Criado em</div>
+                <div class="col">Ações</div>
+            </div>
+            <g:if test="${payerList.isEmpty()}">
+                <div class="py-3 text-center">
+                    <g:if test="${params.deleted}">
+                        Você não possui pagadores excluídos
+                    </g:if>
+                    <g:else>
+                        Você não possui pagadores ativos
+                    </g:else>
+                </div>
+            </g:if>
+            <g:else>
                 <g:each var="payer" in="${payerList}">
-                    <tr>
-                        <td>${payer.id}</td>
-                        <td>${payer.name}</td>
-                        <td>${payer.email}</td>
-                        <td>${payer.cpfCnpj}</td>
-                        <td>${payer.phoneNumber}</td>
-                        <td>${payer.createdAt}</td>
-                        <td>
-                            <g:if test="${payer.deleted}">
-                                <button type="button" data-id="${payer.id}" class="restore-button btn btn-primary">Restaurar</button>
-                            </g:if>
-                            <g:else>
-                                <g:link action="show" id="${payer.id}">
-                                    <button class="btn btn-primary">Editar</button>
-                                </g:link>
-                            </g:else>
-                        </td>
-                    </tr>
+                    <div class="row data-row">
+                        <div class="col">${payer.id}</div>
+                        <div class="col">${payer.name}</div>
+                        <div class="col">${payer.email}</div>
+                        <div class="col">${payer.cpfCnpj}</div>
+                        <div class="col">${payer.phoneNumber}</div>
+                        <div class="col">${payer.createdAt}</div>
+                        <div class="col actions-col">
+                            <div class="float-end">
+                                <g:if test="${payer.deleted}">
+                                    <button type="button" data-id="${payer.id}" class="restore-button btn btn-light" title="Restaurar">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                </g:if>
+                                <g:else>
+                                    <g:link action="show" id="${payer.id}" class="btn btn-light" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </g:link>
+                                    <g:link action="delete" id="${payer.id}" class="btn btn-light" title="Excluir">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </g:link>
+                                </g:else>
+                            </div>
+                        </div>
+                    </div>
                 </g:each>
-            </tbody>
-        </table>
+            </g:else>
+        </div>
     </div>
     <div class="modal fade" id="newPayerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
