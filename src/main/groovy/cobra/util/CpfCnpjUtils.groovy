@@ -2,12 +2,15 @@ package cobra.util
 
 class CpfCnpjUtils {
 
+    private static final CPF_LENGTH = 11
+    private static final CNPJ_LENGTH = 14
+
     public static String formatForPublicVisualization(String cpfCnpj) {
-        if (cpfCnpj.length() == 11) {
+        if (cpfCnpj.length() == CPF_LENGTH) {
             return cpfFormat(cpfCnpj)
         }
 
-        if (cpfCnpj.length() == 14) {
+        if (cpfCnpj.length() == CNPJ_LENGTH) {
             return cnpjFormat(cpfCnpj)
         }
 
