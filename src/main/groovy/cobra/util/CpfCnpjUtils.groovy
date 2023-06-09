@@ -1,5 +1,7 @@
 package cobra.util
 
+import javax.swing.text.MaskFormatter
+
 class CpfCnpjUtils {
 
     private static final CPF_LENGTH = 11
@@ -11,7 +13,10 @@ class CpfCnpjUtils {
         }
 
         if (cpfCnpj.length() == CNPJ_LENGTH) {
-            return "${cpfCnpj.substring(0, 2)}.${cpfCnpj.substring(2, 5)}.${cpfCnpj.substring(5, 8)}/${cpfCnpj.substring(8, 12)}-${cpfCnpj.substring(12, 14)}"
+            MaskFormatter cnpjMaskFormatter = new MaskFormatter("##.###.###/####-##")
+            cnpjMaskFormatter.setValueContainsLiteralCharacters(false);
+
+            return cnpjMaskFormatter.valueToString(cpfCnpj)
         }
 
         return cpfCnpj
