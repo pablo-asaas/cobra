@@ -22,7 +22,7 @@
                 </g:link>
             </div>
             <button type="button" class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#newPayerModal">
-                Adicionar
+                Novo Pagador
             </button>
         </div>
 
@@ -59,16 +59,16 @@
                             <div class="float-end">
                                 <g:if test="${payer.deleted}">
                                     <button type="button" data-id="${payer.id}" class="restore-button btn btn-light" title="Restaurar">
-                                        <i class="bi bi-check-lg"></i>
+                                        <i class="bi bi-arrow-counterclockwise"></i>
                                     </button>
                                 </g:if>
                                 <g:else>
                                     <g:link action="show" id="${payer.id}" class="btn btn-light" title="Editar">
                                         <i class="bi bi-pencil-fill"></i>
                                     </g:link>
-                                    <g:link action="delete" id="${payer.id}" class="btn btn-light" title="Excluir">
+                                    <button data-id="${payer.id}" class="btn btn-light delete-button" title="Excluir">
                                         <i class="bi bi-trash-fill"></i>
-                                    </g:link>
+                                    </button>
                                 </g:else>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
     </div>
 <g:javascript>
     function handleFormSubmit(event){
-        event.preventDefault();
+        event.preventDefault()
 
         $.ajax({
             type: "POST",
@@ -123,10 +123,10 @@
             error: (error) => {
                 alert(error.responseJSON.message)
             }
-        });
+        })
     }
-    function restorePayer(event){
-        const id = $(event.target).data("id")
+    function handleRestoreClick(event){
+        const id = $(event.delegateTarget).data("id")
 
         $.ajax({
             type: "POST",
@@ -139,12 +139,34 @@
             error: (error) => {
                 alert(error.responseJSON.message)
             }
-        });
+        })
+    }
+    function handleDeleteClick(event){
+        event.preventDefault()
+
+        if (!confirm("Deseja realmente excluir este pagador?")) {
+            return
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/payer/delete",
+            data: {id: $(event.delegateTarget).data("id")},
+            dataType: "json",
+            success: (data) => {
+                alert(data.message)
+                location.reload()
+            },
+            error: (error) => {
+                alert(error.responseJSON.message)
+            }
+        })
     }
     $(document).ready(() => {
         $("#createPayerForm").on("submit", handleFormSubmit)
-        $(".restore-button").on("click", restorePayer)
-    });
+        $(".restore-button").on("click", handleRestoreClick)
+        $(".delete-button").on("click", handleDeleteClick)
+    })
 </g:javascript>
 </body>
 </html>
