@@ -17,10 +17,6 @@ class UserController {
         return [userList: userService.findAll(getCurrentCustomer()), currentUser: springSecurityService.getCurrentUser().username]
     }
 
-    def create() {
-        return [:]
-    }
-
     def save() {
         try {
             userService.save(getCurrentCustomer(), params)
