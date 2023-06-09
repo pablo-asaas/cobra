@@ -15,30 +15,48 @@
                 Voltar
             </g:link>
         </div>
-        <h1>Editar pagador</h1>
-        <g:form name="updatePayerForm" method="PUT" url="[controller: 'payer', action: 'update']">
-            <fieldset class="form">
-                <g:field name="id" value="${payer.id}" required="true" type="hidden"/>
+        <h1 class="mb-4">Editar pagador</h1>
 
-                <label class="col-form-label" for="name">Name</label>
-                <g:field class="form-control" type="text" name="name" value="${payer.name}" required="true"/>
+        <div class="container-fluid border rounded py-3">
+            <form id="updatePayerForm" method="PUT">
+                <g:hiddenField name="id" value="${payer.id}"/>
 
-                <label class="col-form-label" for="email">Email</label>
-                <g:field class="form-control" type="email" name="email" value="${payer.email}" required="true"/>
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="id" value="${payer.id}" disabled="true"/>
+                    <label class="col-form-label" for="id">ID</label>
+                </div>
 
-                <label class="col-form-label" for="cpfCnpj">Cpf/Cnpj</label>
-                <g:field class="form-control" type="text" name="cpfCnpj" value="${payer.cpfCnpj}" maxLength="14" required="true"/>
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="name" value="${payer.name}"/>
+                    <label class="col-form-label" for="name">Name</label>
+                </div>
 
-                <label class="col-form-label" for="phoneNumber">Celular</label>
-                <g:field class="form-control" type="text" name="phoneNumber" value="${payer.phoneNumber}" maxLength="13" required="true"/>
-            </fieldset>
-            <fieldset>
-                <g:link action="delete"  id="${payer.id}">
-                    <button type="button" class="btn btn-danger">Deletar</button>
-                </g:link>
-                <g:submitButton name="update" class="btn btn-primary" value="Salvar"/>
-            </fieldset>
-        </g:form>
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="email" name="email" value="${payer.email}"/>
+                    <label class="col-form-label" for="email">Email</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="cpfCnpj" value="${payer.cpfCnpj}" maxLength="14"/>
+                    <label class="col-form-label" for="cpfCnpj">CPF/CNPJ</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="phoneNumber" value="${payer.phoneNumber}" maxLength="13"/>
+                    <label class="col-form-label" for="phoneNumber">Celular</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <span id="createdAt" class="form-control readonly-control">${payer.createdAt}</span>
+                    <label for="createdAt">Criado em</label>
+                </div>
+
+                <div class="d-flex w-100 justify-content-end">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+
+            </form>
+        </div>
     </div>
 <g:javascript>
     function handleFormSubmit(event){

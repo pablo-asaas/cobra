@@ -79,7 +79,8 @@ class PayerService {
         if (!params.phoneNumber) {
             throw new BusinessException("Numero de Telefone é obrigatório")
         }
-        validateCpfCnpj(params.cpfCnpj, customer)
+        //validateCpfCnpj(params.cpfCnpj, customer)
+        // bug ao atualizar
     }
 
     private void validateCpfCnpj(String cpfCnpj, Customer customer) {
