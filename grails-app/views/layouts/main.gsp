@@ -30,20 +30,57 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/payer">Pagadores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/payment">Cobranças</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user">Usuários</a>
-                        </li>
+                        <sec:ifLoggedIn>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/payer">Pagadores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/payment">Cobranças</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user">Usuários</a>
+                            </li>
+                        </sec:ifLoggedIn>
+                    </ul>
+                    <ul class="navbar-nav ms-md-auto">
+                        <sec:ifLoggedIn>
+                            <li class="nav-item">
+                                <g:link class="logout-button nav-link">Sair</g:link>
+                            </li>
+                        </sec:ifLoggedIn>
+                        <sec:ifNotLoggedIn>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Entrar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/register">Registrar</a>
+                            </li>
+                        </sec:ifNotLoggedIn>
                     </ul>
                 </div>
             </div>
         </nav>
 
         <g:layoutBody/>
+
+    <g:javascript>
+        function logout(event){
+            event.preventDefault()
+
+            $.ajax({
+                type: "POST",
+                url: "/logout",
+                success: () => {
+                    window.location = "/"
+                },
+                error: (error) => {
+                    alert(error.responseJSON.message)
+                }
+            })
+        }
+        $(document).ready(() => {
+            $(".logout-button").on("click", logout)
+        })
+</g:javascript>
     </body>
 </html>
