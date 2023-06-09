@@ -171,16 +171,16 @@
                                     </g:if>
                                     <g:else>
                                         <g:if test="${payment.status == PaymentStatus.PAID}">
-                                            <g:if test="${payment.status == cobra.payment.PaymentStatus.PENDING}">
-                                <button type="button" data-id="${payment.id}" class="deposit-button btn btn-primary">
-                                    Dinheiro
-                                </button>
-                            </g:if>
-                            <g:link action="show" controller="receipt" target="_blank" id="${payment.publicId}" class="btn btn-light" title="Comprovante">
+                                            <g:link action="show" controller="receipt" target="_blank" id="${payment.publicId}" class="btn btn-light" title="Comprovante">
                                                 <i class="bi bi-receipt"></i>
                                             </g:link>
                                         </g:if>
                                         <g:else>
+                                            <g:if test="${payment.status == PaymentStatus.PENDING}">
+                                                <button type="button" data-id="${payment.id}" class="deposit-button btn btn-light" title="Confirmar pagamento">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                            </g:if>
                                             <g:link action="show" id="${payment.id}" class="btn btn-light" title="Editar">
                                                 <i class="bi bi-pencil-fill"></i>
                                             </g:link>
