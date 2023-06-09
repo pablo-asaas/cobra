@@ -4,8 +4,8 @@ import javax.swing.text.MaskFormatter
 
 class CpfCnpjUtils {
 
-    private static final CPF_LENGTH = 11
-    private static final CNPJ_LENGTH = 14
+    private static final Integer CPF_LENGTH = 11
+    private static final Integer CNPJ_LENGTH = 14
 
     public static String formatForPublicVisualization(String cpfCnpj) {
         if (cpfCnpj.length() == CPF_LENGTH) {
