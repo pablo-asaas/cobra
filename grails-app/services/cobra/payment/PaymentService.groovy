@@ -2,6 +2,7 @@ package cobra.payment
 
 import cobra.customer.Customer
 import cobra.exception.BusinessException
+import cobra.exception.ResourceNotFoundException
 import cobra.payer.Payer
 import cobra.payer.PayerService
 import cobra.util.DateUtils
@@ -21,11 +22,16 @@ class PaymentService {
         return Payment.query([customer: customer]).list()
     }
 
+    @ReadOnly
+    public List<Payment> findAllDeleted(Customer customer) {
+        return Payment.query([customer: customer, onlyDeleted: true]).list()
+    }
+
     public Payment findById(Customer customer, Long id) {
         Payment payment = Payment.query([customer: customer, id: id]).get()
 
         if (!payment) {
-            throw new RuntimeException("Pagamento não encontrado")
+            throw new ResourceNotFoundException("Cobrança não encontrada")
         }
 
         return payment
@@ -35,7 +41,7 @@ class PaymentService {
         validateSaveParams(customer, params)
 
         Payment payment = new Payment()
-        Payer payer = payerService.findById(params.payer as Long)
+        Payer payer = payerService.findById(customer, params.payer as Long)
 
         payment.customer = customer
         payment.payer = payer
@@ -58,7 +64,7 @@ class PaymentService {
         if (params.dueDate) {
             Date updatedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
 
-            if (updatedDueDate <= new Date()) {
+            if (updatedDueDate <= DateUtils.getEndOfDay()) {
                 throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
             }
 
@@ -67,6 +73,10 @@ class PaymentService {
 
         if (params.value) {
             payment.value = new BigDecimal(params.value)
+        }
+
+        if (payment.status == PaymentStatus.OVERDUE) {
+            payment.status = PaymentStatus.PENDING
         }
 
         payment.save(failOnError: true)
@@ -81,6 +91,32 @@ class PaymentService {
         payment.save(failOnError: true)
 
         paymentNotificationService.onDelete(payment)
+    }
+
+    public void restore(Customer customer, Long id, Map params) {
+        Payment payment = Payment.query([customer: customer, id: id, onlyDeleted: true]).get()
+
+        if (!payment) {
+            throw new ResourceNotFoundException("Cobrança não encontrada")
+        }
+
+        if (!params.dueDate) {
+            throw new BusinessException("É obrigatório informar uma nova data de vencimento")
+        }
+
+        Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
+
+        if (parsedDueDate <= DateUtils.getEndOfDay()) {
+            throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
+        }
+
+        payment.deleted = false
+        payment.dueDate = parsedDueDate
+        payment.status = PaymentStatus.PENDING
+
+        payment.save(failOnError: true)
+
+        paymentNotificationService.onRestore(payment)
     }
 
     public void processToOverdue() {
@@ -99,6 +135,33 @@ class PaymentService {
 
             paymentNotificationService.onOverdue(payment)
         }
+    }
+
+    @ReadOnly
+    public Payment getPaymentReceipt(String publicId) {
+        Payment payment = Payment.query([publicId: publicId,
+                                         ignoreCustomer: true,
+                                         status: PaymentStatus.PAID]).get()
+
+        if (!payment) {
+            throw new ResourceNotFoundException("Comprovante não encontrado")
+        }
+
+        return payment
+    }
+
+    public confirmDeposit(Customer customer, Long id) {
+        Payment payment = findById(customer, id)
+
+        if (payment.status != PaymentStatus.PENDING) {
+            throw new BusinessException("Só é possível confirmar um pagamento se estiver pendente")
+        }
+
+        payment.status = PaymentStatus.PAID
+        payment.paymentDate = new Date()
+        payment.save(failOnError: true)
+
+        paymentNotificationService.onPaid(payment)
     }
 
     private void validateSaveParams(Customer customer, Map params) {
@@ -130,7 +193,7 @@ class PaymentService {
 
         Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
 
-        if (parsedDueDate <= new Date()) {
+        if (parsedDueDate <= DateUtils.getEndOfDay()) {
             throw new BusinessException("A data de vencimento não pode ser anterior ou igual ao dia de hoje")
         }
     }

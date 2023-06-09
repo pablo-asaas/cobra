@@ -1,0 +1,13 @@
+.header-row {
+    background-color: var(--cobra-light) !important;
+}
+
+.data-row .col {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.data-row .actions-col {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}

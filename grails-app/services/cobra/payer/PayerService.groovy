@@ -3,6 +3,7 @@ package cobra.payer
 import cobra.customer.Customer
 import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
+import cobra.validator.CpfCnpjValidator
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 import org.apache.commons.validator.routines.EmailValidator
@@ -30,7 +31,7 @@ class PayerService {
 
 
     public void save(Customer customer, Map params){
-        validateParams(params)
+        validateParams(params, customer)
 
         Payer payer = new Payer()
         payer.name = params.name
@@ -57,7 +58,7 @@ class PayerService {
     }
 
     public void update(Customer customer, Long id, Map params){
-        validateParams(params)
+        validateParams(params, customer)
 
         Payer payer = findById(customer, id)
         payer.name = params.name
@@ -85,7 +86,7 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
-    private void validateParams(Map params) {
+    private void validateParams(Map params, Customer customer) {
         if (!params.name) {
             throw new BusinessException("Nome é obrigatório")
         }
@@ -94,9 +95,6 @@ class PayerService {
         }
         if (!(new EmailValidator(false).isValid(params.email as String))) {
             throw new BusinessException("Email inválido")
-        }
-        if (!params.cpfCnpj) {
-            throw new BusinessException("Cpf/Cnpj é obrigatório")
         }
         if (!params.phoneNumber) {
             throw new BusinessException("Numero de Telefone é obrigatório")
@@ -118,6 +116,19 @@ class PayerService {
         }
         if (!params.state) {
             throw new BusinessException("Estado é obrigatório")
+        }
+        validateCpfCnpj(params.cpfCnpj, customer)
+    }
+
+    private void validateCpfCnpj(String cpfCnpj, Customer customer) {
+        if (!cpfCnpj) {
+            throw new BusinessException("CPF/CNPJ é obrigatório")
+        }
+        if (!CpfCnpjValidator.validate(cpfCnpj)) {
+            throw new BusinessException("CPF/CNPJ inválido")
+        }
+        if (Payer.query([exists: true, cpfCnpj: cpfCnpj, customer: customer]).get().asBoolean()) {
+            throw new BusinessException("CPF/CNPJ já cadastrado")
         }
     }
 }

@@ -2,6 +2,8 @@ package cobra.customer
 
 import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
+import cobra.payer.Payer
+import cobra.validator.CpfCnpjValidator
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 import org.apache.commons.validator.routines.EmailValidator
@@ -99,6 +101,19 @@ class CustomerService {
         }
         if (!params.state) {
             throw new BusinessException("Estado é obrigatório")
+        }
+        validateCpfCnpj(params.cpfCnpj)
+    }
+
+    private void validateCpfCnpj(String cpfCnpj) {
+        if (!cpfCnpj) {
+            throw new BusinessException("CPF/CNPJ é obrigatório")
+        }
+        if (!CpfCnpjValidator.validate(cpfCnpj)) {
+            throw new BusinessException("CPF/CNPJ inválido")
+        }
+        if (Customer.countByCpfCnpj(cpfCnpj) > 0) {
+            throw new BusinessException("CPF/CNPJ já cadastrado")
         }
     }
 }

@@ -20,9 +20,21 @@ class Payer extends BasePerson{
             } else if (!Boolean.valueOf(search.includeDeleted)) {
                 eq("deleted", false)
             }
+
             if (search.containsKey("id")) {
                 eq("id", search.id)
             }
+
+            if (search.exists) {
+                projections {
+                    property "id"
+                }
+            }
+
+            if (search.containsKey("cpfCnpj")) {
+                eq('cpfCnpj', search.cpfCnpj)
+            }
+
             if (!search.containsKey("customer")) {
                 throw new RuntimeException("É obrigatório informar um cliente para executar a consulta")
             } else {

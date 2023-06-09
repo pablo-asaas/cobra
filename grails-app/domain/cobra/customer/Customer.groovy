@@ -10,6 +10,10 @@ class Customer extends BasePerson {
                 eq("deleted", false)
             }
 
+            if (search.containsKey("exists") && search.containsKey("cpfCnpj")) {
+                eq("cpfCnpj", search.cpfCnpj)
+            }
+
             if (search.containsKey("id")) {
                 eq("id", search.id)
             }

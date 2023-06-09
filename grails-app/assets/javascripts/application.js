@@ -6,6 +6,5 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery-3.5.1.min
-//= require popper.min
-//= require bootstrap
+//= require bootstrap.bundle.min
 //= require_self

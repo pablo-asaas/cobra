@@ -13,6 +13,7 @@ class Payment extends BaseDomain {
     BigDecimal value
     PaymentStatus status = PaymentStatus.PENDING
     Date dueDate
+    Date paymentDate
 
     static mapping = {
         publicId unique: true, length: 36
@@ -29,6 +30,7 @@ class Payment extends BaseDomain {
                 errors.rejectValue("dueDate", null)
             }
         }
+        paymentDate nullable: true
     }
 
     static namedQueries = {
@@ -41,7 +43,9 @@ class Payment extends BaseDomain {
                 eq("customer", search.customer)
             }
 
-            if (!Boolean.valueOf(search.includeDeleted)) {
+            if (Boolean.valueOf(search.onlyDeleted)) {
+                eq("deleted", true)
+            } else if (!Boolean.valueOf(search.includeDeleted)) {
                 eq("deleted", false)
             }
 
@@ -55,6 +59,10 @@ class Payment extends BaseDomain {
 
             if (search.containsKey("status")) {
                 eq("status", search.status)
+            }
+
+            if (search.containsKey("publicId")) {
+                eq("publicId", search.publicId)
             }
         }
     }
