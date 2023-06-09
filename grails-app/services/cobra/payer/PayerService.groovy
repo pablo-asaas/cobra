@@ -5,6 +5,7 @@ import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
+import org.apache.commons.validator.routines.EmailValidator
 
 @Transactional
 class PayerService {
@@ -90,6 +91,9 @@ class PayerService {
         }
         if (!params.email){
             throw new BusinessException("Email é obrigatório")
+        }
+        if (!(new EmailValidator(false).isValid(params.email as String))) {
+            throw new BusinessException("Email inválido")
         }
         if (!params.cpfCnpj) {
             throw new BusinessException("Cpf/Cnpj é obrigatório")

@@ -4,6 +4,7 @@ import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
+import org.apache.commons.validator.routines.EmailValidator
 
 @Transactional
 class CustomerService {
@@ -49,6 +50,8 @@ class CustomerService {
     }
 
     public void update(Long id, Map params) {
+        validateParams(params)
+
         Customer customer = findById(id)
 
         if (params.name) customer.name = params.name
@@ -72,6 +75,9 @@ class CustomerService {
         }
         if (!params.email){
             throw new BusinessException("Email é obrigatório")
+        }
+        if (!(new EmailValidator(false).isValid(params.email as String))) {
+            throw new BusinessException("Email inválido")
         }
         if (!params.cpfCnpj) {
             throw new BusinessException("Cpf/Cnpj é obrigatório")
