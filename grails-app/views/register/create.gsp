@@ -30,9 +30,11 @@
     </g:form>
     <g:javascript>
         function validateCpfCnpj(event){
-
             const cpfCnpj = $(event.target.cpfCnpj).val()
-            return (cpfCnpj.match(/^([0-9]{11})$/) || cpfCnpj.match(/^([0-9]{14})$/))
+            const isValidCpf = cpfCnpj.match(/^([0-9]{11})$/)
+            const isValidCnpj = cpfCnpj.match(/^([0-9]{14})$/)
+
+            return isValidCpf|| isValidCnpj
         }
         function handleRegisterSubmit(event){
             event.preventDefault();
