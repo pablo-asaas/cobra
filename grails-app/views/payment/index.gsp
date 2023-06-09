@@ -70,10 +70,33 @@
                 })
             }
 
+            function handleDepositClick(event){
+                if(!confirm("Deseja realmente confirmar o pagamento?")){
+                    return
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/payment/confirmPayment/",
+                    data: {
+                        id: $(event.target).data("id"),
+                        deposit: true
+                    },
+                    dataType: "json",
+                    success: (data) => {
+                        alert(data.message)
+                        location.reload()
+                    },
+                    error: (error) => {
+                        alert(error.responseJSON.message)
+                    }
+                });
+            }
+
             $(document).ready(() => {
                 $("#createPaymentForm").on("submit", handleCreateSubmit)
                 $("#restorePaymentForm").on("submit", handleRestoreSubmit)
                 $(".delete-button").on("click", handleDeleteClick)
+                $(".deposit-button").on("click", handleDepositClick)
 
                 $('#restorePaymentModal').on('show.bs.modal', (event) => {
                     const button = $(event.relatedTarget)
@@ -148,7 +171,12 @@
                                     </g:if>
                                     <g:else>
                                         <g:if test="${payment.status == PaymentStatus.PAID}">
-                                            <g:link action="show" controller="receipt" target="_blank" id="${payment.publicId}" class="btn btn-light" title="Comprovante">
+                                            <g:if test="${payment.status == cobra.payment.PaymentStatus.PENDING}">
+                                <button type="button" data-id="${payment.id}" class="deposit-button btn btn-primary">
+                                    Dinheiro
+                                </button>
+                            </g:if>
+                            <g:link action="show" controller="receipt" target="_blank" id="${payment.publicId}" class="btn btn-light" title="Comprovante">
                                                 <i class="bi bi-receipt"></i>
                                             </g:link>
                                         </g:if>

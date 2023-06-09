@@ -1,40 +1,29 @@
-package cobra.authentication
+package cobra.user
 
+import cobra.customer.Customer
 import cobra.exception.BusinessException
-import cobra.user.UserService
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityService
+import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
-import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
-class RegisterController {
+@Secured('ROLE_USER')
+class UserController {
 
-    SpringSecurityService springSecurityService
     UserService userService
-
-    static allowedMethods = [save: 'POST']
+    SpringSecurityService springSecurityService
 
     def index() {
-        if (springSecurityService.isLoggedIn()) {
-            redirect uri: 'index'
-        }
-        else {
-            redirect action: 'create'
-        }
+        return [userList: userService.findAll(getCurrentCustomer()), currentUser: springSecurityService.getCurrentUser().username]
     }
 
     def create() {
-        if (springSecurityService.isLoggedIn()) {
-            redirect uri: 'index'
-            return
-        }
         return [:]
     }
 
     def save() {
         try {
-            userService.save(params)
+            userService.save(getCurrentCustomer(), params)
             render([message: "Usuário criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
         }catch (BusinessException e) {
             e.printStackTrace()
@@ -43,5 +32,10 @@ class RegisterController {
             e.printStackTrace()
             render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.BAD_REQUEST.code)
         }
+    }
+
+    private Customer getCurrentCustomer() {
+        User user = springSecurityService.currentUser
+        return user.customer
     }
 }
