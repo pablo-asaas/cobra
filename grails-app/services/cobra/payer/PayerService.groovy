@@ -106,7 +106,7 @@ class PayerService {
             throw new BusinessException("Nome da Rua é obrigatório")
         }
         if (!params.buildingNumber) {
-            throw new BusinessException("Número é obrigatório")
+            throw new BusinessException("Número da residência é obrigatório")
         }
         if (!params.neighborhood) {
             throw new BusinessException("Bairro é obrigatório")
