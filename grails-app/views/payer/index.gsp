@@ -8,50 +8,60 @@
 </head>
 
 <body>
-    <h1>Pagadores</h1>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPayerModal">Adicionar</button>
-    <g:link action="index">
-        <button type="button" class="btn btn-primary">Ativos</button>
-    </g:link>
-    <g:link action="index" params="[deleted: true]">
-        <button type="button" class="btn btn-primary">Inativos</button>
-    </g:link>
+    <div class="container pt-5 pb-3">
+        <h1 class="mb-4">Pagadores</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>CPF/CNPJ</th>
-                <th>Celular</th>
-                <th>Criado em</th>
-                <th>Acões</th>
-            </tr>
-        </thead>
-        <tbody>
-            <g:each var="payer" in="${payerList}">
+        <div class="mb-4">
+            <div class="btn-group border">
+                <g:link action="index" class="btn btn-light border-end">
+                    Ativos
+                </g:link>
+
+                <g:link action="index" params="[deleted: true]" class="btn btn-light border-start">
+                    Inativos
+                </g:link>
+            </div>
+            <button type="button" class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#newPayerModal">
+                Adicionar
+            </button>
+        </div>
+
+        <table>
+            <thead>
                 <tr>
-                    <td>${payer.id}</td>
-                    <td>${payer.name}</td>
-                    <td>${payer.email}</td>
-                    <td>${payer.cpfCnpj}</td>
-                    <td>${payer.phoneNumber}</td>
-                    <td>${payer.createdAt}</td>
-                    <td>
-                        <g:if test="${payer.deleted}">
-                            <button type="button" data-id="${payer.id}" class="restore-button btn btn-primary">Restaurar</button>
-                        </g:if>
-                        <g:else>
-                            <g:link action="show" id="${payer.id}">
-                                <button class="btn btn-primary">Editar</button>
-                            </g:link>
-                        </g:else>
-                    </td>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>CPF/CNPJ</th>
+                    <th>Celular</th>
+                    <th>Criado em</th>
+                    <th>Acões</th>
                 </tr>
-            </g:each>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <g:each var="payer" in="${payerList}">
+                    <tr>
+                        <td>${payer.id}</td>
+                        <td>${payer.name}</td>
+                        <td>${payer.email}</td>
+                        <td>${payer.cpfCnpj}</td>
+                        <td>${payer.phoneNumber}</td>
+                        <td>${payer.createdAt}</td>
+                        <td>
+                            <g:if test="${payer.deleted}">
+                                <button type="button" data-id="${payer.id}" class="restore-button btn btn-primary">Restaurar</button>
+                            </g:if>
+                            <g:else>
+                                <g:link action="show" id="${payer.id}">
+                                    <button class="btn btn-primary">Editar</button>
+                                </g:link>
+                            </g:else>
+                        </td>
+                    </tr>
+                </g:each>
+            </tbody>
+        </table>
+    </div>
     <div class="modal fade" id="newPayerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
