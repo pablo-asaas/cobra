@@ -19,6 +19,6 @@ class FormattersTagLib {
     }
 
     def cpfCnpjFormat = { attrs, body ->
-        out << body() << CpfCnpjUtils.format(attrs.value)
+        out << body() << CpfCnpjUtils.formatForPublicVisualization(attrs.value)
     }
 }

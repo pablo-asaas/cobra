@@ -45,7 +45,7 @@
                     </span>
                 </div>
 
-                <h2 class="h3 mt-3">Dados do cobrador</h2>
+                <h2 class="h3 mt-3">Dados do recebedor</h2>
                 <div class="d-flex justify-content-between">
                     <strong>Nome</strong>
                     <span>${payment.customer.name}</span>
