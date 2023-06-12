@@ -71,19 +71,25 @@
                         </label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <span id="status" class="form-control readonly-control">${payment.status}</span>
+                        <span id="status" class="form-control readonly-control">
+                            <g:message code="PaymentStatus.${payment.status}"/>
+                        </span>
                         <label for="status">
                             <g:message code="label.payment.status"/>
                         </label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <span id="type" class="form-control readonly-control">${payment.type}</span>
+                        <span id="type" class="form-control readonly-control">
+                            <g:message code="PaymentType.${payment.type}"/>
+                        </span>
                         <label for="type">
                             <g:message code="label.payment.type"/>
                         </label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <span id="createdAt" class="form-control readonly-control">${payment.createdAt}</span>
+                        <span id="createdAt" class="form-control readonly-control">
+                            <g:dateFormat value="${payment.createdAt}"/>
+                        </span>
                         <label for="createdAt">
                             <g:message code="label.createdAt"/>
                         </label>
