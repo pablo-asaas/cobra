@@ -37,7 +37,7 @@
             <div class="mb-4">
                 <g:link action="index" class="text-decoration-none navigation-link">
                     <i class="bi bi-chevron-left"></i>
-                    Voltar
+                    <g:message code="button.back"/>
                 </g:link>
             </div>
 
@@ -48,34 +48,50 @@
                     <g:hiddenField name="id" value="${payment.id}"/>
                     <div class="mb-3 form-floating">
                         <span id="id" class="form-control readonly-control">${payment.publicId}</span>
-                        <label for="id">ID</label>
+                        <label for="id">
+                            <g:message code="label.publicId"/>
+                        </label>
                     </div>
                     <div class="mb-3 form-floating">
                         <span id="payer" class="form-control readonly-control">${payment.payer.name}</span>
-                        <label for="payer">Pagador</label>
+                        <label for="payer">
+                            <g:message code="label.payment.payer"/>
+                        </label>
                     </div>
                     <div class="mb-3 form-floating">
                         <g:field type="number" name="value" min="0.01" step="0.01" class="form-control" value="${payment.value}" placeholder="Valor"/>
-                        <label for="value">Valor</label>
+                        <label for="value">
+                            <g:message code="label.payment.value"/>
+                        </label>
                     </div>
                     <div class="mb-3 form-floating">
                         <g:field type="date" name="dueDate" class="form-control" value="${dateFieldFormat([value: payment.dueDate])}" placeholder="Vence em"/>
-                        <label for="dueDate">Vence em</label>
+                        <label for="dueDate">
+                            <g:message code="label.payment.dueDate"/>
+                        </label>
                     </div>
                     <div class="mb-3 form-floating">
                         <span id="status" class="form-control readonly-control">${payment.status}</span>
-                        <label for="status">Status</label>
+                        <label for="status">
+                            <g:message code="label.payment.status"/>
+                        </label>
                     </div>
                     <div class="mb-3 form-floating">
                         <span id="type" class="form-control readonly-control">${payment.type}</span>
-                        <label for="type">Tipo</label>
+                        <label for="type">
+                            <g:message code="label.payment.type"/>
+                        </label>
                     </div>
                     <div class="mb-3 form-floating">
                         <span id="createdAt" class="form-control readonly-control">${payment.createdAt}</span>
-                        <label for="createdAt">Criada em</label>
+                        <label for="createdAt">
+                            <g:message code="label.createdAt"/>
+                        </label>
                     </div>
                     <div class="d-flex w-100 justify-content-end">
-                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <button type="submit" class="btn btn-success">
+                            <g:message code="button.save"/>
+                        </button>
                     </div>
                 </form>
             </div>
