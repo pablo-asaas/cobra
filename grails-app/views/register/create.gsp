@@ -54,7 +54,7 @@
             const isValidCpf = cpfCnpj.match(/^([0-9]{11})$/)
             const isValidCnpj = cpfCnpj.match(/^([0-9]{14})$/)
 
-            return isValidCpf|| isValidCnpj
+            return isValidCpf || isValidCnpj
         }
         function handleRegisterSubmit(event){
             event.preventDefault();
