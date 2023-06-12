@@ -44,12 +44,12 @@ class PayerController {
     def delete(Long id) {
         try {
             payerService.delete(getCurrentCustomer(), id)
-            redirect action: "index"
+            render([message: "Deletado com sucesso"] as JSON, status: HttpStatus.OK.code)
         }catch(ResourceNotFoundException e){
             render(view: "/notFound", model: [message: e.getMessage()], status: HttpStatus.NOT_FOUND.code)
         }catch (Exception e) {
             e.printStackTrace()
-            redirect action: "index"
+            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.BAD_REQUEST.code)
         }
     }
 
