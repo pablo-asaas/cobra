@@ -12,10 +12,6 @@ class PayerController extends BaseController {
 
     static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', restore: 'POST']
 
-    def create() {
-        return [:]
-    }
-
     def index() {
         if (params.deleted) {
             return [payerList: payerService.findAllDeleted(getCurrentCustomer())]
