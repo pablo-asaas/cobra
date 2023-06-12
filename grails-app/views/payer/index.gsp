@@ -85,45 +85,65 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
-                    <g:form name="createPayerForm" method="POST" url="[controller: 'payer', action: 'save']">
-                        <fieldset class="form">
-                            <label class="col-form-label" for="name">Nome</label>
-                            <g:field class="form-control" type="text" name="name" required="true"/>
+                    <form id="createPayerForm" method="POST">
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="name" required="true"/>
+                                <label for="name">Nome</label>
+                            </div>
 
-                            <label class="col-form-label" for="email">Email</label>
-                            <g:field class="form-control" type="email" name="email" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="email" name="email" required="true"/>
+                                <label for="email">Email</label>
+                            </div>
 
-                            <label class="col-form-label" for="cpfCnpj">Cpf/Cnpj</label>
-                            <g:field class="form-control" type="text" name="cpfCnpj" maxLength="14" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="cpfCnpj" maxLength="14" required="true"/>
+                                <label for="cpfCnpj">Cpf/Cnpj</label>
+                            </div>
 
-                            <label class="col-form-label" for="phoneNumber">Celular</label>
-                            <g:field class="form-control" type="text" name="phoneNumber" maxLength="13" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="phoneNumber" maxLength="13" required="true"/>
+                                <label for="phoneNumber">Celular</label>
+                            </div>
 
-                            <label class="col-form-label" for="postalCode">CEP</label>
-                            <g:field class="form-control" type="text" name="postalCode" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="postalCode" required="true"/>
+                                <label for="postalCode">CEP</label>
+                            </div>
 
-                            <label class="col-form-label" for="streetName">Rua</label>
-                            <g:field class="form-control" type="text" name="streetName" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="streetName" required="true"/>
+                                <label for="streetName">Rua</label>
+                            </div>
 
-                            <label class="col-form-label" for="buildingNumber">Número</label>
-                            <g:field class="form-control" type="text" name="buildingNumber" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="buildingNumber" required="true"/>
+                                <label for="buildingNumber">Número</label>
+                            </div>
 
-                            <label class="col-form-label" for="complement">Complemento</label>
-                            <g:field class="form-control" type="text" name="complement"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="complement"/>
+                                <label for="complement">Complemento</label>
+                            </div>
 
-                            <label class="col-form-label" for="state">Estado</label>
-                            <g:field class="form-control" type="text" name="state" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="state" required="true"/>
+                                <label  for="state">Estado</label>
+                            </div>
 
-                            <label class="col-form-label" for="city">Cidade</label>
-                            <g:field class="form-control" type="text" name="city" required="true"/>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="city" required="true"/>
+                                <label for="city">Cidade</label>
+                            </div>
 
-                            <label class="col-form-label" for="neighborhood">Bairro</label>
-                            <g:field class="form-control" type="text" name="neighborhood" required="true"/>
-                        </fieldset>
-                        <fieldset>
-                            <g:submitButton class="btn btn-primary" name="save" value="Salvar"/>
-                        </fieldset>
-                    </g:form>
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="neighborhood" required="true"/>
+                                <label for="neighborhood">Bairro</label>
+                            </div>
+                            <div class="float-end">
+                                <button type="submit" class="btn btn-success">Salvar</button>
+                            </div>
+                    </form>
                 </div>
             </div>
         </div>
