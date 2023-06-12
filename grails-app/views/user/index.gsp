@@ -8,32 +8,35 @@
 </head>
 
 <body>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newUserModal">Adicionar</button>
+    <div class="container pt-5 pb-3">
+        <h1 class="mb-4">Usuários</h1>
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome de usuário</th>
-        </tr>
-        </thead>
-        <tbody>
-        <g:each var="user" in="${userList}">
-            <tr>
-                <td>${user.id}</td>
-                <td>
-                    <g:if test="${user.username == currentUser}">
-                        ${user.username} (Atual)
-                    </g:if>
-                    <g:else>
-                        ${user.username}
-                    </g:else>
-                </td>
+        <div class="mb-4 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newUserModal">
+                Adicionar
+            </button>
+        </div>
 
-            </tr>
-        </g:each>
-        </tbody>
-    </table>
+        <div class="container-fluid border rounded">
+            <div class="row header-row fw-bold border-bottom py-3">
+                <div class="col">ID</div>
+                <div class="col">Nome de usuário</div>
+            </div>
+            <g:each var="user" in="${userList}">
+                <div class="row data-row">
+                    <div class="col">${user.id}</div>
+                    <div class="col">
+                        <g:if test="${user.username == currentUser}">
+                            ${user.username} (Atual)
+                        </g:if>
+                        <g:else>
+                            ${user.username}
+                        </g:else>
+                    </div>
+                </div>
+            </g:each>
+        </div>
+    </div>
     <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
