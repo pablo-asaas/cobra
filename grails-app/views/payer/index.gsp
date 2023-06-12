@@ -36,6 +36,27 @@
 
                             <label class="col-form-label" for="phoneNumber">Celular</label>
                             <g:field class="form-control" type="text" name="phoneNumber" maxLength="13" required="true"/>
+
+                            <label class="col-form-label" for="postalCode">CEP</label>
+                            <g:field class="form-control" type="text" name="postalCode" required="true"/>
+
+                            <label class="col-form-label" for="streetName">Rua</label>
+                            <g:field class="form-control" type="text" name="streetName" required="true"/>
+
+                            <label class="col-form-label" for="buildingNumber">Número</label>
+                            <g:field class="form-control" type="text" name="buildingNumber" required="true"/>
+
+                            <label class="col-form-label" for="complement">Complemento</label>
+                            <g:field class="form-control" type="text" name="complement"/>
+
+                            <label class="col-form-label" for="state">Estado</label>
+                            <g:field class="form-control" type="text" name="state" required="true"/>
+
+                            <label class="col-form-label" for="city">Cidade</label>
+                            <g:field class="form-control" type="text" name="city" required="true"/>
+
+                            <label class="col-form-label" for="neighborhood">Bairro</label>
+                            <g:field class="form-control" type="text" name="neighborhood" required="true"/>
                         </fieldset>
                         <fieldset>
                             <g:submitButton class="btn btn-primary" name="save" value="Salvar"/>
