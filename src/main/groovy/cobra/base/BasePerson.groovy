@@ -26,7 +26,7 @@ abstract class BasePerson extends BaseDomain {
         name blank: false
         email blank: false, email: true
         cpfCnpj blank: false, size: 11..14
-        postalCode blank: false, size: 8
+        postalCode blank: false, size: 8..8
         streetName blank: false
         buildingNumber blank: false
         complement nullable: true
