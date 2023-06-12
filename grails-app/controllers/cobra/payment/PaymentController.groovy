@@ -20,8 +20,8 @@ class PaymentController extends BaseController {
         return [paymentList: paymentService.findAll(getCurrentCustomer())]
     }
 
-    def show(Long id) {
-        return [payment: paymentService.findById(getCurrentCustomer(), id)]
+    def show() {
+        return [payment: paymentService.findById(getCurrentCustomer(), params.id as Long)]
     }
 
     def save() {
@@ -29,8 +29,8 @@ class PaymentController extends BaseController {
         render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
-    def delete(Long id) {
-        paymentService.delete(getCurrentCustomer(), id)
+    def delete() {
+        paymentService.delete(getCurrentCustomer(), params.id as Long)
         render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
