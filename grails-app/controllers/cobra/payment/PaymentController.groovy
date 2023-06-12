@@ -1,19 +1,14 @@
 package cobra.payment
 
-import cobra.customer.Customer
-import cobra.exception.BusinessException
-import cobra.exception.ResourceNotFoundException
-import cobra.user.User
+import cobra.base.BaseController
 import grails.converters.JSON
-import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
 
 @Secured('ROLE_USER')
-class PaymentController {
+class PaymentController extends BaseController {
 
     PaymentService paymentService
-    SpringSecurityService springSecurityService
 
     static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE']
 
@@ -26,86 +21,33 @@ class PaymentController {
     }
 
     def show(Long id) {
-        try {
-            return [payment: paymentService.findById(getCurrentCustomer(), id)]
-        } catch (ResourceNotFoundException exception) {
-            render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
-        } catch (Exception exception) {
-            exception.printStackTrace()
-            redirect action: "index"
-        }
+        return [payment: paymentService.findById(getCurrentCustomer(), id)]
     }
 
     def save() {
-        try {
-            paymentService.save(getCurrentCustomer(), params)
-            render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
-        } catch (BusinessException exception) {
-            render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
-        } catch (Exception exception) {
-            exception.printStackTrace()
-            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
-        }
+        paymentService.save(getCurrentCustomer(), params)
+        render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
     def delete(Long id) {
-        try {
-            paymentService.delete(getCurrentCustomer(), id)
-            render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.OK.code)
-        } catch (ResourceNotFoundException exception) {
-            render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
-        } catch (Exception exception) {
-            exception.printStackTrace()
-            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
-        }
+        paymentService.delete(getCurrentCustomer(), id)
+        render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def update() {
-        try {
-            paymentService.update(getCurrentCustomer(), params.id as Long, params)
-            render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.OK.code)
-        } catch (ResourceNotFoundException exception) {
-            render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
-        } catch (BusinessException exception) {
-            render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
-        } catch (Exception exception) {
-            exception.printStackTrace()
-            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
-        }
+        paymentService.update(getCurrentCustomer(), params.id as Long, params)
+        render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def restore() {
-        try {
-            paymentService.restore(getCurrentCustomer(), params.id as Long, params)
-            render([message: "Pagamento restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
-        } catch (BusinessException exception) {
-            render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
-        } catch (ResourceNotFoundException exception) {
-            render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
-        } catch (Exception exception) {
-            exception.printStackTrace()
-            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
-        }
+        paymentService.restore(getCurrentCustomer(), params.id as Long, params)
+        render([message: "Pagamento restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def confirmPayment() {
-        try {
-            if (params.deposit) {
-                paymentService.confirmDeposit(getCurrentCustomer(), params.id as Long)
-                render([message: "Pagamento confirmado com sucesso"] as JSON, status: HttpStatus.OK.code)
-            }
-        } catch (BusinessException exception) {
-            render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
-        } catch (ResourceNotFoundException exception) {
-            render(view: "/notFound", model: [message: exception.message], status: HttpStatus.NOT_FOUND.code)
-        } catch (Exception exception) {
-            exception.printStackTrace()
-            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.INTERNAL_SERVER_ERROR.code)
+        if (params.deposit) {
+            paymentService.confirmDeposit(getCurrentCustomer(), params.id as Long)
+            render([message: "Pagamento confirmado com sucesso"] as JSON, status: HttpStatus.OK.code)
         }
-    }
-
-    private Customer getCurrentCustomer() {
-        User user = springSecurityService.currentUser
-        return user.customer
     }
 }
