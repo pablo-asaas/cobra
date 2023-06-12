@@ -54,7 +54,10 @@ class PayerService {
         Payer payer = findById(customer, id)
         payer.name = params.name
         payer.email = params.email
-        payer.cpfCnpj = params.cpfCnpj
+        if (payer.cpfCnpj != params.cpfCnpj){
+            validateCpfCnpj(customer, params.cpfCnpj as String)
+            payer.cpfCnpj = params.cpfCnpj
+        }
         payer.phoneNumber = params.phoneNumber
 
         payer.save(failOnError: true)
@@ -79,11 +82,9 @@ class PayerService {
         if (!params.phoneNumber) {
             throw new BusinessException("Numero de Telefone é obrigatório")
         }
-        //validateCpfCnpj(params.cpfCnpj, customer)
-        // bug ao atualizar
     }
 
-    private void validateCpfCnpj(String cpfCnpj, Customer customer) {
+    private void validateCpfCnpj(Customer customer, String cpfCnpj) {
         if (!cpfCnpj) {
             throw new BusinessException("CPF/CNPJ é obrigatório")
         }
