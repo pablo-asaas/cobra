@@ -22,12 +22,12 @@ class PayerController extends BaseController {
 
     def save() {
         payerService.save(getCurrentCustomer(), params)
-        render([message: "Criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+        render([message: "Pagador criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
     def delete() {
         payerService.delete(getCurrentCustomer(), params.id as Long)
-        render([message: "Deletado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: "Pagador deletado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def show() {
@@ -36,11 +36,11 @@ class PayerController extends BaseController {
 
     def update() {
         payerService.update(getCurrentCustomer(), params.id as Long, params)
-        render([message: "Editado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+        render([message: "Pagador editado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
     def restore() {
         payerService.restore(getCurrentCustomer(), params.id as Long)
-        render([message: "Restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: "Pagador restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 }
