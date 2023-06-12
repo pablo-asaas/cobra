@@ -133,13 +133,27 @@
 
             <div class="container-fluid border rounded">
                 <div class="row header-row fw-bold border-bottom py-3">
-                    <div class="col">ID</div>
-                    <div class="col">Pagador</div>
-                    <div class="col">Valor</div>
-                    <div class="col">Vence em</div>
-                    <div class="col">Status</div>
-                    <div class="col">Tipo</div>
-                    <div class="col">Ações</div>
+                    <div class="col">
+                        <g:message code="label.publicId"/>
+                    </div>
+                    <div class="col">
+                        <g:message code="label.payment.payer"/>
+                    </div>
+                    <div class="col">
+                        <g:message code="label.payment.value"/>
+                    </div>
+                    <div class="col">
+                        <g:message code="label.payment.dueDate"/>
+                    </div>
+                    <div class="col">
+                        <g:message code="label.payment.status"/>
+                    </div>
+                    <div class="col">
+                        <g:message code="label.payment.type"/>
+                    </div>
+                    <div class="col">
+                        <g:message code="label.actions"/>
+                    </div>
                 </div>
                 <g:if test="${paymentList.isEmpty()}">
                     <div class="py-3 text-center">
@@ -165,26 +179,26 @@
                             <div class="col actions-col">
                                 <div class="float-end">
                                     <g:if test="${payment.deleted}">
-                                        <button type="button" data-id="${payment.id}" data-due-date="${dateFieldFormat([value: payment.dueDate])}" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#restorePaymentModal" title="Restaurar">
+                                        <button type="button" data-id="${payment.id}" data-due-date="${dateFieldFormat([value: payment.dueDate])}" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#restorePaymentModal" title="${message(code: 'button.restore')}">
                                             <i class="bi bi-arrow-counterclockwise"></i>
                                         </button>
                                     </g:if>
                                     <g:else>
                                         <g:if test="${payment.status == PaymentStatus.PAID}">
-                                            <g:link action="show" controller="receipt" target="_blank" id="${payment.publicId}" class="btn btn-light" title="Comprovante">
+                                            <g:link action="show" controller="receipt" target="_blank" id="${payment.publicId}" class="btn btn-light" title="${message(code: 'button.payment.receipt')}">
                                                 <i class="bi bi-receipt"></i>
                                             </g:link>
                                         </g:if>
                                         <g:else>
                                             <g:if test="${payment.status == PaymentStatus.PENDING}">
-                                                <button type="button" data-id="${payment.id}" class="deposit-button btn btn-light" title="Confirmar pagamento">
+                                                <button type="button" data-id="${payment.id}" class="deposit-button btn btn-light" title="${message(code: 'button.payment.confirm')}">
                                                     <i class="bi bi-check-lg"></i>
                                                 </button>
                                             </g:if>
-                                            <g:link action="show" id="${payment.id}" class="btn btn-light" title="Editar">
+                                            <g:link action="show" id="${payment.id}" class="btn btn-light" title="${message(code: 'button.edit')}">
                                                 <i class="bi bi-pencil-fill"></i>
                                             </g:link>
-                                            <button class="btn btn-light delete-button" data-id="${payment.id}" title="Excluir">
+                                            <button class="btn btn-light delete-button" data-id="${payment.id}" title="${message(code: 'button.delete')}">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </g:else>
@@ -212,19 +226,29 @@
                             </div>
                             <div class="mb-3 form-floating">
                                 <g:field type="number" name="value" min="0.01" step="0.01" required="true" class="form-control" placeholder="Valor"/>
-                                <label for="value">Valor</label>
+                                <label for="value">
+                                    <g:message code="label.payment.value"/>
+                                </label>
                             </div>
                             <div class="mb-3 form-floating">
                                 <g:select from="${PaymentType}" name="type" required="true" class="form-select" placeholder="Tipo"/>
-                                <label for="type">Tipo</label>
+                                <label for="type">
+                                    <g:message code="label.payment.type"/>
+                                </label>
                             </div>
                             <div class="mb-3 form-floating">
                                 <g:field type="date" name="dueDate" required="true" class="form-control" placeholder="Vence em"/>
-                                <label for="dueDate">Vence em</label>
+                                <label for="dueDate">
+                                    <g:message code="label.payment.dueDate"/>
+                                </label>
                             </div>
                             <div class="float-end">
-                                <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Salvar</button>
+                                <button type="button" class="btn" data-bs-dismiss="modal">
+                                    <g:message code="button.cancel"/>
+                                </button>
+                                <button type="submit" class="btn btn-success">
+                                    <g:message code="button.save"/>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -244,12 +268,18 @@
                             <g:hiddenField name="id"/>
                             <div class="mb-3 form-floating">
                                 <g:field type="date" name="dueDate" required="true" class="form-control" placeholder="Vence em"/>
-                                <label for="dueDate">Vence em</label>
+                                <label for="dueDate">
+                                    <g:message code="label.payment.dueDate"/>
+                                </label>
                                 <div class="form-text">Informe uma nova data de vencimento</div>
                             </div>
                             <div class="float-end">
-                                <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Restaurar</button>
+                                <button type="button" class="btn" data-bs-dismiss="modal">
+                                    <g:message code="button.cancel"/>
+                                </button>
+                                <button type="submit" class="btn btn-success">
+                                    <g:message code="button.save"/>
+                                </button>
                             </div>
                         </form>
                     </div>
