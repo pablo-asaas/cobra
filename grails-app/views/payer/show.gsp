@@ -51,6 +51,41 @@
                     <label for="createdAt">Criado em</label>
                 </div>
 
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="postalCode" required="true" value="${payer.postalCode}"/>
+                    <label for="postalCode">CEP</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="streetName" required="true" value="${payer.streetName}"/>
+                    <label for="streetName">Rua</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="buildingNumber" required="true" value="${payer.buildingNumber}"/>
+                    <label for="buildingNumber">Número</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="complement" value="${payer.complement}"/>
+                    <label for="complement">Complemento</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="state" required="true" value="${payer.state}"/>
+                    <label  for="state">Estado</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="city" required="true" value="${payer.city}"/>
+                    <label for="city">Cidade</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="neighborhood" required="true" value="${payer.neighborhood}"/>
+                    <label for="neighborhood">Bairro</label>
+                </div>
+
                 <div class="d-flex w-100 justify-content-end">
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </div>
