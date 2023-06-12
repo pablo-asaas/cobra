@@ -9,25 +9,33 @@
             <div class="card-body">
                 <h1 class="mb-3 h2">Comprovante de pagamento</h1>
                 <div class="d-flex justify-content-between">
-                    <strong>Data de pagamento</strong>
+                    <strong>
+                        <g:message code="label.payment.paymentDate"/>
+                    </strong>
                     <span>
                         <g:dateFormat value="${payment.paymentDate}"/>
                     </span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <strong>Valor</strong>
+                    <strong>
+                        <g:message code="label.payment.value"/>
+                    </strong>
                     <span>
                         <g:currencyFormat value="${payment.value}"/>
                     </span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <strong>Tipo de pagamento</strong>
+                    <strong>
+                        <g:message code="label.payment.type"/>
+                    </strong>
                     <span>
                         <g:message code="PaymentType.${payment.type}"/>
                     </span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <strong>Data de vencimento</strong>
+                    <strong>
+                        <g:message code="label.payment.dueDate"/>
+                    </strong>
                     <span>
                         <g:dateFormat value="${payment.dueDate}"/>
                     </span>
@@ -35,11 +43,15 @@
 
                 <h2 class="h3 mt-3">Dados do pagador</h2>
                 <div class="d-flex justify-content-between">
-                    <strong>Nome</strong>
+                    <strong>
+                        <g:message code="label.name"/>
+                    </strong>
                     <span>${payment.payer.name}</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <strong>CPF/CNPJ</strong>
+                    <strong>
+                        <g:message code="label.cpfCnpj"/>
+                    </strong>
                     <span>
                         <g:cpfCnpjFormat value="${payment.payer.cpfCnpj}"/>
                     </span>
@@ -47,11 +59,15 @@
 
                 <h2 class="h3 mt-3">Dados do recebedor</h2>
                 <div class="d-flex justify-content-between">
-                    <strong>Nome</strong>
+                    <strong>
+                        <g:message code="label.name"/>
+                    </strong>
                     <span>${payment.customer.name}</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <strong>CPF/CNPJ</strong>
+                    <strong>
+                        <g:message code="label.cpfCnpj"/>
+                    </strong>
                     <span>
                         <g:cpfCnpjFormat value="${payment.customer.cpfCnpj}"/>
                     </span>
