@@ -30,7 +30,7 @@ class PayerController extends BaseController {
 
     def delete(Long id) {
         payerService.delete(getCurrentCustomer(), id)
-        redirect action: "index"
+        render([message: "Deletado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def show (Long id) {
