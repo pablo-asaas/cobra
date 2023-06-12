@@ -5,84 +5,56 @@
     </head>
 
     <body>
-        <div class="container-fluid mx-auto w-25 py-5">
-            <div class="row">
-                <div class="col">
-                    <h1 class="font-weight-bold">Comprovante de pagamento</h1>
+        <div class="card mt-5 mx-auto" style="max-width: 576px">
+            <div class="card-body">
+                <h1 class="mb-3 h2">Comprovante de pagamento</h1>
+                <div class="d-flex justify-content-between">
+                    <strong>Data de pagamento</strong>
+                    <span>
+                        <g:dateFormat value="${payment.paymentDate}"/>
+                    </span>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col font-weight-bold">
-                    Data de pagamento
+                <div class="d-flex justify-content-between">
+                    <strong>Valor</strong>
+                    <span>
+                        <g:currencyFormat value="${payment.value}"/>
+                    </span>
                 </div>
-                <div class="col">
-                    ${payment.paymentDate}
+                <div class="d-flex justify-content-between">
+                    <strong>Tipo de pagamento</strong>
+                    <span>
+                        <g:message code="PaymentType.${payment.type}"/>
+                    </span>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col font-weight-bold">
-                    Valor
+                <div class="d-flex justify-content-between">
+                    <strong>Data de vencimento</strong>
+                    <span>
+                        <g:dateFormat value="${payment.dueDate}"/>
+                    </span>
                 </div>
-                <div class="col">
-                    R$ ${payment.value}
+
+                <h2 class="h3 mt-3">Dados do pagador</h2>
+                <div class="d-flex justify-content-between">
+                    <strong>Nome</strong>
+                    <span>${payment.payer.name}</span>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col font-weight-bold">
-                    Tipo de pagamento
+                <div class="d-flex justify-content-between">
+                    <strong>CPF/CNPJ</strong>
+                    <span>
+                        <g:cpfCnpjFormat value="${payment.payer.cpfCnpj}"/>
+                    </span>
                 </div>
-                <div class="col">
-                    ${payment.type}
+
+                <h2 class="h3 mt-3">Dados do recebedor</h2>
+                <div class="d-flex justify-content-between">
+                    <strong>Nome</strong>
+                    <span>${payment.customer.name}</span>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col font-weight-bold">
-                    Data de vencimento
-                </div>
-                <div class="col">
-                    ${payment.dueDate}
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <h2 class="font-weight-bold">Dados do pagador</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col font-weight-bold">
-                    Nome
-                </div>
-                <div class="col">
-                    ${payment.payer.name}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col font-weight-bold">
-                    CPF/CNPJ
-                </div>
-                <div class="col">
-                    ${payment.payer.cpfCnpj}
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <h2 class="font-weight-bold">Dados do cobrador</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col font-weight-bold">
-                    Nome
-                </div>
-                <div class="col">
-                    ${payment.customer.name}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col font-weight-bold">
-                    CPF/CNPJ
-                </div>
-                <div class="col">
-                    ${payment.customer.cpfCnpj}
+                <div class="d-flex justify-content-between">
+                    <strong>CPF/CNPJ</strong>
+                    <span>
+                        <g:cpfCnpjFormat value="${payment.customer.cpfCnpj}"/>
+                    </span>
                 </div>
             </div>
         </div>
