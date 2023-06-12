@@ -172,10 +172,18 @@
                                 <span title="${payment.publicId}">${payment.publicId.substring(0, 8)}</span>
                             </div>
                             <div class="col">${payment.payer.name}</div>
-                            <div class="col">${payment.value}</div>
-                            <div class="col">${payment.dueDate}</div>
-                            <div class="col">${payment.status}</div>
-                            <div class="col">${payment.type}</div>
+                            <div class="col">
+                                <g:currencyFormat value="${payment.value}"/>
+                            </div>
+                            <div class="col">
+                                <g:dateFormat value="${payment.dueDate}"/>
+                            </div>
+                            <div class="col">
+                                <g:message code="PaymentStatus.${payment.status}"/>
+                            </div>
+                            <div class="col">
+                                <g:message code="PaymentType.${payment.type}"/>
+                            </div>
                             <div class="col actions-col">
                                 <div class="float-end">
                                     <g:if test="${payment.deleted}">
