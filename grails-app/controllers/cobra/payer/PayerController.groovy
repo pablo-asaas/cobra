@@ -10,12 +10,13 @@ class PayerController extends BaseController {
 
     def payerService
 
-    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', restore: 'POST']
+    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE', restore: 'POST']
 
     def index() {
         if (params.deleted) {
             return [payerList: payerService.findAllDeleted(getCurrentCustomer())]
         }
+
         return [payerList: payerService.findAll(getCurrentCustomer())]
     }
 
@@ -24,13 +25,13 @@ class PayerController extends BaseController {
         render([message: "Criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
-    def delete(Long id) {
-        payerService.delete(getCurrentCustomer(), id)
+    def delete() {
+        payerService.delete(getCurrentCustomer(), params.id as Long)
         render([message: "Deletado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
-    def show (Long id) {
-        return [payer: payerService.findById(getCurrentCustomer(), id)]
+    def show() {
+        return [payer: payerService.findById(getCurrentCustomer(), params.id as Long)]
     }
 
     def update() {
@@ -38,8 +39,8 @@ class PayerController extends BaseController {
         render([message: "Editado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
-    def restore(Long id) {
-        payerService.restore(getCurrentCustomer(), id)
+    def restore() {
+        payerService.restore(getCurrentCustomer(), params.id as Long)
         render([message: "Restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 }
