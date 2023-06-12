@@ -8,7 +8,7 @@ import io.micronaut.http.HttpStatus
 @Secured('ROLE_USER')
 class PayerController extends BaseController {
 
-    def payerService
+    PayerService payerService
 
     static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE', restore: 'POST']
 
