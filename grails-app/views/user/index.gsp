@@ -2,38 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <asset:javascript src="application.js"/>
+    <asset:stylesheet src="grid-table.css"/>
+    <asset:stylesheet src="modal.css"/>
     <title>Usuários</title>
 </head>
 
 <body>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newUserModal">Adicionar</button>
-    <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newUserModalLabel">Adicionar usuário</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <g:form name="newUserForm" method="POST" action="save">
-                        <fieldset class="form">
-                            <label class="col-form-label" for="username"><g:message code='springSecurity.login.username.label'/>:</label>
-                            <g:field class="form-control" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none"/>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newUserModal">Adicionar</button>
 
-                            <label class="col-form-label" for="password"><g:message code='springSecurity.login.password.label'/>:</label>
-                            <g:field class="form-control" type="password" name="${passwordParameter ?: 'password'}" id="password"/>
-                        </fieldset>
-                        <fieldset>
-                            <g:submitButton class="btn btn-primary" name="save" value="Criar usuário"/>
-                        </fieldset>
-                    </g:form>
-                </div>
-            </div>
-        </div>
-    </div>
     <table>
         <thead>
         <tr>
@@ -58,6 +34,34 @@
         </g:each>
         </tbody>
     </table>
+    <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newUserModalLabel">Adicionar usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newUserForm" method="POST">
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none"/>
+                                <label for="username"><g:message code='springSecurity.login.username.label'/>:</label>
+                            </div>
+
+                            <div class="mb-3 form-floating">
+                                <g:field class="form-control" type="password" name="${passwordParameter ?: 'password'}" id="password"/>
+                                <label for="password"><g:message code='springSecurity.login.password.label'/>:</label>
+                            </div>
+
+                            <div class="float-end">
+                                <button type="submit" class="btn btn-success">Criar usuário</button>
+                            </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <g:javascript>
         function handleFormSubmit(event){
             event.preventDefault();
