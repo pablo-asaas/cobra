@@ -36,7 +36,7 @@ class PayerController extends BaseController {
 
     def update() {
         payerService.update(getCurrentCustomer(), params.id as Long, params)
-        render([message: "Pagador editado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+        render([message: "Pagador editado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def restore() {
