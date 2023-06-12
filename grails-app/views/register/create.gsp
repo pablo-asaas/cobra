@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="cobra.payment.PaymentStatus" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
@@ -50,15 +50,36 @@
     </g:form>
     <g:javascript>
         function validateCpfCnpj(event){
+            const cpfCnpj = $(event.target.cpfCnpj).val()
+            const isValidCpf = cpfCnpj.match(/^([0-9]{11})$/)
+            const isValidCnpj = cpfCnpj.match(/^([0-9]{14})$/)
 
-            const cpfCnpj = parseInt($(event.target.cpfCnpj).val())
-            if(!cpfCnpj.match(/[0-9]{11}/) || !cpfCnpj.match(/[0-9]{14}/)){
-                event.preventDefault();
-                alert("CPF ou CNPJ inválido")
-            }
+            return isValidCpf|| isValidCnpj
         }
+        function handleRegisterSubmit(event){
+            event.preventDefault();
+            if (!validateCpfCnpj(event)){
+                alert("CPF ou CNPJ inválido")
+                return
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/register/save",
+                data: $(event.target).serialize(),
+                dataType: "json",
+                success: (data) => {
+                    alert(data.message)
+                    location.reload()
+                },
+                error: (error) => {
+                    alert(error.responseJSON.message)
+                }
+            });
+        }
+
         $(document).ready(() => {
-            $("#registerForm").on("submit", validateCpfCnpj)
+            $("#registerForm").on("submit", handleRegisterSubmit)
         });
     </g:javascript>
 </body>
