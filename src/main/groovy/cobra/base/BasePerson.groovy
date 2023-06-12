@@ -10,6 +10,14 @@ abstract class BasePerson extends BaseDomain {
     String email
     String cpfCnpj
 
+    String postalCode
+    String streetName
+    String buildingNumber
+    String complement
+    String neighborhood
+    String city
+    String state
+
     static mapping = {
         cpfCnpj unique: true
     }
@@ -18,5 +26,12 @@ abstract class BasePerson extends BaseDomain {
         name blank: false
         email blank: false, email: true
         cpfCnpj blank: false, size: 11..14
+        postalCode blank: false, size: 8
+        streetName blank: false
+        buildingNumber blank: false
+        complement nullable: true
+        neighborhood blank: false
+        city blank: false
+        state blank: false
     }
 }

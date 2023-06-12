@@ -6,6 +6,7 @@ import cobra.exception.ResourceNotFoundException
 import cobra.validator.CpfCnpjValidator
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
+import org.apache.commons.validator.routines.EmailValidator
 
 @Transactional
 class PayerService {
@@ -39,6 +40,14 @@ class PayerService {
         payer.phoneNumber = params.phoneNumber
         payer.customer = customer
 
+        payer.postalCode = params.postalCode
+        payer.streetName = params.streetName
+        payer.buildingNumber = params.buildingNumber
+        if (params.complement) payer.complement = params.complement
+        payer.neighborhood = params.neighborhood
+        payer.city = params.city
+        payer.state = params.state
+
         payer.save(failOnError: true)
     }
 
@@ -60,6 +69,14 @@ class PayerService {
         }
         payer.phoneNumber = params.phoneNumber
 
+        payer.postalCode = params.postalCode
+        payer.streetName = params.streetName
+        payer.buildingNumber = params.buildingNumber
+        if (params.complement) payer.complement = params.complement
+        payer.neighborhood = params.neighborhood
+        payer.city = params.city
+        payer.state = params.state
+
         payer.save(failOnError: true)
     }
 
@@ -76,12 +93,34 @@ class PayerService {
         if (!params.name) {
             throw new BusinessException("Nome é obrigatório")
         }
-        if(!params.email){
+        if (!params.email){
             throw new BusinessException("Email é obrigatório")
+        }
+        if (!(new EmailValidator(false).isValid(params.email as String))) {
+            throw new BusinessException("Email inválido")
         }
         if (!params.phoneNumber) {
             throw new BusinessException("Numero de Telefone é obrigatório")
         }
+        if (!params.postalCode) {
+            throw new BusinessException("CEP é obrigatório")
+        }
+        if (!params.streetName){
+            throw new BusinessException("Nome da Rua é obrigatório")
+        }
+        if (!params.buildingNumber) {
+            throw new BusinessException("Número da residência é obrigatório")
+        }
+        if (!params.neighborhood) {
+            throw new BusinessException("Bairro é obrigatório")
+        }
+        if (!params.city) {
+            throw new BusinessException("Cidade é obrigatório")
+        }
+        if (!params.state) {
+            throw new BusinessException("Estado é obrigatório")
+        }
+
     }
 
     private void validateCpfCnpj(Customer customer, String cpfCnpj) {
