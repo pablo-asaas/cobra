@@ -32,28 +32,40 @@
                     <ul class="navbar-nav">
                         <sec:ifLoggedIn>
                             <li class="nav-item">
-                                <a class="nav-link" href="/payer">Pagadores</a>
+                                <a class="nav-link" href="/payer">
+                                    <g:message code="navbar.payer"/>
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/payment">Cobranças</a>
+                                <a class="nav-link" href="/payment">
+                                    <g:message code="navbar.payment"/>
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user">Usuários</a>
+                                <a class="nav-link" href="/user">
+                                    <g:message code="navbar.user"/>
+                                </a>
                             </li>
                         </sec:ifLoggedIn>
                     </ul>
                     <ul class="navbar-nav ms-md-auto">
                         <sec:ifLoggedIn>
                             <li class="nav-item">
-                                <g:link class="logout-button nav-link">Sair</g:link>
+                                <g:link class="logout-button nav-link">
+                                    <g:message code="navbar.logout"/>
+                                </g:link>
                             </li>
                         </sec:ifLoggedIn>
                         <sec:ifNotLoggedIn>
                             <li class="nav-item">
-                                <a class="nav-link" href="/login">Entrar</a>
+                                <a class="nav-link" href="/login">
+                                    <g:message code="navbar.login"/>
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/register">Registrar</a>
+                                <a class="nav-link" href="/register">
+                                    <g:message code="navbar.register"/>
+                                </a>
                             </li>
                         </sec:ifNotLoggedIn>
                     </ul>
