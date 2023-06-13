@@ -2,29 +2,38 @@
 <head>
     <meta name="layout" content="${gspLayout ?: 'main'}"/>
     <title>Login</title>
+    <asset:stylesheet src="form.css"/>
+    <asset:stylesheet src="navigation.css"/>
 </head>
 
 <body>
-<div id="login">
-    <div class="inner">
-        <div class="fheader"><g:message code='springSecurity.login.header'/></div>
+<div class="container mt-5 mx-auto" style="max-width: 576px">
+    <h1 class="mb-4">Fazer login</h1>
 
+    <div class="container-fluid border rounded py-3">
         <g:if test='${flash.message}'>
-            <div class="login_message">${flash.message}</div>
+            <div class="alert alert-danger" role="alert">
+                ${flash.message}
+            </div>
         </g:if>
+        <form action="login/authenticate"  method="POST" autocomplete="off">
+                <div  class="mb-3 form-floating">
+                    <g:field class="form-control" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none"/>
+                    <label class="col-form-label" for="username"><g:message code='springSecurity.login.username.label'/></label>
+                </div>
 
-        <g:form url="login/authenticate"  method="POST" autocomplete="off">
-            <fieldset class="form">
-                <label class="col-form-label" for="username"><g:message code='springSecurity.login.username.label'/>:</label>
-                <g:field class="form-control" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none"/>
+                <div  class="mb-3 form-floating">
+                    <g:field class="form-control" type="password" name="${passwordParameter ?: 'password'}" id="password"/>
+                    <label class="col-form-label" for="password"><g:message code='springSecurity.login.password.label'/></label>
+                </div>
 
-                <label class="col-form-label" for="password"><g:message code='springSecurity.login.password.label'/>:</label>
-                <g:field class="form-control" type="password" name="${passwordParameter ?: 'password'}" id="password"/>
-            </fieldset>
-            <fieldset>
-                <g:submitButton class="btn btn-primary" name="submit" value="${message(code: 'springSecurity.login.button')}"/>
-            </fieldset>
-        </g:form>
+                <div class="d-flex w-100 justify-content-between">
+                    <g:link controller="register" action="index" class="btn btn-light">
+                        Criar conta
+                    </g:link>
+                    <button type="submit" class="btn btn-success">Login</button>
+                </div>
+        </form>
     </div>
 </div>
 </body>

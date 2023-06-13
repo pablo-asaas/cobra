@@ -3,51 +3,108 @@
 <head>
     <meta name="layout" content="main"/>
     <title>Criar conta</title>
+    <asset:stylesheet src="form.css"/>
 </head>
 
 <body>
-    <g:form name="registerForm" method="POST" action="save">
-        <fieldset class="form">
-            <label class="col-form-label" for="username"><g:message code='springSecurity.login.username.label'/>:</label>
-            <g:field class="form-control" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none" required="true"/>
+    <div class="container pt-5 pb-3">
+        <h1 class="mb-4">Criar conta</h1>
+        <div class="container-fluid border rounded py-3">
+            <form class="row" id="registerForm" method="POST">
+                <h3 class="mb-4 mt-2">Informações de cadastro</h3>
 
-            <label class="col-form-label" for="password"><g:message code='springSecurity.login.password.label'/>:</label>
-            <g:field class="form-control" type="password" name="${passwordParameter ?: 'password'}" id="password" required="true"/>
+                <div>
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="name" required="true"/>
+                        <label class="col-form-label" for="name">Nome</label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="name">Nome</label>
-            <g:field class="form-control" type="text" name="name" required="true"/>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="email" name="email" required="true"/>
+                        <label class="col-form-label" for="email">Email</label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="email">Email</label>
-            <g:field class="form-control" type="email" name="email" required="true"/>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="cpfCnpj" maxLength="14" required="true"/>
+                        <label class="col-form-label" for="cpfCnpj">CPF/CNPJ</label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="cpfCnpj">CPF/CNPJ</label>
-            <g:field class="form-control" type="text" name="cpfCnpj" maxLength="14" required="true"/>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none" required="true"/>
+                        <label class="col-form-label" for="username"><g:message code='springSecurity.login.username.label'/></label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="postalCode">CEP</label>
-            <g:field class="form-control" type="text" name="postalCode" required="true"/>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="password" name="${passwordParameter ?: 'password'}" id="password" required="true"/>
+                        <label class="col-form-label" for="password"><g:message code='springSecurity.login.password.label'/></label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="streetName">Rua</label>
-            <g:field class="form-control" type="text" name="streetName" required="true"/>
+                <h3 class="mb-4 mt-2">Informações de endereço</h3>
 
-            <label class="col-form-label" for="buildingNumber">Número</label>
-            <g:field class="form-control" type="text" name="buildingNumber" required="true"/>
+                <div class="col-md-4">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="postalCode" required="true"/>
+                        <label class="col-form-label" for="postalCode">CEP</label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="complement">Complemento</label>
-            <g:field class="form-control" type="text" name="complement"/>
+                <div class="col-md-8">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="streetName" required="true"/>
+                        <label class="col-form-label" for="streetName">Rua</label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="state">Estado</label>
-            <g:field class="form-control" type="text" name="state" required="true"/>
+                <div class="col-md-2">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="buildingNumber" required="true"/>
+                        <label class="col-form-label" for="buildingNumber">Número</label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="city">Cidade</label>
-            <g:field class="form-control" type="text" name="city" required="true"/>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="complement"/>
+                        <label class="col-form-label" for="complement">Complemento (Opicional)</label>
+                    </div>
+                </div>
 
-            <label class="col-form-label" for="neighborhood">Bairro</label>
-            <g:field class="form-control" type="text" name="neighborhood" required="true"/>
-        </fieldset>
-        <fieldset>
-            <g:submitButton class="btn btn-primary" name="save" value="Criar conta"/>
-        </fieldset>
-    </g:form>
+                <div class="col-md-4">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="neighborhood" required="true"/>
+                        <label class="col-form-label" for="neighborhood">Bairro</label>
+                    </div>
+                </div>
+
+                <div class="col-md-10">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="city" required="true"/>
+                        <label class="col-form-label" for="city">Cidade</label>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="mb-3 form-floating">
+                        <g:field class="form-control" type="text" name="state" required="true"/>
+                        <label class="col-form-label" for="state">Estado</label>
+                    </div>
+                </div>
+
+                <div class="d-flex w-100 justify-content-end">
+                    <g:submitButton class="btn btn-success" name="save" value="Criar conta"/>
+                </div>
+            </form>
+        </div>
+    </div>
     <g:javascript>
         function validateCpfCnpj(event){
             const cpfCnpj = $(event.target.cpfCnpj).val()
