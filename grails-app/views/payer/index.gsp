@@ -28,13 +28,27 @@
 
         <div class="container-fluid border rounded">
             <div class="row header-row fw-bold border-bottom py-3">
-                <div class="col">ID</div>
-                <div class="col">Nome</div>
-                <div class="col">Email</div>
-                <div class="col">CPF/CNPJ</div>
-                <div class="col">Celular</div>
-                <div class="col">Criado em</div>
-                <div class="col">Ações</div>
+                <div class="col">
+                    <g:message code="label.id"/>
+                </div>
+                <div class="col">
+                    <g:message code="label.name"/>
+                </div>
+                <div class="col">
+                    <g:message code="label.email"/>
+                </div>
+                <div class="col">
+                    <g:message code="label.cpfCnpj"/>
+                </div>
+                <div class="col">
+                    <g:message code="label.phoneNumber"/>
+                </div>
+                <div class="col">
+                    <g:message code="label.createdAt"/>
+                </div>
+                <div class="col">
+                    <g:message code="label.actions"/>
+                </div>
             </div>
             <g:if test="${payerList.isEmpty()}">
                 <div class="py-3 text-center">
@@ -88,60 +102,84 @@
                     <form id="createPayerForm" method="POST">
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="name" required="true"/>
-                                <label for="name">Nome</label>
+                                <label for="name">
+                                    <g:message code="label.name"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="email" name="email" required="true"/>
-                                <label for="email">Email</label>
+                                <label for="email">
+                                    <g:message code="label.email"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="cpfCnpj" maxLength="14" required="true"/>
-                                <label for="cpfCnpj">Cpf/Cnpj</label>
+                                <label for="cpfCnpj">
+                                    <g:message code="label.cpfCnpj"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="phoneNumber" maxLength="13" required="true"/>
-                                <label for="phoneNumber">Celular</label>
+                                <label for="phoneNumber">
+                                    <g:message code="label.phoneNumber"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="postalCode" required="true"/>
-                                <label for="postalCode">CEP</label>
+                                <label for="postalCode">
+                                    <g:message code="label.address.postalCode"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="streetName" required="true"/>
-                                <label for="streetName">Rua</label>
+                                <label for="streetName">
+                                    <g:message code="label.address.streetName"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="buildingNumber" required="true"/>
-                                <label for="buildingNumber">Número</label>
+                                <label for="buildingNumber">
+                                    <g:message code="label.address.buildingNumber"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="complement"/>
-                                <label for="complement">Complemento</label>
+                                <label for="complement">
+                                    <g:message code="label.address.complement"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="state" required="true"/>
-                                <label  for="state">Estado</label>
+                                <label  for="state">
+                                    <g:message code="label.address.state"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="city" required="true"/>
-                                <label for="city">Cidade</label>
+                                <label for="city">
+                                    <g:message code="label.address.city"/>
+                                </label>
                             </div>
 
                             <div class="mb-3 form-floating">
                                 <g:field class="form-control" type="text" name="neighborhood" required="true"/>
-                                <label for="neighborhood">Bairro</label>
+                                <label for="neighborhood">
+                                    <g:message code="label.address.neighborhood"/>
+                                </label>
                             </div>
                             <div class="float-end">
-                                <button type="submit" class="btn btn-success">Salvar</button>
+                                <button type="submit" class="btn btn-success">
+                                    <g:message code="button.save"/>
+                                </button>
                             </div>
                     </form>
                 </div>
