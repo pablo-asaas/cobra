@@ -23,71 +23,99 @@
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="id" value="${payer.id}" disabled="true"/>
-                    <label class="col-form-label" for="id">ID</label>
+                    <label class="col-form-label" for="id">
+                        <g:message code="label.id"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="name" value="${payer.name}"/>
-                    <label class="col-form-label" for="name">Name</label>
+                    <label class="col-form-label" for="name">
+                        <g:message code="label.name"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="email" name="email" value="${payer.email}"/>
-                    <label class="col-form-label" for="email">Email</label>
+                    <label class="col-form-label" for="email">
+                        <g:message code="label.email"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="cpfCnpj" value="${payer.cpfCnpj}" maxLength="14"/>
-                    <label class="col-form-label" for="cpfCnpj">CPF/CNPJ</label>
+                    <label class="col-form-label" for="cpfCnpj">
+                        <g:message code="label.cpfCnpj"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="phoneNumber" value="${payer.phoneNumber}" maxLength="13"/>
-                    <label class="col-form-label" for="phoneNumber">Celular</label>
+                    <label class="col-form-label" for="phoneNumber">
+                        <g:message code="label.phoneNumber"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <span id="createdAt" class="form-control readonly-control">${payer.createdAt}</span>
-                    <label for="createdAt">Criado em</label>
+                    <label for="createdAt">
+                        <g:message code="label.createdAt"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="postalCode" required="true" value="${payer.postalCode}"/>
-                    <label for="postalCode">CEP</label>
+                    <label for="postalCode">
+                        <g:message code="label.address.postalCode"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="streetName" required="true" value="${payer.streetName}"/>
-                    <label for="streetName">Rua</label>
+                    <label for="streetName">
+                        <g:message code="label.address.streetName"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="buildingNumber" required="true" value="${payer.buildingNumber}"/>
-                    <label for="buildingNumber">Número</label>
+                    <label for="buildingNumber">
+                        <g:message code="label.address.buildingNumber"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="complement" value="${payer.complement}"/>
-                    <label for="complement">Complemento</label>
+                    <label for="complement">
+                        <g:message code="label.address.complement"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="state" required="true" value="${payer.state}"/>
-                    <label  for="state">Estado</label>
+                    <label  for="state">
+                        <g:message code="label.address.state"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="city" required="true" value="${payer.city}"/>
-                    <label for="city">Cidade</label>
+                    <label for="city">
+                        <g:message code="label.address.city"/>
+                    </label>
                 </div>
 
                 <div class="mb-3 form-floating">
                     <g:field class="form-control" type="text" name="neighborhood" required="true" value="${payer.neighborhood}"/>
-                    <label for="neighborhood">Bairro</label>
+                    <label for="neighborhood">
+                        <g:message code="label.address.neighborhood"/>
+                    </label>
                 </div>
 
                 <div class="d-flex w-100 justify-content-end">
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <button type="submit" class="btn btn-success">
+                        <g:message code="button.save"/>
+                    </button>
                 </div>
 
             </form>
