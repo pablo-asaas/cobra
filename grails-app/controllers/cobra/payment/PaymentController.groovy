@@ -10,7 +10,7 @@ class PaymentController extends BaseController {
 
     PaymentService paymentService
 
-    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE', restore: 'POST']
+    static allowedMethods = [index: 'GET', save: 'POST', update: 'PATCH', delete: 'DELETE', restore: 'POST']
 
     def index() {
         if (params.deleted) {

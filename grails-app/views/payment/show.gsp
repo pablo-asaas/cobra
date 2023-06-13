@@ -12,7 +12,7 @@
                 event.preventDefault();
 
                 $.ajax({
-                    type: "PUT",
+                    type: "PATCH",
                     url: "/payment/update",
                     data: $(event.target).serialize(),
                     dataType: "json",
