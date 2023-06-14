@@ -43,6 +43,9 @@
                         </sec:ifLoggedIn>
                     </ul>
                     <ul class="navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <g:link class="nav-link" controller="customer" action="show">Editar dados</g:link>
+                        </li>
                         <sec:ifLoggedIn>
                             <li class="nav-item">
                                 <g:link class="logout-button nav-link">Sair</g:link>
