@@ -10,7 +10,7 @@ class PaymentController extends BaseController {
 
     PaymentService paymentService
 
-    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE']
+    static allowedMethods = [index: 'GET', save: 'POST', update: 'PATCH', delete: 'DELETE', restore: 'POST']
 
     def index() {
         if (params.deleted) {
@@ -20,8 +20,8 @@ class PaymentController extends BaseController {
         return [paymentList: paymentService.findAll(getCurrentCustomer())]
     }
 
-    def show(Long id) {
-        return [payment: paymentService.findById(getCurrentCustomer(), id)]
+    def show() {
+        return [payment: paymentService.findById(getCurrentCustomer(), params.id as Long)]
     }
 
     def save() {
@@ -29,8 +29,8 @@ class PaymentController extends BaseController {
         render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
-    def delete(Long id) {
-        paymentService.delete(getCurrentCustomer(), id)
+    def delete() {
+        paymentService.delete(getCurrentCustomer(), params.id as Long)
         render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
@@ -41,7 +41,7 @@ class PaymentController extends BaseController {
 
     def restore() {
         paymentService.restore(getCurrentCustomer(), params.id as Long, params)
-        render([message: "Pagamento restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: "Cobrança restaurada com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def confirmPayment() {
