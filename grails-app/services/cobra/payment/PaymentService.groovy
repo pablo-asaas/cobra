@@ -64,8 +64,8 @@ class PaymentService {
         paymentNotificationService.onSave(payment)
     }
 
-    public void update(Customer customer, Long id, Map params) {
-        Payment payment = findById(customer, id)
+    public void update(Customer customer, String publicId, Map params) {
+        Payment payment = findByPublicId(customer, publicId)
 
         if (payment.status == PaymentStatus.PAID) {
             throw new BusinessException("Não é possível alterar um pagamento que já esteja pago")

@@ -35,7 +35,7 @@ class PaymentController extends BaseController {
     }
 
     def update() {
-        paymentService.update(getCurrentCustomer(), params.id as Long, params)
+        paymentService.update(getCurrentCustomer(), params.id as String, params)
         render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 

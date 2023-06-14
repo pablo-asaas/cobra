@@ -45,7 +45,7 @@
 
             <div class="container-fluid border rounded py-3">
                 <form method="POST" id="updatePaymentForm">
-                    <g:hiddenField name="id" value="${payment.id}"/>
+                    <g:hiddenField name="id" value="${payment.publicId}"/>
                     <div class="mb-3 form-floating">
                         <span id="id" class="form-control readonly-control">${payment.publicId}</span>
                         <label for="id">ID</label>
