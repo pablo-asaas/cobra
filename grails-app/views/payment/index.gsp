@@ -165,7 +165,7 @@
                             <div class="col actions-col">
                                 <div class="float-end">
                                     <g:if test="${payment.deleted}">
-                                        <button type="button" data-id="${payment.id}" data-due-date="${dateFieldFormat([value: payment.dueDate])}" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#restorePaymentModal" title="Restaurar">
+                                        <button type="button" data-id="${payment.publicId}" data-due-date="${dateFieldFormat([value: payment.dueDate])}" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#restorePaymentModal" title="Restaurar">
                                             <i class="bi bi-arrow-counterclockwise"></i>
                                         </button>
                                     </g:if>

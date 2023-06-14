@@ -40,7 +40,7 @@ class PaymentController extends BaseController {
     }
 
     def restore() {
-        paymentService.restore(getCurrentCustomer(), params.id as Long, params)
+        paymentService.restore(getCurrentCustomer(), params.id as String, params)
         render([message: "Pagamento restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 

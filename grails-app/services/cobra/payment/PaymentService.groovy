@@ -103,8 +103,8 @@ class PaymentService {
         paymentNotificationService.onDelete(payment)
     }
 
-    public void restore(Customer customer, Long id, Map params) {
-        Payment payment = Payment.query([customer: customer, id: id, onlyDeleted: true]).get()
+    public void restore(Customer customer, String publicId, Map params) {
+        Payment payment = Payment.query([customer: customer, publicId: publicId, onlyDeleted: true]).get()
 
         if (!payment) {
             throw new ResourceNotFoundException("Cobrança não encontrada")
