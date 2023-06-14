@@ -29,8 +29,8 @@ class PaymentController extends BaseController {
         render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
-    def delete(Long id) {
-        paymentService.delete(getCurrentCustomer(), id)
+    def delete() {
+        paymentService.delete(getCurrentCustomer(), params.id as String)
         render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 

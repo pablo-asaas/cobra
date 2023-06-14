@@ -94,8 +94,8 @@ class PaymentService {
         paymentNotificationService.onUpdate(payment)
     }
 
-    public void delete(Customer customer, Long id) {
-        Payment payment = findById(customer, id)
+    public void delete(Customer customer, String publicID) {
+        Payment payment = findByPublicId(customer, publicID)
         payment.deleted = true
 
         payment.save(failOnError: true)
