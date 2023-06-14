@@ -56,9 +56,12 @@ class CustomerService {
 
         Customer customer = findById(id)
 
-        if (params.name) customer.name = params.name
-        if (params.email) customer.email = params.email
-        if (params.cpfCnpj) customer.cpfCnpj = params.cpfCnpj
+        customer.name = params.name
+        customer.email = params.email
+        if (customer.cpfCnpj != params.cpfCnpj) {
+            validateCpfCnpj(params.cpfCnpj as String)
+            customer.cpfCnpj = params.cpfCnpj
+        }
 
         customer.postalCode = params.postalCode
         customer.streetName = params.streetName
@@ -102,7 +105,6 @@ class CustomerService {
         if (!params.state) {
             throw new BusinessException("Estado é obrigatório")
         }
-        validateCpfCnpj(params.cpfCnpj)
     }
 
     private void validateCpfCnpj(String cpfCnpj) {
