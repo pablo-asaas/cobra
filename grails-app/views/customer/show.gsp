@@ -16,11 +16,6 @@
             <g:hiddenField name="id" value="${customer.id}"/>
 
             <div class="mb-3 form-floating">
-                <g:field class="form-control" type="text" name="id" value="${customer.id}" disabled="true"/>
-                <label class="col-form-label" for="id">ID</label>
-            </div>
-
-            <div class="mb-3 form-floating">
                 <g:field class="form-control" type="text" name="name" value="${customer.name}"/>
                 <label class="col-form-label" for="name">Name</label>
             </div>
