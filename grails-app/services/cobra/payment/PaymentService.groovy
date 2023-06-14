@@ -37,6 +37,16 @@ class PaymentService {
         return payment
     }
 
+    public Payment findByPublicId(Customer customer, String publicId) {
+        Payment payment = Payment.query([customer: customer, publicId: publicId]).get()
+
+        if (!payment) {
+            throw new ResourceNotFoundException("Cobrança não encontrada")
+        }
+
+        return payment
+    }
+
     public void save(Customer customer, Map params) {
         validateSaveParams(customer, params)
 

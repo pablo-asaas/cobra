@@ -20,8 +20,8 @@ class PaymentController extends BaseController {
         return [paymentList: paymentService.findAll(getCurrentCustomer())]
     }
 
-    def show(Long id) {
-        return [payment: paymentService.findById(getCurrentCustomer(), id)]
+    def show() {
+        return [payment: paymentService.findByPublicId(getCurrentCustomer(), params.id as String)]
     }
 
     def save() {

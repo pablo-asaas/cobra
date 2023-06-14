@@ -181,7 +181,7 @@
                                                     <i class="bi bi-check-lg"></i>
                                                 </button>
                                             </g:if>
-                                            <g:link action="show" id="${payment.id}" class="btn btn-light" title="Editar">
+                                            <g:link action="show" id="${payment.publicId}" class="btn btn-light" title="Editar">
                                                 <i class="bi bi-pencil-fill"></i>
                                             </g:link>
                                             <button class="btn btn-light delete-button" data-id="${payment.id}" title="Excluir">
