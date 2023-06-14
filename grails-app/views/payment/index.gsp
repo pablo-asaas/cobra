@@ -177,7 +177,7 @@
                                         </g:if>
                                         <g:else>
                                             <g:if test="${payment.status == PaymentStatus.PENDING}">
-                                                <button type="button" data-id="${payment.id}" class="deposit-button btn btn-light" title="Confirmar pagamento">
+                                                <button type="button" data-id="${payment.publicId}" class="deposit-button btn btn-light" title="Confirmar pagamento">
                                                     <i class="bi bi-check-lg"></i>
                                                 </button>
                                             </g:if>

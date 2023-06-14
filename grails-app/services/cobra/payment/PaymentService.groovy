@@ -160,8 +160,8 @@ class PaymentService {
         return payment
     }
 
-    public confirmDeposit(Customer customer, Long id) {
-        Payment payment = findById(customer, id)
+    public confirmDeposit(Customer customer, String id) {
+        Payment payment = findByPublicId(customer, id)
 
         if (payment.status != PaymentStatus.PENDING) {
             throw new BusinessException("Só é possível confirmar um pagamento se estiver pendente")

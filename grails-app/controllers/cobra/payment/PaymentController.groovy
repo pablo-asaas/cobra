@@ -46,7 +46,7 @@ class PaymentController extends BaseController {
 
     def confirmPayment() {
         if (params.deposit) {
-            paymentService.confirmDeposit(getCurrentCustomer(), params.id as Long)
+            paymentService.confirmDeposit(getCurrentCustomer(), params.id as String)
             render([message: "Pagamento confirmado com sucesso"] as JSON, status: HttpStatus.OK.code)
         }
     }
