@@ -59,8 +59,8 @@
 
                 <div class="col-md-8">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="streetName" required="true"/>
-                        <label class="col-form-label" for="streetName">Rua</label>
+                        <g:field class="form-control" type="text" name="streetName" required="true" disabled="true"/>
+                        <label class="col-form-label" for="streetName">Rua </label>
                     </div>
                 </div>
 
@@ -80,21 +80,21 @@
 
                 <div class="col-md-4">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="neighborhood" required="true"/>
+                        <g:field class="form-control" type="text" name="neighborhood" required="true" disabled="true"/>
                         <label class="col-form-label" for="neighborhood">Bairro</label>
                     </div>
                 </div>
 
                 <div class="col-md-10">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="city" required="true"/>
+                        <g:field class="form-control" type="text" name="city" required="true" disabled="true"/>
                         <label class="col-form-label" for="city">Cidade</label>
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="state" required="true"/>
+                        <g:field class="form-control" type="text" name="state" required="true" disabled="true"/>
                         <label class="col-form-label" for="state">Estado</label>
                     </div>
                 </div>
@@ -132,12 +132,35 @@
                 error: (error) => {
                     alert(error.responseJSON.message)
                 }
-            });
+            })
+        }
+
+        function searchAddress(event) {
+            const postalCode = $(event.target).val()
+            const validPostalCode = /^([0-9]{8})$/
+
+            if (!validPostalCode.test(postalCode)) {
+                alert("CEP inválido!")
+                return
+            }
+
+            $.getJSON("https://viacep.com.br/ws/"+ postalCode +"/json/?callback=?", function(dados) {
+                if (!("erro" in dados)) {
+                    $("#streetName").val(dados.logradouro).prop( "disabled", false )
+                    $("#neighborhood").val(dados.bairro).prop( "disabled", false )
+                    $("#city").val(dados.localidade).prop( "disabled", false )
+                    $("#state").val(dados.uf).prop( "disabled", false )
+                }
+                else {
+                    alert("CEP não encontrado.")
+                }
+            })
         }
 
         $(document).ready(() => {
             $("#registerForm").on("submit", handleRegisterSubmit)
-        });
+            $("#postalCode").blur(searchAddress)
+        })
     </g:javascript>
 </body>
 </html>
