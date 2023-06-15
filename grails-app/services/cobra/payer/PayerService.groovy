@@ -3,6 +3,7 @@ package cobra.payer
 import cobra.customer.Customer
 import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
+import cobra.payer.adapter.PayerAdapter
 import cobra.validator.CpfCnpjValidator
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
@@ -30,24 +31,24 @@ class PayerService {
     }
 
 
-    public void save(Customer customer, Map params){
-        validateParams(params)
-        validateCpfCnpj(customer, params.cpfCnpj as String)
+    public void save(Customer customer, PayerAdapter payerAdapter){
+        validateParams(payerAdapter)
+        validateCpfCnpj(customer, payerAdapter.cpfCnpj)
 
         Payer payer = new Payer()
-        payer.name = params.name
-        payer.email = params.email
-        payer.cpfCnpj = params.cpfCnpj
-        payer.phoneNumber = params.phoneNumber
+        payer.name = payerAdapter.name
+        payer.email = payerAdapter.email
+        payer.cpfCnpj = payerAdapter.cpfCnpj
+        payer.phoneNumber = payerAdapter.phoneNumber
         payer.customer = customer
 
-        payer.postalCode = params.postalCode
-        payer.streetName = params.streetName
-        payer.buildingNumber = params.buildingNumber
-        if (params.complement) payer.complement = params.complement
-        payer.neighborhood = params.neighborhood
-        payer.city = params.city
-        payer.state = params.state
+        payer.postalCode = payerAdapter.postalCode
+        payer.streetName = payerAdapter.streetName
+        payer.buildingNumber = payerAdapter.buildingNumber
+        payer.complement = payerAdapter.complement
+        payer.neighborhood = payerAdapter.neighborhood
+        payer.city = payerAdapter.city
+        payer.state = payerAdapter.state
 
         payer.save(failOnError: true)
     }
@@ -58,25 +59,25 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
-    public void update(Customer customer, Long id, Map params){
-        validateParams(params, customer)
+    public void update(Customer customer, Long id, PayerAdapter payerAdapter){
+        validateParams(payerAdapter)
 
         Payer payer = findById(customer, id)
-        payer.name = params.name
-        payer.email = params.email
-        if (payer.cpfCnpj != params.cpfCnpj){
-            validateCpfCnpj(customer, params.cpfCnpj as String)
-            payer.cpfCnpj = params.cpfCnpj
+        payer.name = payerAdapter.name
+        payer.email = payerAdapter.email
+        if (payer.cpfCnpj != payerAdapter.cpfCnpj){
+            validateCpfCnpj(customer, payerAdapter.cpfCnpj)
+            payer.cpfCnpj = payerAdapter.cpfCnpj
         }
-        payer.phoneNumber = params.phoneNumber
+        payer.phoneNumber = payerAdapter.phoneNumber
 
-        payer.postalCode = params.postalCode
-        payer.streetName = params.streetName
-        payer.buildingNumber = params.buildingNumber
-        if (params.complement) payer.complement = params.complement
-        payer.neighborhood = params.neighborhood
-        payer.city = params.city
-        payer.state = params.state
+        payer.postalCode = payerAdapter.postalCode
+        payer.streetName = payerAdapter.streetName
+        payer.buildingNumber = payerAdapter.buildingNumber
+        if (payerAdapter.complement) payer.complement = payerAdapter.complement
+        payer.neighborhood = payerAdapter.neighborhood
+        payer.city = payerAdapter.city
+        payer.state = payerAdapter.state
 
         payer.save(failOnError: true)
     }
@@ -90,35 +91,35 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
-    private void validateParams(Map params) {
-        if (!params.name) {
+    private void validateParams(PayerAdapter payerAdapter) {
+        if (!payerAdapter.name) {
             throw new BusinessException("Nome é obrigatório")
         }
-        if (!params.email){
+        if (!payerAdapter.email){
             throw new BusinessException("Email é obrigatório")
         }
-        if (!(new EmailValidator(false).isValid(params.email as String))) {
+        if (!(new EmailValidator(false).isValid(payerAdapter.email))) {
             throw new BusinessException("Email inválido")
         }
-        if (!params.phoneNumber) {
+        if (!payerAdapter.phoneNumber) {
             throw new BusinessException("Numero de Telefone é obrigatório")
         }
-        if (!params.postalCode) {
+        if (!payerAdapter.postalCode) {
             throw new BusinessException("CEP é obrigatório")
         }
-        if (!params.streetName){
+        if (!payerAdapter.streetName){
             throw new BusinessException("Nome da Rua é obrigatório")
         }
-        if (!params.buildingNumber) {
+        if (!payerAdapter.buildingNumber) {
             throw new BusinessException("Número da residência é obrigatório")
         }
-        if (!params.neighborhood) {
+        if (!payerAdapter.neighborhood) {
             throw new BusinessException("Bairro é obrigatório")
         }
-        if (!params.city) {
+        if (!payerAdapter.city) {
             throw new BusinessException("Cidade é obrigatório")
         }
-        if (!params.state) {
+        if (!payerAdapter.state) {
             throw new BusinessException("Estado é obrigatório")
         }
 
