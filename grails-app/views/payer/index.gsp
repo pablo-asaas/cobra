@@ -190,7 +190,7 @@
         }
 
         $.ajax({
-            type: "POST",
+            type: "DELETE",
             url: "/payer/delete",
             data: {id: $(event.delegateTarget).data("id")},
             dataType: "json",
