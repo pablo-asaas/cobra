@@ -1,6 +1,8 @@
 package cobra.payment
 
 import cobra.base.BaseController
+import cobra.payment.adapter.BasePaymentAdapter
+import cobra.payment.adapter.SavePaymentAdapter
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
@@ -25,7 +27,7 @@ class PaymentController extends BaseController {
     }
 
     def save() {
-        paymentService.save(getCurrentCustomer(), params)
+        paymentService.save(getCurrentCustomer(), new SavePaymentAdapter(params))
         render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 

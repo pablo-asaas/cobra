@@ -5,6 +5,7 @@ import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
 import cobra.payer.Payer
 import cobra.payer.PayerService
+import cobra.payment.adapter.SavePaymentAdapter
 import cobra.util.DateUtils
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
@@ -37,17 +38,17 @@ class PaymentService {
         return payment
     }
 
-    public void save(Customer customer, Map params) {
-        validateSaveParams(customer, params)
+    public void save(Customer customer, SavePaymentAdapter paymentAdapter) {
+        validateSaveParams(customer, paymentAdapter)
 
         Payment payment = new Payment()
-        Payer payer = payerService.findById(customer, params.payer as Long)
+        Payer payer = payerService.findById(customer, paymentAdapter.payerId)
 
         payment.customer = customer
         payment.payer = payer
-        payment.type = PaymentType.valueOf(params.type.toUpperCase())
-        payment.value = new BigDecimal(params.value)
-        payment.dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
+        payment.type = paymentAdapter.type
+        payment.value = paymentAdapter.value
+        payment.dueDate = paymentAdapter.dueDate
 
         payment.save(failOnError: true)
 
@@ -164,36 +165,32 @@ class PaymentService {
         paymentNotificationService.onPaid(payment)
     }
 
-    private void validateSaveParams(Customer customer, Map params) {
+    private void validateSaveParams(Customer customer, SavePaymentAdapter paymentAdapter) {
         if (!customer) {
             throw new BusinessException("É obrigatório informar um cliente")
         }
 
-        if (!params.payer) {
+        if (!paymentAdapter.payerId) {
             throw new BusinessException("É obrigatório informar um pagador")
         }
 
-        if (!params.type) {
+        if (!paymentAdapter.type) {
             throw new BusinessException("É obrigatório informar um tipo")
         }
 
-        if (!params.value) {
+        if (!paymentAdapter.value) {
             throw new BusinessException("É obrigatório informar um valor")
         }
 
-        BigDecimal parsedValue = new BigDecimal(params.value)
-
-        if (parsedValue <= BigDecimal.ZERO) {
+        if (paymentAdapter.value <= BigDecimal.ZERO) {
             throw new BusinessException("O valor não pode ser menor ou igual a zero")
         }
 
-        if (!params.dueDate) {
+        if (!paymentAdapter.dueDate) {
             throw new BusinessException("É obrigatório informar uma data de vencimento")
         }
 
-        Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
-
-        if (parsedDueDate <= DateUtils.getEndOfDay()) {
+        if (paymentAdapter.dueDate <= DateUtils.getEndOfDay()) {
             throw new BusinessException("A data de vencimento não pode ser anterior ou igual ao dia de hoje")
         }
     }
