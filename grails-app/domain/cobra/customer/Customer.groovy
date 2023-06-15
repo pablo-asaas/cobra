@@ -4,6 +4,10 @@ import cobra.base.BasePerson
 
 class Customer extends BasePerson {
 
+    static mapping = {
+        cpfCnpj unique: true
+    }
+
     static namedQueries = {
         query { Map search ->
             if (!Boolean.valueOf(search.includeDeleted)) {

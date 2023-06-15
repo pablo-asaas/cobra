@@ -31,7 +31,8 @@ class PayerService {
 
 
     public void save(Customer customer, Map params){
-        validateParams(params, customer)
+        validateParams(params)
+        validateCpfCnpj(customer, params.cpfCnpj as String)
 
         Payer payer = new Payer()
         payer.name = params.name
@@ -89,7 +90,7 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
-    private void validateParams(Map params, Customer customer) {
+    private void validateParams(Map params) {
         if (!params.name) {
             throw new BusinessException("Nome é obrigatório")
         }
