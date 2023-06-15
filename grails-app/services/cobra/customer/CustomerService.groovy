@@ -33,11 +33,6 @@ class CustomerService {
         return customer.save(failOnError: true)
     }
 
-    @ReadOnly
-    public List<Customer> findAll() {
-        return Customer.query([:]).list()
-    }
-
     public Customer findById(Long id) {
         Customer customer = Customer.query([id: id]).get()
 
