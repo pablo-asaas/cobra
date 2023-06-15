@@ -8,10 +8,10 @@ class SavePaymentAdapter extends BasePaymentAdapter{
     PaymentType type
     BigDecimal value
 
-    SavePaymentAdapter(Date dueDate, Long payerId, PaymentType type, BigDecimal value) {
-        super(dueDate)
-        this.payerId = payerId
-        this.type = type
-        this.value = value
+    SavePaymentAdapter(Map params) {
+        super(params.dueDate)
+        this.payerId = params.payerId
+        this.type = params.type
+        this.value = params.value
     }
 }

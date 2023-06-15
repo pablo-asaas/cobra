@@ -4,8 +4,8 @@ class UpdatePaymentAdapter extends BasePaymentAdapter{
 
     BigDecimal value
 
-    UpdatePaymentAdapter(Date dueDate, BigDecimal value) {
-        super(dueDate)
-        this.value = value
+    UpdatePaymentAdapter(Map params) {
+        super(params.dueDate)
+        this.value = params.value
     }
 }
