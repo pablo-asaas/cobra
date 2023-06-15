@@ -59,25 +59,25 @@ class PayerService {
         payer.save(failOnError: true)
     }
 
-    public void update(Customer customer, Long id, Map params){
-        validateParams(params, customer)
+    public void update(Customer customer, Long id, PayerAdapter payerAdapter){
+        validateParams(payerAdapter)
 
         Payer payer = findById(customer, id)
-        payer.name = params.name
-        payer.email = params.email
-        if (payer.cpfCnpj != params.cpfCnpj){
-            validateCpfCnpj(customer, params.cpfCnpj as String)
-            payer.cpfCnpj = params.cpfCnpj
+        payer.name = payerAdapter.name
+        payer.email = payerAdapter.email
+        if (payer.cpfCnpj != payerAdapter.cpfCnpj){
+            validateCpfCnpj(customer, payerAdapter.cpfCnpj)
+            payer.cpfCnpj = payerAdapter.cpfCnpj
         }
-        payer.phoneNumber = params.phoneNumber
+        payer.phoneNumber = payerAdapter.phoneNumber
 
-        payer.postalCode = params.postalCode
-        payer.streetName = params.streetName
-        payer.buildingNumber = params.buildingNumber
-        if (params.complement) payer.complement = params.complement
-        payer.neighborhood = params.neighborhood
-        payer.city = params.city
-        payer.state = params.state
+        payer.postalCode = payerAdapter.postalCode
+        payer.streetName = payerAdapter.streetName
+        payer.buildingNumber = payerAdapter.buildingNumber
+        if (payerAdapter.complement) payer.complement = payerAdapter.complement
+        payer.neighborhood = payerAdapter.neighborhood
+        payer.city = payerAdapter.city
+        payer.state = payerAdapter.state
 
         payer.save(failOnError: true)
     }
