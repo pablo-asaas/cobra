@@ -5,6 +5,7 @@ import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
 import cobra.payer.Payer
 import cobra.payer.PayerService
+import cobra.payment.adapter.RestorePaymentAdapter
 import cobra.payment.adapter.SavePaymentAdapter
 import cobra.payment.adapter.UpdatePaymentAdapter
 import cobra.util.DateUtils
@@ -93,25 +94,23 @@ class PaymentService {
         paymentNotificationService.onDelete(payment)
     }
 
-    public void restore(Customer customer, Long id, Map params) {
+    public void restore(Customer customer, Long id, RestorePaymentAdapter paymentAdapter) {
         Payment payment = Payment.query([customer: customer, id: id, onlyDeleted: true]).get()
 
         if (!payment) {
             throw new ResourceNotFoundException("Cobrança não encontrada")
         }
 
-        if (!params.dueDate) {
+        if (!paymentAdapter.dueDate) {
             throw new BusinessException("É obrigatório informar uma nova data de vencimento")
         }
 
-        Date parsedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
-
-        if (parsedDueDate <= DateUtils.getEndOfDay()) {
+        if (paymentAdapter.dueDate <= DateUtils.getEndOfDay()) {
             throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
         }
 
         payment.deleted = false
-        payment.dueDate = parsedDueDate
+        payment.dueDate = paymentAdapter.dueDate
         payment.status = PaymentStatus.PENDING
 
         payment.save(failOnError: true)

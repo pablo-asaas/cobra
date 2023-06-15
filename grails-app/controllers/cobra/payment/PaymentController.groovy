@@ -2,6 +2,7 @@ package cobra.payment
 
 import cobra.base.BaseController
 import cobra.payment.adapter.BasePaymentAdapter
+import cobra.payment.adapter.RestorePaymentAdapter
 import cobra.payment.adapter.SavePaymentAdapter
 import cobra.payment.adapter.UpdatePaymentAdapter
 import grails.converters.JSON
@@ -43,7 +44,7 @@ class PaymentController extends BaseController {
     }
 
     def restore() {
-        paymentService.restore(getCurrentCustomer(), params.id as Long, params)
+        paymentService.restore(getCurrentCustomer(), params.id as Long, new RestorePaymentAdapter(params))
         render([message: "Cobrança restaurada com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
