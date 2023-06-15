@@ -32,4 +32,13 @@ class DateUtils {
             return ''
         }
     }
+
+    public static String formatWithTime(Date date) {
+        try {
+            return new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(date)
+        } catch (Exception exception) {
+            exception.printStackTrace()
+            return ''
+        }
+    }
 }

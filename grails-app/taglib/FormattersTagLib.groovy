@@ -14,6 +14,10 @@ class FormattersTagLib {
         out << body() << DateUtils.format(attrs.value)
     }
 
+    def datetimeFormat = { attrs, body ->
+        out << body() << DateUtils.formatWithTime(attrs.value)
+    }
+
     def currencyFormat = { attrs, body ->
         out << body() << "R\$ ${CurrencyUtils.format(attrs.value)}"
     }
