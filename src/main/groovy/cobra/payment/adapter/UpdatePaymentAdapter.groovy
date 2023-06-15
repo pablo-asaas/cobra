@@ -6,6 +6,6 @@ class UpdatePaymentAdapter extends BasePaymentAdapter{
 
     UpdatePaymentAdapter(Map params) {
         super(params.dueDate)
-        this.value = params.value
+        this.value = new BigDecimal(params.value)
     }
 }

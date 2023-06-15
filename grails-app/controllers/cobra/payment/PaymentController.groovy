@@ -3,6 +3,7 @@ package cobra.payment
 import cobra.base.BaseController
 import cobra.payment.adapter.BasePaymentAdapter
 import cobra.payment.adapter.SavePaymentAdapter
+import cobra.payment.adapter.UpdatePaymentAdapter
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
@@ -37,7 +38,7 @@ class PaymentController extends BaseController {
     }
 
     def update() {
-        paymentService.update(getCurrentCustomer(), params.id as Long, params)
+        paymentService.update(getCurrentCustomer(), params.id as Long, new UpdatePaymentAdapter(params))
         render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 

@@ -6,6 +6,7 @@ import cobra.exception.ResourceNotFoundException
 import cobra.payer.Payer
 import cobra.payer.PayerService
 import cobra.payment.adapter.SavePaymentAdapter
+import cobra.payment.adapter.UpdatePaymentAdapter
 import cobra.util.DateUtils
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
@@ -55,25 +56,23 @@ class PaymentService {
         paymentNotificationService.onSave(payment)
     }
 
-    public void update(Customer customer, Long id, Map params) {
+    public void update(Customer customer, Long id, UpdatePaymentAdapter paymentAdapter) {
         Payment payment = findById(customer, id)
 
         if (payment.status == PaymentStatus.PAID) {
             throw new BusinessException("Não é possível alterar um pagamento que já esteja pago")
         }
 
-        if (params.dueDate) {
-            Date updatedDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.dueDate)
-
-            if (updatedDueDate <= DateUtils.getEndOfDay()) {
+        if (paymentAdapter.dueDate) {
+            if (paymentAdapter.dueDate <= DateUtils.getEndOfDay()) {
                 throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
             }
 
-            payment.dueDate = updatedDueDate
+            payment.dueDate = paymentAdapter.dueDate
         }
 
-        if (params.value) {
-            payment.value = new BigDecimal(params.value)
+        if (paymentAdapter.value) {
+            payment.value = paymentAdapter.value
         }
 
         if (payment.status == PaymentStatus.OVERDUE) {
