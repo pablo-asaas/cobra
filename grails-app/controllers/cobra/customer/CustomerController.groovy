@@ -1,36 +1,21 @@
 package cobra.customer
 
-import cobra.customer.CustomerService
+import cobra.base.BaseController
 import grails.plugin.springsecurity.annotation.Secured
-import cobra.exception.BusinessException
 import grails.converters.JSON
 import io.micronaut.http.HttpStatus
 
 @Secured('ROLE_USER')
-class CustomerController {
+class CustomerController extends BaseController{
 
     CustomerService customerService
 
-    static allowedMethods = [save: 'POST']
-
-    def index() {
-        return [customers: customerService.findAll()]
+    def show () {
+        return [customer: customerService.findById(getCurrentCustomer().id)]
     }
 
-    def create() {
-        return [:]
-    }
-
-    def save() {
-        try {
-            customerService.save(params)
-            render([message: "Criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
-        } catch (BusinessException exception) {
-            exception.printStackTrace()
-            render([message: exception.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
-        }  catch (Exception exception) {
-            exception.printStackTrace()
-            render([message: "Ocorreu um erro desconhecido"] as JSON, status: HttpStatus.BAD_REQUEST.code)
-        }
+    def update() {
+        customerService.update(params.id as Long, params)
+        render([message: "Editado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 }
