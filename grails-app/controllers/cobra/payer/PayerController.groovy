@@ -1,6 +1,7 @@
 package cobra.payer
 
 import cobra.base.BaseController
+import cobra.payer.adapter.PayerAdapter
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
@@ -21,7 +22,7 @@ class PayerController extends BaseController {
     }
 
     def save() {
-        payerService.save(getCurrentCustomer(), params)
+        payerService.save(getCurrentCustomer(), new PayerAdapter(params))
         render([message: "Pagador criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
