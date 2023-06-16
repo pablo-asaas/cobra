@@ -10,7 +10,7 @@ class LoginController {
 
     def index() {
         if (springSecurityService.isLoggedIn()) {
-            redirect uri: 'index'
+            redirect uri: '/'
         }
         else {
             redirect action: 'auth'
@@ -18,9 +18,8 @@ class LoginController {
     }
 
     def auth() {
-
         if (springSecurityService.isLoggedIn()) {
-            redirect uri: 'index'
+            redirect uri: '/'
             return
         }
 
