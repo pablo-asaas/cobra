@@ -3,9 +3,7 @@ package cobra.customer
 import cobra.customer.adapter.CustomerAdapter
 import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
-import cobra.payer.Payer
 import cobra.validator.CpfCnpjValidator
-import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 import org.apache.commons.validator.routines.EmailValidator
 
