@@ -1,6 +1,8 @@
 package cobra.payment
 
 import cobra.mail.MailSenderService
+import cobra.notification.NotificationService
+import cobra.notification.NotificationType
 import cobra.util.CurrencyUtils
 import grails.gorm.transactions.Transactional
 
@@ -8,6 +10,7 @@ import grails.gorm.transactions.Transactional
 class PaymentNotificationService {
 
     MailSenderService mailSenderService
+    NotificationService notificationService
 
     public void onSave(Payment payment) {
         String paymentValue = CurrencyUtils.format(payment.value)
@@ -51,6 +54,8 @@ class PaymentNotificationService {
 
         mailSenderService.send(payment.customer.email, subject, contentBody)
         mailSenderService.send(payment.payer.email, subject, contentBody)
+
+        notificationService.save(payment, NotificationType.PAYMENT_OVERDUE)
     }
 
     public void onPaid(Payment payment) {
@@ -59,5 +64,7 @@ class PaymentNotificationService {
 
         mailSenderService.send(payment.customer.email, subject, contentBody)
         mailSenderService.send(payment.payer.email, subject, contentBody)
+
+        notificationService.save(payment, NotificationType.PAYMENT_PAID)
     }
 }

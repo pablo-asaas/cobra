@@ -1,6 +1,7 @@
 package cobra.notification
 
 import cobra.customer.Customer
+import cobra.payment.Payment
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -25,6 +26,16 @@ class NotificationService {
         return Notification.query([customer: customer,
                                    publicId: publicId,
                                    includeRead: true]).get()
+    }
+
+    public void save(Payment payment, NotificationType type) {
+        Notification notification = new Notification()
+
+        notification.customer = payment.customer
+        notification.payment = payment
+        notification.type = type
+
+        notification.save(failOnError: true)
     }
 
     public void markAsRead(Notification notification) {
