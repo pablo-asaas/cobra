@@ -13,22 +13,22 @@ import org.apache.commons.validator.routines.EmailValidator
 class CustomerService {
 
 
-    public Customer save(Map params) {
+    public Customer save(CustomerAdapter customerAdapter) {
 
-        validateParams(params)
+        validateParams(customerAdapter)
 
         Customer customer = new Customer()
-        customer.name = params.name
-        customer.email = params.email
-        customer.cpfCnpj = params.cpfCnpj
+        customer.name = customerAdapter.name
+        customer.email = customerAdapter.email
+        customer.cpfCnpj = customerAdapter.cpfCnpj
 
-        customer.postalCode = params.postalCode
-        customer.streetName = params.streetName
-        customer.buildingNumber = params.buildingNumber
-        if (params.complement) customer.complement = params.complement
-        customer.neighborhood = params.neighborhood
-        customer.city = params.city
-        customer.state = params.state
+        customer.postalCode = customerAdapter.postalCode
+        customer.streetName = customerAdapter.streetName
+        customer.buildingNumber = customerAdapter.buildingNumber
+        if (customerAdapter.complement) customer.complement = customerAdapter.complement
+        customer.neighborhood = customerAdapter.neighborhood
+        customer.city = customerAdapter.city
+        customer.state = customerAdapter.state
 
         return customer.save(failOnError: true)
     }

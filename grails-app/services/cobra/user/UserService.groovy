@@ -2,6 +2,7 @@ package cobra.user
 
 import cobra.customer.Customer
 import cobra.customer.CustomerService
+import cobra.customer.adapter.CustomerAdapter
 import cobra.exception.BusinessException
 import grails.gorm.transactions.Transactional
 
@@ -11,7 +12,7 @@ class UserService {
     CustomerService customerService
 
     public void save(Map params) {
-        Customer customer = customerService.save(params)
+        Customer customer = customerService.save(new CustomerAdapter(params))
         save(customer, params)
     }
 
