@@ -1,6 +1,6 @@
 package cobra.payment.adapter
 
-class UpdatePaymentAdapter extends BasePaymentAdapter{
+class UpdatePaymentAdapter extends BasePaymentAdapter {
 
     BigDecimal value
 

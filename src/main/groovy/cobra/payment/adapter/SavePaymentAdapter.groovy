@@ -2,7 +2,7 @@ package cobra.payment.adapter
 
 import cobra.payment.PaymentType
 
-class SavePaymentAdapter extends BasePaymentAdapter{
+class SavePaymentAdapter extends BasePaymentAdapter {
 
     Long payerId
     PaymentType type
