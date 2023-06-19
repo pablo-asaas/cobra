@@ -21,6 +21,7 @@
             <div class="row header-row fw-bold border-bottom py-3">
                 <div class="col">ID</div>
                 <div class="col">Nome de usuário</div>
+                <div class="col">Criado em</div>
             </div>
             <g:each var="user" in="${userList}">
                 <div class="row data-row">
@@ -33,6 +34,7 @@
                             ${user.username}
                         </g:else>
                     </div>
+                    <div class="col">${user.createdAt}</div>
                 </div>
             </g:each>
         </div>
