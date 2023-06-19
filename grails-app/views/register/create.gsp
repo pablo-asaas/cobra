@@ -4,6 +4,7 @@
     <meta name="layout" content="main"/>
     <title>Criar conta</title>
     <asset:stylesheet src="form.css"/>
+    <asset:javascript src="postalCodeUtils.js"/>
 </head>
 
 <body>
@@ -59,8 +60,8 @@
 
                 <div class="col-md-8">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="streetName" required="true"/>
-                        <label class="col-form-label" for="streetName">Rua</label>
+                        <g:field class="form-control" type="text" name="streetName" required="true" disabled="true"/>
+                        <label class="col-form-label" for="streetName">Rua </label>
                     </div>
                 </div>
 
@@ -80,21 +81,21 @@
 
                 <div class="col-md-4">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="neighborhood" required="true"/>
+                        <g:field class="form-control" type="text" name="neighborhood" required="true" disabled="true"/>
                         <label class="col-form-label" for="neighborhood">Bairro</label>
                     </div>
                 </div>
 
                 <div class="col-md-10">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="city" required="true"/>
+                        <g:field class="form-control" type="text" name="city" required="true" disabled="true"/>
                         <label class="col-form-label" for="city">Cidade</label>
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="mb-3 form-floating">
-                        <g:field class="form-control" type="text" name="state" required="true"/>
+                        <g:field class="form-control" type="text" name="state" required="true" disabled="true"/>
                         <label class="col-form-label" for="state">Estado</label>
                     </div>
                 </div>
@@ -132,12 +133,13 @@
                 error: (error) => {
                     alert(error.responseJSON.message)
                 }
-            });
+            })
         }
 
         $(document).ready(() => {
             $("#registerForm").on("submit", handleRegisterSubmit)
-        });
+            $("#postalCode").on("blur", searchAddress)
+        })
     </g:javascript>
 </body>
 </html>

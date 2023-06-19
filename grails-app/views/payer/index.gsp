@@ -5,6 +5,7 @@
     <asset:stylesheet src="grid-table.css"/>
     <asset:stylesheet src="modal.css"/>
     <title>Index</title>
+    <asset:javascript src="postalCodeUtils.js"/>
 </head>
 
 <body>
@@ -112,7 +113,7 @@
                             </div>
 
                             <div class="mb-3 form-floating">
-                                <g:field class="form-control" type="text" name="streetName" required="true"/>
+                                <g:field class="form-control" type="text" name="streetName" required="true" disabled="true"/>
                                 <label for="streetName">Rua</label>
                             </div>
 
@@ -127,17 +128,17 @@
                             </div>
 
                             <div class="mb-3 form-floating">
-                                <g:field class="form-control" type="text" name="state" required="true"/>
+                                <g:field class="form-control" type="text" name="state" required="true" disabled="true"/>
                                 <label  for="state">Estado</label>
                             </div>
 
                             <div class="mb-3 form-floating">
-                                <g:field class="form-control" type="text" name="city" required="true"/>
+                                <g:field class="form-control" type="text" name="city" required="true" disabled="true"/>
                                 <label for="city">Cidade</label>
                             </div>
 
                             <div class="mb-3 form-floating">
-                                <g:field class="form-control" type="text" name="neighborhood" required="true"/>
+                                <g:field class="form-control" type="text" name="neighborhood" required="true" disabled="true"/>
                                 <label for="neighborhood">Bairro</label>
                             </div>
                             <div class="float-end">
@@ -203,10 +204,12 @@
             }
         })
     }
+
     $(document).ready(() => {
         $("#createPayerForm").on("submit", handleFormSubmit)
         $(".restore-button").on("click", handleRestoreClick)
         $(".delete-button").on("click", handleDeleteClick)
+        $("#postalCode").on("blur", searchAddress)
     })
 </g:javascript>
 </body>
