@@ -11,7 +11,7 @@
                 <h1 class="mb-5 mt-3">Bem vindo ao Cobra</h1>
 
                 <h2>A vida sempre Cobra,
-                e o nós te ajudamos no gerenciamento das suas cobranças de forma rápida, simples e segura.
+                e nós te ajudamos no gerenciamento das suas cobranças de forma rápida, simples e segura.
                 </h2>
                 <g:link controller="login" class="btn btn-success btn-lg">
                     Já tenho uma conta
