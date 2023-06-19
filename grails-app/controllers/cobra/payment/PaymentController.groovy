@@ -1,6 +1,10 @@
 package cobra.payment
 
 import cobra.base.BaseController
+import cobra.payment.adapter.BasePaymentAdapter
+import cobra.payment.adapter.RestorePaymentAdapter
+import cobra.payment.adapter.SavePaymentAdapter
+import cobra.payment.adapter.UpdatePaymentAdapter
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
@@ -25,7 +29,7 @@ class PaymentController extends BaseController {
     }
 
     def save() {
-        paymentService.save(getCurrentCustomer(), params)
+        paymentService.save(getCurrentCustomer(), new SavePaymentAdapter(params))
         render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 
@@ -35,12 +39,12 @@ class PaymentController extends BaseController {
     }
 
     def update() {
-        paymentService.update(getCurrentCustomer(), params.id as Long, params)
+        paymentService.update(getCurrentCustomer(), params.id as Long, new UpdatePaymentAdapter(params))
         render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
     def restore() {
-        paymentService.restore(getCurrentCustomer(), params.id as Long, params)
+        paymentService.restore(getCurrentCustomer(), params.id as Long, new RestorePaymentAdapter(params))
         render([message: "Cobrança restaurada com sucesso"] as JSON, status: HttpStatus.OK.code)
     }
 
