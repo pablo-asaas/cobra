@@ -17,19 +17,8 @@ class RegisterController {
 
     def index() {
         if (springSecurityService.isLoggedIn()) {
-            redirect uri: 'index'
+            redirect uri: '/'
         }
-        else {
-            redirect action: 'create'
-        }
-    }
-
-    def create() {
-        if (springSecurityService.isLoggedIn()) {
-            redirect uri: 'index'
-            return
-        }
-        return [:]
     }
 
     def save() {
