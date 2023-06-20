@@ -4,12 +4,12 @@ import cobra.base.BaseDomain
 import cobra.customer.Customer
 import cobra.payment.Payment
 
-class Notification extends BaseDomain {
+class AlertNotification extends BaseDomain {
 
     String publicId = UUID.randomUUID().toString()
     Customer customer
     Payment payment
-    NotificationType type
+    AlertNotificationType type
     Boolean unread = true
 
     static namedQueries = {
