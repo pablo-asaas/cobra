@@ -1,6 +1,6 @@
 package cobra.notification
 
-enum NotificationType {
+enum AlertNotificationType {
 
     PAYMENT_PAID,
     PAYMENT_OVERDUE
