@@ -43,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
-                <div class="card border-dark">
+                <div class="card border">
                     <div class="card-body">
                         <h5 class="card-title">Gráfico de Cobranças</h5>
                         <p class="card-text">Não há nada</p>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="col-md-6 mb-3">
-                <div class="card border-dark">
+                <div class="card border">
                     <div class="card-body">
                         <h5 class="card-title">Gráfico de Faturamento</h5>
                         <p class="card-text">Não há nada</p>
