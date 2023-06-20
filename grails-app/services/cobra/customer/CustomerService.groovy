@@ -23,7 +23,7 @@ class CustomerService {
         customer.postalCode = customerAdapter.postalCode
         customer.streetName = customerAdapter.streetName
         customer.buildingNumber = customerAdapter.buildingNumber
-        if (customerAdapter.complement) customer.complement = customerAdapter.complement
+        customer.complement = customerAdapter.complement
         customer.neighborhood = customerAdapter.neighborhood
         customer.city = customerAdapter.city
         customer.state = customerAdapter.state
@@ -60,7 +60,7 @@ class CustomerService {
         customer.postalCode = customerAdapter.postalCode
         customer.streetName = customerAdapter.streetName
         customer.buildingNumber = customerAdapter.buildingNumber
-        if (customerAdapter.complement) customer.complement = customerAdapter.complement
+        customer.complement = customerAdapter.complement
         customer.neighborhood = customerAdapter.neighborhood
         customer.city = customerAdapter.city
         customer.state = customerAdapter.state
