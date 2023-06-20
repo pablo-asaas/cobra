@@ -1,4 +1,4 @@
-<%@ page import="cobra.notification.NotificationType" %>
+<%@ page import="cobra.notification.AlertNotificationType" %>
 <!doctype html>
 <html lang="en" class="no-js">
     <head>
@@ -25,7 +25,7 @@
             <g:javascript>
                 $.ajax({
                     type: "GET",
-                    url: "/notification/navbarTrayLatestNotifications",
+                    url: "/alertNotification/navbarTrayLatestNotifications",
                     dataType: "json",
                     success: (data) => {
                         if (data.length < 1) {
@@ -39,8 +39,8 @@
 
                         dropdownContent.html("")
 
-                        for (const notification of data) {
-                            dropdownContent.append('<div class="border-bottom notification"><a href="/notification/show/' + notification.publicId + '" class="text-decoration-none p-3 d-block"><p class="fw-bold mb-1">' + notification.title + '</p><p class="mb-1">' + notification.content + '</p><p class="text-muted mb-0">' + notification.date + '</p></a></div>')
+                        for (const alertNotification of data) {
+                            dropdownContent.append('<div class="border-bottom notification"><a href="/alertNotification/show/' + alertNotification.publicId + '" class="text-decoration-none p-3 d-block"><p class="fw-bold mb-1">' + alertNotification.title + '</p><p class="mb-1">' + alertNotification.content + '</p><p class="text-muted mb-0">' + alertNotification.date + '</p></a></div>')
                         }
                     }
                 })
@@ -89,7 +89,7 @@
                                             <p class="text-center py-3 mb-0 border-bottom">Você não possui notificações não lidas</p>
                                         </div>
                                         <div class="dropdown-menu-footer">
-                                            <a href="/notification" class="text-decoration-none navigation-link">Ver todas</a>
+                                            <a href="/alertNotification" class="text-decoration-none navigation-link">Ver todas</a>
                                         </div>
                                     </div>
                                 </div>
