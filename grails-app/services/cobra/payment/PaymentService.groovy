@@ -12,8 +12,6 @@ import cobra.util.DateUtils
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
-import java.text.SimpleDateFormat
-
 @Transactional
 class PaymentService {
 
