@@ -13,8 +13,8 @@ class DashboardService {
 
     public Map dashboardInfo(Customer customer) {
         BigDecimal monthlyBilling = calculateMonthlyBilling(customer)
-        Long pendingPaymentsAmount = calculatePendingPaymentsAmount(customer)
-        Long overduePaymentsAmount = calculateOverduePaymentsAmount(customer)
+        Long pendingPaymentsAmount = calculatePaymentsAmountByStatus(customer, PaymentStatus.PENDING)
+        Long overduePaymentsAmount = calculatePaymentsAmountByStatus(customer, PaymentStatus.OVERDUE)
 
         return [monthlyBilling: monthlyBilling,
                 pendingPaymentsAmount: pendingPaymentsAmount,
@@ -28,11 +28,7 @@ class DashboardService {
         return Payment.query(customer: customer, status: PaymentStatus.PAID, column: "value", fromDate: fromDate, toDate: toDate).get()
     }
 
-    private Long calculatePendingPaymentsAmount(Customer customer) {
-        return Payment.query(customer: customer, status: PaymentStatus.PENDING).count()
-    }
-
-    private Long calculateOverduePaymentsAmount(Customer customer) {
-        return Payment.query(customer: customer, status: PaymentStatus.OVERDUE).count()
+    private Long calculatePaymentsAmountByStatus(Customer customer, PaymentStatus status) {
+        return Payment.query(customer: customer, status: status).count()
     }
 }
