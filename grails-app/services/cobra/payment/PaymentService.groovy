@@ -71,6 +71,10 @@ class PaymentService {
         }
 
         if (paymentAdapter.value) {
+            if (paymentAdapter.value <= BigDecimal.ZERO) {
+                throw new BusinessException("Não é possível alterar o valor para menor ou igual a zero")
+            }
+
             payment.value = paymentAdapter.value
         }
 
