@@ -11,7 +11,7 @@ class PayerController extends BaseController {
 
     PayerService payerService
 
-    static allowedMethods = [index: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE', restore: 'POST']
+    static allowedMethods = [index: 'GET', ajaxPayerList: 'GET', save: 'POST', update: 'PUT', delete: 'DELETE', restore: 'POST']
 
     def index() {
         if (params.deleted) {
@@ -19,6 +19,17 @@ class PayerController extends BaseController {
         }
 
         return [payerList: payerService.findAll(getCurrentCustomer())]
+    }
+
+    def ajaxPayerList() {
+        List<Payer> payerList = payerService.findAll(getCurrentCustomer())
+        List<Map> parsedPayerList = []
+
+        for (Payer payer : payerList) {
+            parsedPayerList.add([id: payer.id, name: payer.name])
+        }
+
+        render(parsedPayerList as JSON, status: HttpStatus.OK.code)
     }
 
     def save() {
