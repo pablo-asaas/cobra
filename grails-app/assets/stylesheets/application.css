@@ -9,5 +9,7 @@
 *
 *= require bootstrap.min
 *= require bootstrap-icons.min
+*= require select2.min
+*= require select2-bootstrap-5-theme.min
 *= require_self
 */
