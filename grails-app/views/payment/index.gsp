@@ -78,7 +78,7 @@
                     type: "POST",
                     url: "/payment/confirmPayment/",
                     data: {
-                        id: $(event.target).data("id"),
+                        id: $(event.delegateTarget).data("id"),
                         deposit: true
                     },
                     dataType: "json",
