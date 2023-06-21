@@ -12,7 +12,7 @@
                 <div class="card border-success">
                     <div class="card-body">
                         <h5 class="card-title text-success">Faturamento mensal</h5>
-                        <p class="card-text">${monthlyBilling}</p>
+                        <p class="card-text"><g:currencyFormat value="${monthlyBilling}"/></p>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="card  border-success">
                     <div class="card-body">
                         <h5 class="card-title text-success">Total a receber</h5>
-                        <p class="card-text">${totalReceivable}</p>
+                        <p class="card-text"><g:currencyFormat value="${totalReceivable}"/></p>
                     </div>
                 </div>
             </div>
