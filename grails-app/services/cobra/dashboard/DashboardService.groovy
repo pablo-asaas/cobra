@@ -13,8 +13,10 @@ class DashboardService {
 
     public Map dashboardInfo(Customer customer) {
         BigDecimal monthlyBilling = calculateMonthlyBilling(customer)
+        Long pendingPaymentsAmount = calculatePendingPaymentsAmount(customer)
+
         return [monthlyBilling: monthlyBilling,
-                pendingPaymentsAmount: 6,
+                pendingPaymentsAmount: pendingPaymentsAmount,
                 overduePaymentsAmount: 9,
                 totalReceivable: 1234]
     }
@@ -23,5 +25,9 @@ class DashboardService {
         def fromDate = DateUtils.getStartOfMonth()
         def toDate = new Date()
         return Payment.query(customer: customer, status: PaymentStatus.PAID, column: "value", fromDate: fromDate, toDate: toDate).get()
+    }
+
+    private Long calculatePendingPaymentsAmount(Customer customer) {
+        return Payment.query(customer: customer, status: PaymentStatus.PENDING).count()
     }
 }
