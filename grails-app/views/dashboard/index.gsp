@@ -12,7 +12,7 @@
                 <div class="card border-success">
                     <div class="card-body">
                         <h5 class="card-title text-success">Faturamento mensal</h5>
-                        <p class="card-text">Não há nada</p>
+                        <p class="card-text"><g:currencyFormat value="${monthlyBilling}"/></p>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 <div class="card  border-warning">
                     <div class="card-body">
                         <h5 class="card-title text-warning">Cobranças pendentes</h5>
-                        <p class="card-text">Não há nada</p>
+                        <p class="card-text">${pendingPaymentsAmount}</p>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="card border-danger">
                     <div class="card-body">
                         <h5 class="card-title text-danger">Cobranças vencidas</h5>
-                        <p class="card-text">Não há nada</p>
+                        <p class="card-text">${overduePaymentsAmount}</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="card  border-success">
                     <div class="card-body">
                         <h5 class="card-title text-success">Total a receber</h5>
-                        <p class="card-text">Não há nada</p>
+                        <p class="card-text"><g:currencyFormat value="${totalReceivable}"/></p>
                     </div>
                 </div>
             </div>
