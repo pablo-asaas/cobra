@@ -1,4 +1,3 @@
-<%@ page import="cobra.notification.AlertNotificationType" %>
 <!doctype html>
 <html lang="en" class="no-js">
     <head>

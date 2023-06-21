@@ -9,8 +9,8 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class PaymentNotificationService {
 
-    MailSenderService mailSenderService
     AlertNotificationService alertNotificationService
+    MailSenderService mailSenderService
 
     public void onSave(Payment payment) {
         String paymentValue = CurrencyUtils.format(payment.value)

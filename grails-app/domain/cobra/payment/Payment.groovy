@@ -64,6 +64,22 @@ class Payment extends BaseDomain {
             if (search.containsKey("publicId")) {
                 eq("publicId", search.publicId)
             }
+
+            if (search.containsKey("fromDate") && search.containsKey("toDate")) {
+                between("paymentDate", search.fromDate, search.toDate)
+            }
+
+            if (search.containsKey("column")) {
+                if (search.sum) {
+                    projections {
+                        sum(search.column)
+                    }
+                } else {
+                    projections {
+                        property(search.column)
+                    }
+                }
+            }
         }
     }
 }

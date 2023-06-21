@@ -78,7 +78,7 @@
                     type: "POST",
                     url: "/payment/confirmPayment/",
                     data: {
-                        id: $(event.target).data("id"),
+                        id: $(event.delegateTarget).data("id"),
                         deposit: true
                     },
                     dataType: "json",
@@ -90,6 +90,29 @@
                         alert(error.responseJSON.message)
                     }
                 });
+            }
+
+            function loadPayerSelectOptions(selectElement) {
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/payer/ajaxPayerList",
+                    dataType: "json",
+                    success: (data) => {
+                        const elementList = []
+
+                        for (const payer of data) {
+                            const payerElement = $("<option>")
+
+                            payerElement.val(payer.id)
+                            payerElement.text(payer.name)
+
+                            elementList.push(payerElement)
+                        }
+
+                        selectElement.append(elementList)
+                    }
+                })
             }
 
             $(document).ready(() => {
@@ -107,7 +130,21 @@
                     $('#restorePaymentForm input[name=id]').val(id)
                     $('#restorePaymentForm input[name=dueDate]').val(dueDate)
                 })
-            });
+
+                const payerSelect = $("#payer")
+
+                loadPayerSelectOptions(payerSelect)
+
+                payerSelect.select2({
+                    theme: "bootstrap-5",
+                    dropdownParent: $("#createPaymentModal"),
+                    selectOnClose: true,
+                    language: {
+                        noResults: () => "Nenhum pagador encontrado"
+                    },
+                    placeholder: "Selecione um pagador"
+                })
+            })
         </g:javascript>
     </head>
 
@@ -206,8 +243,8 @@
                     </div>
                     <div class="modal-body">
                         <form method="POST" id="createPaymentForm">
-                            <div class="mb-3 form-floating">
-                                <g:field type="number" min="1" name="payer" required="true" class="form-control" placeholder="Pagador"/>
+                            <div class="mb-3 form-floating select2-form-floating">
+                                <select id="payer" name="payer" required class="form-select"></select>
                                 <label for="payer">Pagador</label>
                             </div>
                             <div class="mb-3 form-floating">

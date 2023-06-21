@@ -1,6 +1,7 @@
 package cobra.customer
 
 import cobra.base.BaseController
+import cobra.customer.adapter.CustomerAdapter
 import grails.plugin.springsecurity.annotation.Secured
 import grails.converters.JSON
 import io.micronaut.http.HttpStatus
@@ -15,7 +16,7 @@ class CustomerController extends BaseController{
     }
 
     def update() {
-        customerService.update(params.id as Long, params)
+        customerService.update(params.id as Long, new CustomerAdapter(params))
         render([message: "Editado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
     }
 }

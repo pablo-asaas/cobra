@@ -2,6 +2,9 @@
     <head>
         <meta name="layout" content="main"/>
         <title>Comprovante de pagamento</title>
+        <style media="print">
+            .navbar, .no-print { display: none !important; }
+        </style>
     </head>
 
     <body>
@@ -56,6 +59,11 @@
                         <g:cpfCnpjFormat value="${payment.customer.cpfCnpj}"/>
                     </span>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-center no-print">
+                <button type="button" class="btn btn-light" onclick="window.print()" title="Imprimir">
+                    <i class="bi bi-printer-fill"></i>
+                </button>
             </div>
         </div>
     </body>
