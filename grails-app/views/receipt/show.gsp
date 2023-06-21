@@ -60,6 +60,11 @@
                     </span>
                 </div>
             </div>
+            <div class="card-footer d-flex justify-content-center no-print">
+                <button type="button" class="btn btn-light" onclick="window.print()" title="Imprimir">
+                    <i class="bi bi-printer-fill"></i>
+                </button>
+            </div>
         </div>
     </body>
 </html>
