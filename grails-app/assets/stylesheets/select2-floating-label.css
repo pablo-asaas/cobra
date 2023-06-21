@@ -1,0 +1,13 @@
+.select2-selection {
+    height: auto !important;;
+    padding-top: 1.625rem !important;
+    padding-bottom: 0.625rem !important;
+}
+
+.form-floating.select2-form-floating .select2-selection__placeholder {
+    color: #212529 !important;
+}
+
+.form-floating.select2-form-floating label {
+    z-index: 1;
+}
