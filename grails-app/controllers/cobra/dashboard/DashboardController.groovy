@@ -9,6 +9,6 @@ class DashboardController extends BaseController{
     DashboardService dashboardService
 
     def index() {
-        return dashboardService.dashboardInfo()
+        return dashboardService.dashboardInfo(getCurrentCustomer())
     }
 }
