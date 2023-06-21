@@ -70,8 +70,14 @@ class Payment extends BaseDomain {
             }
 
             if (search.containsKey("column")) {
-                projections {
-                    sum(search.column)
+                if (search.sum) {
+                    projections {
+                        sum(search.column)
+                    }
+                } else {
+                    projections {
+                        property(search.column)
+                    }
                 }
             }
         }
