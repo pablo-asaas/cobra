@@ -6,6 +6,8 @@ import cobra.payer.Payer
 
 class Payment extends BaseDomain {
 
+    public static final BigDecimal PAYMENT_MINIMUM_VALUE = new BigDecimal("0.01")
+
     String publicId = UUID.randomUUID().toString()
     Customer customer
     Payer payer
@@ -21,7 +23,7 @@ class Payment extends BaseDomain {
 
     static constraints = {
         value validator: { val, obj, errors ->
-            if (val <= BigDecimal.ZERO) {
+            if (val < PAYMENT_MINIMUM_VALUE) {
                 errors.rejectValue("value", null)
             }
         }

@@ -18,8 +18,6 @@ class PaymentService {
     PayerService payerService
     PaymentNotificationService paymentNotificationService
 
-    private static final BigDecimal PAYMENT_MINIMUM_VALUE = new BigDecimal("0.01")
-
     @ReadOnly
     public List<Payment> findAll(Customer customer) {
         return Payment.query([customer: customer]).list()
@@ -73,7 +71,7 @@ class PaymentService {
         }
 
         if (paymentAdapter.value) {
-            if (paymentAdapter.value < PAYMENT_MINIMUM_VALUE) {
+            if (paymentAdapter.value < Payment.PAYMENT_MINIMUM_VALUE) {
                 throw new BusinessException("Não é possível alterar o valor para menor ou igual a zero")
             }
 
@@ -184,7 +182,7 @@ class PaymentService {
             throw new BusinessException("É obrigatório informar um valor")
         }
 
-        if (paymentAdapter.value < PAYMENT_MINIMUM_VALUE) {
+        if (paymentAdapter.value < Payment.PAYMENT_MINIMUM_VALUE) {
             throw new BusinessException("O valor não pode ser menor ou igual a zero")
         }
 
