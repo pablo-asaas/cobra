@@ -12,8 +12,6 @@ import cobra.util.DateUtils
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
-import java.text.SimpleDateFormat
-
 @Transactional
 class PaymentService {
 
@@ -73,6 +71,10 @@ class PaymentService {
         }
 
         if (paymentAdapter.value) {
+            if (paymentAdapter.value < Payment.PAYMENT_MINIMUM_VALUE) {
+                throw new BusinessException("Não é possível alterar o valor para menor ou igual a zero")
+            }
+
             payment.value = paymentAdapter.value
         }
 
@@ -180,7 +182,7 @@ class PaymentService {
             throw new BusinessException("É obrigatório informar um valor")
         }
 
-        if (paymentAdapter.value <= BigDecimal.ZERO) {
+        if (paymentAdapter.value < Payment.PAYMENT_MINIMUM_VALUE) {
             throw new BusinessException("O valor não pode ser menor ou igual a zero")
         }
 
