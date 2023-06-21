@@ -7,6 +7,6 @@ import grails.plugin.springsecurity.annotation.Secured
 class DashboardController extends BaseController{
 
     def index() {
-        return [dashboard: "dashboard"]
+        return [monthlyBilling: 100, pendingPaymentsAmount: 6, overduePaymentsAmount: 9, totalReceivable: 1234]
     }
 }
