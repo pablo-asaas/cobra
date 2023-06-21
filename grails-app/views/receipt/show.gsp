@@ -2,6 +2,9 @@
     <head>
         <meta name="layout" content="main"/>
         <title>Comprovante de pagamento</title>
+        <style media="print">
+            .navbar, .no-print { display: none !important; }
+        </style>
     </head>
 
     <body>
