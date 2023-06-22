@@ -3,6 +3,9 @@
 <head>
     <meta name="layout" content="main"/>
     <title>Dashboard</title>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
 </head>
 
 <body>
@@ -54,11 +57,33 @@
                 <div class="card border">
                     <div class="card-body">
                         <h5 class="card-title">Gráfico de Faturamento</h5>
-                        <p class="card-text">Não há nada</p>
+                        <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<g:javascript>
+    var xValues = ["Italy", "France", "Spain", "USA"]
+    var yValues = [55, 49, 44, 24]
+    var barColors = ["red", "green","blue","orange","brown"]
+
+    new Chart("myChart", {
+        type: "doughnut",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "World Wide Wine Production"
+            }
+        }
+    })
+</g:javascript>
 </body>
 </html>
