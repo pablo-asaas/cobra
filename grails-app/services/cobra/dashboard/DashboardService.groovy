@@ -23,6 +23,10 @@ class DashboardService {
                 totalReceivable: totalReceivable]
     }
 
+    public Map doughnutGraphInfo (Customer customer) {
+        return ["pix": 3, "credit_card": 4, "debit_card": 5, "payment_slip": 6]
+    }
+
     private BigDecimal calculateMonthlyBilling(Customer customer) {
         def fromDate = DateUtils.getStartOfMonth()
         def toDate = new Date()
