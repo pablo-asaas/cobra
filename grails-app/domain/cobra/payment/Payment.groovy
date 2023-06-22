@@ -83,5 +83,13 @@ class Payment extends BaseDomain {
                 }
             }
         }
+        countByPaymentType { Map search ->
+            query(search)
+
+            projections {
+                groupProperty ("type")
+                count ("type")
+            }
+        }
     }
 }

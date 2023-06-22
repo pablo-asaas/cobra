@@ -24,7 +24,11 @@ class DashboardService {
     }
 
     public Map doughnutGraphInfo (Customer customer) {
-        return ["pix": 3, "credit_card": 4, "debit_card": 5, "payment_slip": 6]
+        def countTypeList = Payment.countByPaymentType([customer: customer]).list()
+        def countTypeMap = countTypeList.collectEntries {
+            [it[0].toString().toLowerCase(), it[1]]
+        }
+        return countTypeMap
     }
 
     private BigDecimal calculateMonthlyBilling(Customer customer) {
