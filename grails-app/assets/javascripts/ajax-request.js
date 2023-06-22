@@ -74,7 +74,7 @@ class AjaxRequest {
     }
 
     static #buildCloseAlertButton() {
-        const closeButton = $("<button></button>")
+        const closeButton = $("<button type='button'></button>")
 
         closeButton.addClass("btn-close ps-3")
         closeButton.attr("data-bs-dismiss", "alert")
