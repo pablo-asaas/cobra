@@ -37,7 +37,7 @@ class AjaxRequest {
 
     static onButtonClick(type, url, data) {
         $.ajax({ type, url, data })
-            .done((data) => location.reload())
+            .done(() => location.reload())
             .fail((error) => {
                 let errorMessage = this.#defaultErrorMessage
 
