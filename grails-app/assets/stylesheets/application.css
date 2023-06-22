@@ -12,5 +12,6 @@
 *= require select2.min
 *= require select2-bootstrap-5-theme.min
 *= require select2-floating-label
+*= require floating-alert
 *= require_self
 */
