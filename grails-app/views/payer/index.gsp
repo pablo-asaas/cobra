@@ -150,65 +150,33 @@
         </div>
     </div>
 <g:javascript>
-    function handleFormSubmit(event) {
+    function handleCreateSubmit(event) {
         event.preventDefault()
-
-        $.ajax({
-            type: "POST",
-            url: "/payer/save",
-            data: $(event.target).serialize(),
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                location.reload()
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
-        })
+        AjaxRequest.onFormSubmit("POST", "/payer/save", $(event.target))
     }
+
     function handleRestoreClick(event) {
-        const id = $(event.delegateTarget).data("id")
+        if (!confirm("Deseja realmente restaurar este pagador?")) {
+            return
+        }
 
-        $.ajax({
-            type: "POST",
-            url: "/payer/restore/" + id,
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                location.reload()
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
+        AjaxRequest.onButtonClick("POST", "/payer/restore", {
+            id: $(event.delegateTarget).data("id")
         })
     }
-    function handleDeleteClick(event) {
-        event.preventDefault()
 
+    function handleDeleteClick(event) {
         if (!confirm("Deseja realmente excluir este pagador?")) {
             return
         }
 
-        $.ajax({
-            type: "DELETE",
-            url: "/payer/delete",
-            data: {
-                id: $(event.delegateTarget).data("id")
-            },
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                location.reload()
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
+        AjaxRequest.onButtonClick("DELETE", "/payer/delete", {
+            id: $(event.delegateTarget).data("id")
         })
     }
 
     $(document).ready(() => {
-        $("#createPayerForm").on("submit", handleFormSubmit)
+        $("#createPayerForm").on("submit", handleCreateSubmit)
         $(".restore-button").on("click", handleRestoreClick)
         $(".delete-button").on("click", handleDeleteClick)
         $("#postalCode").on("blur", searchAddress)

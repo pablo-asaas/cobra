@@ -94,26 +94,13 @@
         </div>
     </div>
 <g:javascript>
-    function handleFormSubmit(event) {
+    function handleUpdateSubmit(event) {
         event.preventDefault()
-
-        $.ajax({
-            type: "PUT",
-            url: "/payer/update",
-            data: $(event.target).serialize(),
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                window.location.replace(window.location.origin + "/payer/index")
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
-        })
+        AjaxRequest.onFormSubmit("PUT", "/payer/update", $(event.target), "/payer")
     }
 
     $(document).ready(() => {
-        $("#updatePayerForm").on("submit", handleFormSubmit)
+        $("#updatePayerForm").on("submit", handleUpdateSubmit)
     })
 </g:javascript>
 </body>
