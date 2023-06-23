@@ -64,29 +64,25 @@
         </div>
     </div>
     <g:javascript>
-        const doughnutGraphData = $.parseJSON($('#paymentTypeUsed').attr('data-graph'))
-        const doughnutXValues = ["Pix", "Cartão de crédito", "Cartão de débito", "Boleto"]
-        const doughnutYValues = [doughnutGraphData.pix, doughnutGraphData.credit_card, doughnutGraphData.debit_card, doughnutGraphData.payment_slip]
-        const doughnutBarColors = [
+
+        var barColors = [
             "#5873FC",
             "#5B97E5",
             "#58CCFC",
             "#55EFF2"
         ]
-        buildChart("paymentTypeUsed", "doughnut", doughnutXValues, doughnutYValues, doughnutBarColors, true)
+
+        const doughnutGraphData = $.parseJSON($('#paymentTypeUsed').attr('data-graph'))
+        const doughnutXValues = ["Pix", "Cartão de crédito", "Cartão de débito", "Boleto"]
+        const doughnutYValues = [doughnutGraphData.pix, doughnutGraphData.credit_card, doughnutGraphData.debit_card, doughnutGraphData.payment_slip]
+        buildChart("paymentTypeUsed", "doughnut", doughnutXValues, doughnutYValues, true)
 
         const barGraphData = $.parseJSON($('#lastThreeMonthBilling').attr('data-graph'))
         const barXValues = lastThreeMonths()
         const barYValues = [barGraphData.lastButOne, barGraphData.last, barGraphData.current]
-        const barBarColors = [
-            "#5873FC",
-            "#5B97E5",
-            "#58CCFC",
-            "#55EFF2"
-        ]
-        buildChart("lastThreeMonthBilling", "bar", barXValues, barYValues, barBarColors, false)
+        buildChart("lastThreeMonthBilling", "bar", barXValues, barYValues, false)
 
-        function buildChart(graphId, graphType, xValues, yValues, barColors, display) {
+        function buildChart(graphId, graphType, xValues, yValues, displayLegend) {
             new Chart(graphId, {
                 type: graphType,
                 data: {
@@ -97,7 +93,7 @@
                     }]
                 },
                 options: {
-                    legend: {display: display}
+                    legend: {display: displayLegend}
                 }
 
             })
