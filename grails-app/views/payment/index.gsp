@@ -59,7 +59,7 @@
                                 <span title="${payment.publicId}">${payment.publicId.substring(0, 8)}</span>
                             </div>
                             <div class="col">${payment.payer.name}</div>
-                            <div class="col">${payment.value}</div>
+                            <div class="col">${currencyFormat([value: payment.value])}</div>
                             <div class="col">${dateFormat([value: payment.dueDate])}</div>
                             <div class="col">${message([code: "PaymentStatus.${payment.status}"])}</div>
                             <div class="col">${message([code: "PaymentType.${payment.type}"])}</div>
