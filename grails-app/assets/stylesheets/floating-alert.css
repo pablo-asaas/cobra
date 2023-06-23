@@ -1,0 +1,6 @@
+.floating-alert {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    max-width: 466px;
+}

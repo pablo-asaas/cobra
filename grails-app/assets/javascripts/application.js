@@ -8,4 +8,5 @@
 //= require jquery-3.5.1.min
 //= require bootstrap.bundle.min
 //= require select2.min
+//= require ajax-request
 //= require_self
