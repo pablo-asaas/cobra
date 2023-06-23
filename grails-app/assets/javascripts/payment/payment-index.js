@@ -58,14 +58,14 @@ $(document).ready(() => {
     $(".delete-button").on("click", handleDeleteClick)
     $(".deposit-button").on("click", handleDepositClick)
 
-    $('#restorePaymentModal').on('show.bs.modal', (event) => {
+    $('#restorePaymentModal').on("show.bs.modal", (event) => {
         const button = $(event.relatedTarget)
 
-        const id = button.data('id')
-        const dueDate = button.data('due-date')
+        const id = button.data("id")
+        const dueDate = button.data("due-date")
 
-        $('#restorePaymentForm input[name=id]').val(id)
-        $('#restorePaymentForm input[name=dueDate]').val(dueDate)
+        $("#restorePaymentForm input[name=id]").val(id)
+        $("#restorePaymentForm input[name=dueDate]").val(dueDate)
     })
 
     const payerSelect = $("#payer")
