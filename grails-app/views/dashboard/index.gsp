@@ -48,7 +48,7 @@
             <div class="col-md-6 mb-3">
                 <div class="card border">
                     <div class="card-body">
-                        <h5 class="card-title">Gráfico de Cobranças</h5>
+                        <h5 class="card-title">Faturamento nos últimos três meses</h5>
                         <canvas data-graph="${barGraphInfo}" id="lastThreeMonthBilling" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
     </div>
     <g:javascript>
         const doughnutGraphData = $.parseJSON($('#paymentTypeUsed').attr('data-graph'))
-        const doughnutXValues = ["Pix", "Cartão de crédito", "Cartão de debito", "Boleto"]
+        const doughnutXValues = ["Pix", "Cartão de crédito", "Cartão de débito", "Boleto"]
         const doughnutYValues = [doughnutGraphData.pix, doughnutGraphData.credit_card, doughnutGraphData.debit_card, doughnutGraphData.payment_slip]
         const doughnutBarColors = [
             "#5873FC",
