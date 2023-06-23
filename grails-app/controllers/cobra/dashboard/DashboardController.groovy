@@ -11,7 +11,7 @@ class DashboardController extends BaseController {
 
     def index() {
         return [cardInfo: dashboardService.dashboardInfo(getCurrentCustomer()),
-                doughnutGraphInfo: dashboardService.doughnutGraphInfo(getCurrentCustomer()) as JSON,
-                barGraphInfo: dashboardService.barGraphInfo(getCurrentCustomer()) as JSON]
+                doughnutGraphInfo: dashboardService.mostUsedPaymentType(getCurrentCustomer()) as JSON,
+                barGraphInfo: dashboardService.lastThreeMonthsBilling(getCurrentCustomer()) as JSON]
     }
 }

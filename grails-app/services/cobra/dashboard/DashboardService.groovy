@@ -23,7 +23,7 @@ class DashboardService {
                 totalReceivable: totalReceivable]
     }
 
-    public Map doughnutGraphInfo (Customer customer) {
+    public Map mostUsedPaymentType(Customer customer) {
         def countTypeList = Payment.countByPaymentType([customer: customer]).list()
         def countTypeMap = countTypeList.collectEntries {
             [it[0].toString().toLowerCase(), it[1]]
@@ -31,7 +31,7 @@ class DashboardService {
         return countTypeMap
     }
 
-    public Map barGraphInfo(Customer customer) {
+    public Map lastThreeMonthsBilling(Customer customer) {
 
         BigDecimal currentMonthBilling = calculateMonthlyBilling(customer, DateUtils.getStartOfMonth(), new Date())
 
