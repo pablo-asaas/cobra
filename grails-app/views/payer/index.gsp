@@ -54,7 +54,7 @@
                         <div class="col">${payer.name}</div>
                         <div class="col text-break">${payer.email}</div>
                         <div class="col">${cpfCnpjFormat([value: payer.cpfCnpj])}</div>
-                        <div class="col">${payer.phoneNumber}</div>
+                        <div class="col">${phoneNumberFormat([value: payer.phoneNumber])}</div>
                         <div class="col">${dateFormat([value: payer.createdAt])}</div>
                         <div class="col actions-col">
                             <div class="float-end">
