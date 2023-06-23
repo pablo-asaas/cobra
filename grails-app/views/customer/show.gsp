@@ -78,25 +78,14 @@
     </div>
 </div>
 <g:javascript>
-    function handleFormSubmit(event){
+    function handleUpdateSubmit(event){
         event.preventDefault()
 
-        $.ajax({
-            type: "PUT",
-            url: "/customer/update",
-            data: $(event.target).serialize(),
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                window.location.replace(window.location.origin)
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
-        })
+        AjaxRequest.onFormSubmit("PUT", "/customer/update", $(event.target), "/")
     }
+
     $(document).ready(() => {
-        $("#updateCustomerForm").on("submit", handleFormSubmit)
+        $("#updateCustomerForm").on("submit", handleUpdateSubmit)
     })
 </g:javascript>
 </body>
