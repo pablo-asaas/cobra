@@ -7,29 +7,7 @@
         <asset:stylesheet src="navigation"/>
         <asset:stylesheet src="form"/>
 
-        <g:javascript>
-            function handleFormSubmit(event) {
-                event.preventDefault();
-
-                $.ajax({
-                    type: "PATCH",
-                    url: "/payment/update",
-                    data: $(event.target).serialize(),
-                    dataType: "json",
-                    success: (data) => {
-                        alert(data.message)
-                        window.location.replace(window.location.origin + "/payment")
-                    },
-                    error: (error) => {
-                        alert(error.responseJSON.message)
-                    }
-                });
-            }
-
-            $(document).ready(() => {
-                $("#updatePaymentForm").on("submit", handleFormSubmit)
-            });
-        </g:javascript>
+        <asset:javascript src="payment/payment-show.js"/>
     </head>
 
     <body>
