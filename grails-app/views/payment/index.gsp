@@ -31,7 +31,7 @@
             }
 
             function handleDepositClick(event){
-                if(!confirm("Deseja realmente confirmar o pagamento?")){
+                if(!confirm("Deseja realmente confirmar o pagamento?")) {
                     return
                 }
 
