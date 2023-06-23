@@ -45,7 +45,7 @@
                         <label for="status">Status</label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <span id="type" class="form-control readonly-control">${payment.type}</span>
+                        <span id="type" class="form-control readonly-control">${message([code: "PaymentType.${payment.type}"])}</span>
                         <label for="type">Tipo</label>
                     </div>
                     <div class="mb-3 form-floating">

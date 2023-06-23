@@ -62,7 +62,7 @@
                             <div class="col">${payment.value}</div>
                             <div class="col">${payment.dueDate}</div>
                             <div class="col">${message([code: "PaymentStatus.${payment.status}"])}</div>
-                            <div class="col">${payment.type}</div>
+                            <div class="col">${message([code: "PaymentType.${payment.type}"])}</div>
                             <div class="col actions-col">
                                 <div class="float-end">
                                     <g:if test="${payment.deleted}">
