@@ -11,62 +11,22 @@
 
         <g:javascript>
             function handleCreateSubmit(event) {
-                event.preventDefault();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/payment/save",
-                    data: $(event.target).serialize(),
-                    dataType: "json",
-                    success: (data) => {
-                        alert(data.message)
-                        location.reload()
-                    },
-                    error: (error) => {
-                        alert(error.responseJSON.message)
-                    }
-                });
+                event.preventDefault()
+                AjaxRequest.onFormSubmit("POST", "/payment/save", $(event.target))
             }
 
             function handleRestoreSubmit(event) {
                 event.preventDefault()
-
-                $.ajax({
-                    type: "POST",
-                    url: "/payment/restore/",
-                    data: $(event.target).serialize(),
-                    dataType: "json",
-                    success: (data) => {
-                        alert(data.message)
-                        location.reload()
-                    },
-                    error: (error) => {
-                        alert(error.responseJSON.message)
-                    }
-                });
+                AjaxRequest.onFormSubmit("POST", "/payment/restore", $(event.target))
             }
 
             function handleDeleteClick(event) {
-                event.preventDefault()
-
                 if (!confirm("Deseja realmente excluir esta cobrança?")) {
                     return
                 }
 
-                $.ajax({
-                    method: "DELETE",
-                    url: "/payment/delete",
-                    data: {
-                        id: $(event.delegateTarget).data("id")
-                    },
-                    dataType: "json",
-                    success: (data) => {
-                        alert(data.message)
-                        location.reload()
-                    },
-                    error: (error) => {
-                        alert(error.responseJSON.message)
-                    }
+                AjaxRequest.onButtonClick("DELETE", "/payment/delete", {
+                    id: $(event.delegateTarget).data("id")
                 })
             }
 
@@ -74,22 +34,11 @@
                 if(!confirm("Deseja realmente confirmar o pagamento?")){
                     return
                 }
-                $.ajax({
-                    type: "POST",
-                    url: "/payment/confirmPayment/",
-                    data: {
-                        id: $(event.delegateTarget).data("id"),
-                        deposit: true
-                    },
-                    dataType: "json",
-                    success: (data) => {
-                        alert(data.message)
-                        location.reload()
-                    },
-                    error: (error) => {
-                        alert(error.responseJSON.message)
-                    }
-                });
+
+                AjaxRequest.onButtonClick("POST", "/payment/confirmPayment", {
+                    id: $(event.delegateTarget).data("id"),
+                    deposit: true
+                })
             }
 
             function loadPayerSelectOptions(selectElement) {
