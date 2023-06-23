@@ -12,7 +12,7 @@ import java.time.LocalDate
 class DashboardService {
 
     public Map dashboardInfo(Customer customer) {
-        BigDecimal monthlyBilling = calculateMonthlyBilling(customer)
+        BigDecimal monthlyBilling = calculateMonthlyBilling(customer, DateUtils.getStartOfMonth(), new Date())
         Long pendingPaymentsAmount = calculatePaymentsAmountByStatus(customer, PaymentStatus.PENDING)
         Long overduePaymentsAmount = calculatePaymentsAmountByStatus(customer, PaymentStatus.OVERDUE)
         BigDecimal totalReceivable = calculateTotalReceivable(customer)
@@ -33,12 +33,22 @@ class DashboardService {
 
     public Map barGraphInfo(Customer customer) {
 
-        return [current: 1234, last: 321, lastButOne: 456]
+        BigDecimal currentMonthBilling = calculateMonthlyBilling(customer, DateUtils.getStartOfMonth(), new Date())
+
+        Date lastMonth = DateUtils.subtractOrAddMonths(-1)
+        Date lastMonthStart = DateUtils.getStartOfMonth(lastMonth)
+        Date lastMonthEnd = DateUtils.getEndOfMonth(lastMonth)
+        BigDecimal lastMonthBilling = calculateMonthlyBilling(customer, lastMonthStart, lastMonthEnd)
+
+        Date lastButOneMonth = DateUtils.subtractOrAddMonths(-2)
+        Date lastButOneMonthStart = DateUtils.getStartOfMonth(lastButOneMonth)
+        Date lastButOneMonthEnd = DateUtils.getEndOfMonth(lastButOneMonth)
+        BigDecimal lastButOneMonthBilling = calculateMonthlyBilling(customer, lastButOneMonthStart, lastButOneMonthEnd)
+
+        return [current: currentMonthBilling, last: lastMonthBilling, lastButOne: lastButOneMonthBilling]
     }
 
-    private BigDecimal calculateMonthlyBilling(Customer customer) {
-        def fromDate = DateUtils.getStartOfMonth()
-        def toDate = new Date()
+    private BigDecimal calculateMonthlyBilling(Customer customer, Date fromDate, Date toDate) {
         return Payment.query(customer: customer, status: PaymentStatus.PAID, column: "value", sum: true, fromDate: fromDate, toDate: toDate).get()
     }
 
