@@ -31,6 +31,11 @@ class DashboardService {
         return countTypeMap
     }
 
+    public Map barGraphInfo(Customer customer) {
+
+        return [current: 1234, last: 321, lastButOne: 456]
+    }
+
     private BigDecimal calculateMonthlyBilling(Customer customer) {
         def fromDate = DateUtils.getStartOfMonth()
         def toDate = new Date()

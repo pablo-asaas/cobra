@@ -49,7 +49,7 @@
                 <div class="card border">
                     <div class="card-body">
                         <h5 class="card-title">Gráfico de Cobranças</h5>
-                        <canvas data-graph="${doughnutGraphInfo}" id="lastThreeMonthBilling" style="width:100%;max-width:700px"></canvas>
+                        <canvas data-graph="${barGraphInfo}" id="lastThreeMonthBilling" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
 
         const barGraphData = $.parseJSON($('#lastThreeMonthBilling').attr('data-graph'))
         const barXValues = lastThreeMonths()
-        const barYValues = [123, 456, 432]
+        const barYValues = [barGraphData.lastButOne, barGraphData.last, barGraphData.current]
         const barBarColors = [
             "#5873FC",
             "#5B97E5",
