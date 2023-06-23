@@ -8,26 +8,13 @@
         <asset:stylesheet src="form"/>
 
         <g:javascript>
-            function handleFormSubmit(event) {
+            function handleUpdateSubmit(event) {
                 event.preventDefault()
-
-                $.ajax({
-                    type: "PATCH",
-                    url: "/payment/update",
-                    data: $(event.target).serialize(),
-                    dataType: "json",
-                    success: (data) => {
-                        alert(data.message)
-                        window.location.replace(window.location.origin + "/payment")
-                    },
-                    error: (error) => {
-                        alert(error.responseJSON.message)
-                    }
-                })
+                AjaxRequest.onFormSubmit("PATCH", "/payment/update", $(event.target), "/payment")
             }
 
             $(document).ready(() => {
-                $("#updatePaymentForm").on("submit", handleFormSubmit)
+                $("#updatePaymentForm").on("submit", handleUpdateSubmit)
             })
         </g:javascript>
     </head>
