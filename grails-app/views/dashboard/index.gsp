@@ -49,7 +49,7 @@
                 <div class="card border">
                     <div class="card-body">
                         <h5 class="card-title">Gráfico de Cobranças</h5>
-                        <p class="card-text">Não há nada</p>
+                        <canvas data-graph="${doughnutGraphInfo}" id="lastThreeMonthBilling" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>
             </div>
@@ -73,9 +73,20 @@
             "#58CCFC",
             "#55EFF2"
         ]
-        buildChart(doughnutXValues, doughnutYValues, doughnutBarColors, "doughnut", "paymentTypeUsed")
+        buildChart("paymentTypeUsed", "doughnut", doughnutXValues, doughnutYValues, doughnutBarColors, true)
 
-        function buildChart(xValues, yValues, barColors, graphType, graphId) {
+        const barGraphData = $.parseJSON($('#lastThreeMonthBilling').attr('data-graph'))
+        const barXValues = lastThreeMonths()
+        const barYValues = [123, 456, 432]
+        const barBarColors = [
+            "#5873FC",
+            "#5B97E5",
+            "#58CCFC",
+            "#55EFF2"
+        ]
+        buildChart("lastThreeMonthBilling", "bar", barXValues, barYValues, barBarColors, false)
+
+        function buildChart(graphId, graphType, xValues, yValues, barColors, display) {
             new Chart(graphId, {
                 type: graphType,
                 data: {
@@ -86,11 +97,24 @@
                     }]
                 },
                 options: {
-                    title: {
-                        display: true
-                    }
+                    legend: {display: display}
                 }
+
             })
+        }
+        function lastThreeMonths() {
+            const formatter = new Intl.DateTimeFormat('pt-BR', { month: 'short' })
+            const now = new Date()
+            const current = formatter.format(now)
+            const last = formatter.format(subtractMonths(now, 1))
+            const lastButOne = formatter.format(subtractMonths(now, 2))
+            return [lastButOne, last, current]
+        }
+
+        function subtractMonths(date, months) {
+            const dateCopy = new Date(date)
+            dateCopy.setMonth(dateCopy.getMonth() - months)
+            return dateCopy
         }
     </g:javascript>
 </body>
