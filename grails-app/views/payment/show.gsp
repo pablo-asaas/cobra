@@ -7,16 +7,7 @@
         <asset:stylesheet src="navigation"/>
         <asset:stylesheet src="form"/>
 
-        <g:javascript>
-            function handleUpdateSubmit(event) {
-                event.preventDefault()
-                AjaxRequest.onFormSubmit("PATCH", "/payment/update", $(event.target), "/payment")
-            }
-
-            $(document).ready(() => {
-                $("#updatePaymentForm").on("submit", handleUpdateSubmit)
-            })
-        </g:javascript>
+        <asset:javascript src="payment/payment-show.js"/>
     </head>
 
     <body>
