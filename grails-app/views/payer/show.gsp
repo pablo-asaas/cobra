@@ -2,9 +2,13 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+
     <title>Novo pagador</title>
+
     <asset:stylesheet src="form.css"/>
     <asset:stylesheet src="navigation.css"/>
+
+    <asset:javascript src="payer/payer-show.js"/>
 </head>
 
 <body>
@@ -89,19 +93,8 @@
                 <div class="d-flex w-100 justify-content-end">
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </div>
-
             </form>
         </div>
     </div>
-<g:javascript>
-    function handleUpdateSubmit(event) {
-        event.preventDefault()
-        AjaxRequest.onFormSubmit("PUT", "/payer/update", $(event.target), "/payer")
-    }
-
-    $(document).ready(() => {
-        $("#updatePayerForm").on("submit", handleUpdateSubmit)
-    })
-</g:javascript>
 </body>
 </html>
