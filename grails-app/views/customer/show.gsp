@@ -66,7 +66,7 @@
             </div>
 
             <div class="mb-3 form-floating">
-                <span id="createdAt" class="form-control readonly-control">${customer.createdAt}</span>
+                <span id="createdAt" class="form-control readonly-control">${dateFormat([value: customer.createdAt])}</span>
                 <label for="createdAt">Criado em</label>
             </div>
 

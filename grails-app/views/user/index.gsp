@@ -34,7 +34,7 @@
                             ${user.username}
                         </g:else>
                     </div>
-                    <div class="col">${user.createdAt}</div>
+                    <div class="col">${dateFormat([value: user.createdAt])}</div>
                 </div>
             </g:each>
         </div>

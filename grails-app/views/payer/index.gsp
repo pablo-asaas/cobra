@@ -55,7 +55,7 @@
                         <div class="col">${payer.email}</div>
                         <div class="col">${payer.cpfCnpj}</div>
                         <div class="col">${payer.phoneNumber}</div>
-                        <div class="col">${payer.createdAt}</div>
+                        <div class="col">${dateFormat([value: payer.createdAt])}</div>
                         <div class="col actions-col">
                             <div class="float-end">
                                 <g:if test="${payer.deleted}">

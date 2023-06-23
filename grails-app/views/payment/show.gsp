@@ -49,7 +49,7 @@
                         <label for="type">Tipo</label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <span id="createdAt" class="form-control readonly-control">${payment.createdAt}</span>
+                        <span id="createdAt" class="form-control readonly-control">${dateFormat([value: payment.createdAt])}</span>
                         <label for="createdAt">Criada em</label>
                     </div>
                     <div class="d-flex w-100 justify-content-end">

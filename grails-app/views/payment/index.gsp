@@ -60,7 +60,7 @@
                             </div>
                             <div class="col">${payment.payer.name}</div>
                             <div class="col">${payment.value}</div>
-                            <div class="col">${payment.dueDate}</div>
+                            <div class="col">${dateFormat([value: payment.dueDate])}</div>
                             <div class="col">${message([code: "PaymentStatus.${payment.status}"])}</div>
                             <div class="col">${message([code: "PaymentType.${payment.type}"])}</div>
                             <div class="col actions-col">
