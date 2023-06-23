@@ -3,6 +3,9 @@
 <head>
     <meta name="layout" content="main"/>
     <title>Welcome to Grails</title>
+    <sec:ifLoggedIn>
+        <meta http-equiv="refresh" content="0; URL='/dashboard'"/>
+    </sec:ifLoggedIn>
 </head>
 <body>
     <div class="container pt-5 pb-3">
