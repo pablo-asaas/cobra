@@ -52,7 +52,7 @@
                     <div class="row data-row">
                         <div class="col">${payer.id}</div>
                         <div class="col">${payer.name}</div>
-                        <div class="col">${payer.email}</div>
+                        <div class="col text-break">${payer.email}</div>
                         <div class="col">${payer.cpfCnpj}</div>
                         <div class="col">${payer.phoneNumber}</div>
                         <div class="col">${dateFormat([value: payer.createdAt])}</div>
