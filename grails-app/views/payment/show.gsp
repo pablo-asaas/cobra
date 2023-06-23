@@ -41,7 +41,7 @@
                         <label for="dueDate">Vence em</label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <span id="status" class="form-control readonly-control">${payment.status}</span>
+                        <span id="status" class="form-control readonly-control">${message([code: "PaymentStatus.${payment.status}"])}</span>
                         <label for="status">Status</label>
                     </div>
                     <div class="mb-3 form-floating">
