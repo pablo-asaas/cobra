@@ -57,38 +57,41 @@
                 <div class="card border">
                     <div class="card-body">
                         <h5 class="card-title">Tipos de pagamento utilizado</h5>
-                        <canvas data-graph="${doughnutGraphInfo}" id="myChart" style="width:100%;max-width:700px"></canvas>
+                        <canvas data-graph="${doughnutGraphInfo}" id="paymentTypeUsed" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<g:javascript>
-    const graphData = $.parseJSON($('#myChart').attr('data-graph'))
-    var xValues = ["Pix", "Cartão de crédito", "Cartão de debito", "Boleto"]
-    var yValues = [graphData.pix, graphData.credit_card, graphData.debit_card, graphData.payment_slip]
-    var barColors = [
-        "#5873FC",
-        "#5B97E5",
-        "#58CCFC",
-        "#55EFF2"
-    ];
+    <g:javascript>
+        const doughnutGraphData = $.parseJSON($('#paymentTypeUsed').attr('data-graph'))
+        const doughnutXValues = ["Pix", "Cartão de crédito", "Cartão de debito", "Boleto"]
+        const doughnutYValues = [doughnutGraphData.pix, doughnutGraphData.credit_card, doughnutGraphData.debit_card, doughnutGraphData.payment_slip]
+        const doughnutBarColors = [
+            "#5873FC",
+            "#5B97E5",
+            "#58CCFC",
+            "#55EFF2"
+        ]
+        buildChart(doughnutXValues, doughnutYValues, doughnutBarColors, "doughnut", "paymentTypeUsed")
 
-    new Chart("myChart", {
-        type: "doughnut",
-        data: {
-            labels: xValues,
-            datasets: [{
-                backgroundColor: barColors,
-                data: yValues
-            }]
-        },
-        options: {
-            title: {
-                display: true
-            }
+        function buildChart(xValues, yValues, barColors, graphType, graphId) {
+            new Chart(graphId, {
+                type: graphType,
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true
+                    }
+                }
+            })
         }
-    })
-</g:javascript>
+    </g:javascript>
 </body>
 </html>
