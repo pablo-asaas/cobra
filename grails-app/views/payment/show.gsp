@@ -9,7 +9,7 @@
 
         <g:javascript>
             function handleFormSubmit(event) {
-                event.preventDefault();
+                event.preventDefault()
 
                 $.ajax({
                     type: "PATCH",
@@ -23,12 +23,12 @@
                     error: (error) => {
                         alert(error.responseJSON.message)
                     }
-                });
+                })
             }
 
             $(document).ready(() => {
                 $("#updatePaymentForm").on("submit", handleFormSubmit)
-            });
+            })
         </g:javascript>
     </head>
 
