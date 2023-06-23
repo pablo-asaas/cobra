@@ -150,7 +150,7 @@
         </div>
     </div>
 <g:javascript>
-    function handleFormSubmit(event){
+    function handleFormSubmit(event) {
         event.preventDefault()
 
         $.ajax({
@@ -167,7 +167,7 @@
             }
         })
     }
-    function handleRestoreClick(event){
+    function handleRestoreClick(event) {
         const id = $(event.delegateTarget).data("id")
 
         $.ajax({
@@ -183,7 +183,7 @@
             }
         })
     }
-    function handleDeleteClick(event){
+    function handleDeleteClick(event) {
         event.preventDefault()
 
         if (!confirm("Deseja realmente excluir este pagador?")) {
@@ -193,7 +193,9 @@
         $.ajax({
             type: "DELETE",
             url: "/payer/delete",
-            data: {id: $(event.delegateTarget).data("id")},
+            data: {
+                id: $(event.delegateTarget).data("id")
+            },
             dataType: "json",
             success: (data) => {
                 alert(data.message)

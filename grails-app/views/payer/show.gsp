@@ -94,8 +94,8 @@
         </div>
     </div>
 <g:javascript>
-    function handleFormSubmit(event){
-        event.preventDefault();
+    function handleFormSubmit(event) {
+        event.preventDefault()
 
         $.ajax({
             type: "PUT",
@@ -109,11 +109,12 @@
             error: (error) => {
                 alert(error.responseJSON.message)
             }
-        });
+        })
     }
+
     $(document).ready(() => {
         $("#updatePayerForm").on("submit", handleFormSubmit)
-    });
+    })
 </g:javascript>
 </body>
 </html>
