@@ -79,9 +79,6 @@ class CustomerService {
         if (!(new EmailValidator(false).isValid(customerAdapter.email as String))) {
             throw new BusinessException("Email inválido")
         }
-        if (!customerAdapter.cpfCnpj) {
-            throw new BusinessException("Cpf/Cnpj é obrigatório")
-        }
         if (!customerAdapter.postalCode) {
             throw new BusinessException("CEP é obrigatório")
         }
