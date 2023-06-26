@@ -121,20 +121,22 @@ class PaymentService {
     }
 
     public void processToOverdue() {
-        List<Payment> paymentList = Payment.query("dueDate[lt]": DateUtils.getStartOfDay(),
-                                                  ignoreCustomer: true,
-                                                  status: PaymentStatus.PENDING).list()
+        List<Long> paymentIdList = Payment.query(column: "id", "dueDate[lt]": DateUtils.getStartOfDay(),
+                ignoreCustomer: true,
+                status: PaymentStatus.PENDING).list() as List<Long>
 
-        for (Payment payment : paymentList) {
-            payment.status = PaymentStatus.OVERDUE
-
+        for (Long paymentId : paymentIdList) {
             try {
-                payment.save(failOnError: true)
-            } catch (Exception exception) {
-                exception.printStackTrace()
-            }
+                Payment.withNewTransaction { status ->
+                    Payment payment = Payment.get(paymentId)
+                    payment.status = PaymentStatus.OVERDUE
+                    payment.save(failOnError: true)
 
-            paymentNotificationService.onOverdue(payment)
+                    paymentNotificationService.onOverdue(payment)
+                }
+            } catch (Exception exception) {
+                println("Falha ao processar vencimento da cobrança ${paymentId}: ${exception.getMessage()}")
+            }
         }
     }
 
