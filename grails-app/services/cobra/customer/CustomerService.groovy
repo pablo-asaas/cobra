@@ -14,6 +14,7 @@ class CustomerService {
     public Customer save(CustomerAdapter customerAdapter) {
 
         validateParams(customerAdapter)
+        validateCpfCnpj(customerAdapter.cpfCnpj)
 
         Customer customer = new Customer()
         customer.name = customerAdapter.name
