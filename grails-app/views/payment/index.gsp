@@ -157,5 +157,11 @@
                 </div>
             </div>
         </div>
+
+        <nav>
+            <ul class="pagination">
+                <g:paginate action="index" total="${paymentCount}" />
+            </ul>
+        </nav>
     </body>
 </html>
