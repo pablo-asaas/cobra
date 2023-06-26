@@ -12,6 +12,8 @@ class BaseController {
 
     SpringSecurityService springSecurityService
 
+    protected final DEFAULT_PAGINATION_LIMIT = 10
+
     def handleBusinessException(BusinessException businessException) {
         render([message: businessException.message] as JSON, status: HttpStatus.BAD_REQUEST.code)
     }
