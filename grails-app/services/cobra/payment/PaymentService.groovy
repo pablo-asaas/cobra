@@ -28,6 +28,16 @@ class PaymentService {
         return Payment.query([customer: customer, onlyDeleted: true, offset: offset, limit: limit]).list()
     }
 
+    @ReadOnly
+    public Integer count(Customer customer) {
+        return Payment.query([customer: customer]).count()
+    }
+
+    @ReadOnly
+    public Integer countDeleted(Customer customer) {
+        return Payment.query([customer: customer, onlyDeleted: true]).count()
+    }
+
     public Payment findById(Customer customer, Long id) {
         Payment payment = Payment.query([customer: customer, id: id]).get()
 
