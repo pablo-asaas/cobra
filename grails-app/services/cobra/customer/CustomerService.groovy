@@ -3,6 +3,7 @@ package cobra.customer
 import cobra.customer.adapter.CustomerAdapter
 import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
+import cobra.util.MessageUtils
 import cobra.validator.CpfCnpjValidator
 import grails.gorm.transactions.Transactional
 import org.apache.commons.validator.routines.EmailValidator
@@ -34,7 +35,7 @@ class CustomerService {
     public Customer findById(Long id) {
         Customer customer = Customer.query([id: id]).get()
 
-        if (!customer) throw new ResourceNotFoundException("Cliente não encontrado")
+        if (!customer) throw new ResourceNotFoundException(MessageUtils.getMessage('default.not.found.message', ['Cliente']))
 
         return customer
     }
@@ -70,46 +71,46 @@ class CustomerService {
 
     private void validateParams(CustomerAdapter customerAdapter) {
         if (!customerAdapter.name) {
-            throw new BusinessException("Nome é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Nome']))
         }
         if (!customerAdapter.email){
-            throw new BusinessException("Email é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Endereço de email']))
         }
         if (!(new EmailValidator(false).isValid(customerAdapter.email as String))) {
-            throw new BusinessException("Email inválido")
+            throw new BusinessException(MessageUtils.getMessage('default.invalid.message', ['Endereço de email']))
         }
         if (!customerAdapter.cpfCnpj) {
-            throw new BusinessException("Cpf/Cnpj é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['CPF/CNPJ']))
         }
         if (!customerAdapter.postalCode) {
-            throw new BusinessException("CEP é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['CEP']))
         }
         if (!customerAdapter.streetName){
-            throw new BusinessException("Nome da Rua é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Nome da rua']))
         }
         if (!customerAdapter.buildingNumber) {
-            throw new BusinessException("Número da residência é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Número da residência']))
         }
         if (!customerAdapter.neighborhood) {
-            throw new BusinessException("Bairro é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Bairro']))
         }
         if (!customerAdapter.city) {
-            throw new BusinessException("Cidade é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Cidade']))
         }
         if (!customerAdapter.state) {
-            throw new BusinessException("Estado é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Estado']))
         }
     }
 
     private void validateCpfCnpj(String cpfCnpj) {
         if (!cpfCnpj) {
-            throw new BusinessException("CPF/CNPJ é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['CPF/CNPJ']))
         }
         if (!CpfCnpjValidator.validate(cpfCnpj)) {
-            throw new BusinessException("CPF/CNPJ inválido")
+            throw new BusinessException(MessageUtils.getMessage('default.invalid.message', ['CPF/CNPJ']))
         }
         if (Customer.countByCpfCnpj(cpfCnpj) > 0) {
-            throw new BusinessException("CPF/CNPJ já cadastrado")
+            throw new BusinessException(MessageUtils.getMessage('default.alreadyExists.message', ['CPF/CNPJ']))
         }
     }
 }

@@ -24,12 +24,12 @@ class Payment extends BaseDomain {
     static constraints = {
         value validator: { val, obj, errors ->
             if (val < PAYMENT_MINIMUM_VALUE) {
-                errors.rejectValue("value", null)
+                errors.rejectValue("value", "Payment.value.lesserThanMinimumValue.message")
             }
         }
         dueDate validator: { val, obj, errors ->
             if (val <= obj.createdAt) {
-                errors.rejectValue("dueDate", null)
+                errors.rejectValue("dueDate", "Payment.dueDate.priorToCreatedAt.message")
             }
         }
         paymentDate nullable: true
