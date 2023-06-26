@@ -12,7 +12,7 @@ import java.time.LocalDate
 class DashboardService {
 
     public Map dashboardInfo(Customer customer) {
-        BigDecimal monthlyBilling = calculateMonthlyBilling(customer)
+        BigDecimal monthlyBilling = calculateMonthlyBilling(customer, DateUtils.getStartOfMonth(), new Date())
         Long pendingPaymentsAmount = calculatePaymentsAmountByStatus(customer, PaymentStatus.PENDING)
         Long overduePaymentsAmount = calculatePaymentsAmountByStatus(customer, PaymentStatus.OVERDUE)
         BigDecimal totalReceivable = calculateTotalReceivable(customer)
@@ -23,9 +23,32 @@ class DashboardService {
                 totalReceivable: totalReceivable]
     }
 
-    private BigDecimal calculateMonthlyBilling(Customer customer) {
-        def fromDate = DateUtils.getStartOfMonth()
-        def toDate = new Date()
+    public Map mostUsedPaymentType(Customer customer) {
+        def countTypeList = Payment.countByPaymentType([customer: customer]).list()
+        def countTypeMap = countTypeList.collectEntries {
+            [it[0].toString().toLowerCase(), it[1]]
+        }
+        return countTypeMap
+    }
+
+    public Map lastThreeMonthsBilling(Customer customer) {
+
+        BigDecimal currentMonthBilling = calculateMonthlyBilling(customer, DateUtils.getStartOfMonth(), new Date())
+
+        Date lastMonth = DateUtils.subtractOrAddMonths(-1)
+        Date lastMonthStart = DateUtils.getStartOfMonth(lastMonth)
+        Date lastMonthEnd = DateUtils.getEndOfMonth(lastMonth)
+        BigDecimal lastMonthBilling = calculateMonthlyBilling(customer, lastMonthStart, lastMonthEnd)
+
+        Date lastButOneMonth = DateUtils.subtractOrAddMonths(-2)
+        Date lastButOneMonthStart = DateUtils.getStartOfMonth(lastButOneMonth)
+        Date lastButOneMonthEnd = DateUtils.getEndOfMonth(lastButOneMonth)
+        BigDecimal lastButOneMonthBilling = calculateMonthlyBilling(customer, lastButOneMonthStart, lastButOneMonthEnd)
+
+        return [current: currentMonthBilling, last: lastMonthBilling, lastButOne: lastButOneMonthBilling]
+    }
+
+    private BigDecimal calculateMonthlyBilling(Customer customer, Date fromDate, Date toDate) {
         return Payment.query(customer: customer, status: PaymentStatus.PAID, column: "value", sum: true, fromDate: fromDate, toDate: toDate).get()
     }
 

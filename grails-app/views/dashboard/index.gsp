@@ -3,6 +3,9 @@
 <head>
     <meta name="layout" content="main"/>
     <title>Dashboard</title>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
 </head>
 
 <body>
@@ -12,7 +15,7 @@
                 <div class="card border-success">
                     <div class="card-body">
                         <h5 class="card-title text-success">Faturamento mensal</h5>
-                        <p class="card-text"><g:currencyFormat value="${monthlyBilling}"/></p>
+                        <p class="card-text"><g:currencyFormat value="${cardInfo.monthlyBilling}"/></p>
                     </div>
                 </div>
             </div>
@@ -20,7 +23,7 @@
                 <div class="card  border-warning">
                     <div class="card-body">
                         <h5 class="card-title text-warning">Cobranças pendentes</h5>
-                        <p class="card-text">${pendingPaymentsAmount}</p>
+                        <p class="card-text">${cardInfo.pendingPaymentsAmount}</p>
                     </div>
                 </div>
             </div>
@@ -28,7 +31,7 @@
                 <div class="card border-danger">
                     <div class="card-body">
                         <h5 class="card-title text-danger">Cobranças vencidas</h5>
-                        <p class="card-text">${overduePaymentsAmount}</p>
+                        <p class="card-text">${cardInfo.overduePaymentsAmount}</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +39,7 @@
                 <div class="card  border-success">
                     <div class="card-body">
                         <h5 class="card-title text-success">Total a receber</h5>
-                        <p class="card-text"><g:currencyFormat value="${totalReceivable}"/></p>
+                        <p class="card-text"><g:currencyFormat value="${cardInfo.totalReceivable}"/></p>
                     </div>
                 </div>
             </div>
@@ -45,20 +48,70 @@
             <div class="col-md-6 mb-3">
                 <div class="card border">
                     <div class="card-body">
-                        <h5 class="card-title">Gráfico de Cobranças</h5>
-                        <p class="card-text">Não há nada</p>
+                        <h5 class="card-title">Faturamento nos últimos três meses</h5>
+                        <canvas data-graph="${barGraphInfo}" id="lastThreeMonthBilling" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 mb-3">
                 <div class="card border">
                     <div class="card-body">
-                        <h5 class="card-title">Gráfico de Faturamento</h5>
-                        <p class="card-text">Não há nada</p>
+                        <h5 class="card-title">Tipos de pagamento utilizado</h5>
+                        <canvas data-graph="${doughnutGraphInfo}" id="paymentTypeUsed" style="width:100%;max-width:700px"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <g:javascript>
+
+        var barColors = [
+            "#5873FC",
+            "#5B97E5",
+            "#58CCFC",
+            "#55EFF2"
+        ]
+
+        const doughnutGraphData = $.parseJSON($('#paymentTypeUsed').attr('data-graph'))
+        const doughnutXValues = ["Pix", "Cartão de crédito", "Cartão de débito", "Boleto"]
+        const doughnutYValues = [doughnutGraphData.pix, doughnutGraphData.credit_card, doughnutGraphData.debit_card, doughnutGraphData.payment_slip]
+        buildChart("paymentTypeUsed", "doughnut", doughnutXValues, doughnutYValues, true)
+
+        const barGraphData = $.parseJSON($('#lastThreeMonthBilling').attr('data-graph'))
+        const barXValues = lastThreeMonths()
+        const barYValues = [barGraphData.lastButOne, barGraphData.last, barGraphData.current]
+        buildChart("lastThreeMonthBilling", "bar", barXValues, barYValues, false)
+
+        function buildChart(graphId, graphType, xValues, yValues, displayLegend) {
+            new Chart(graphId, {
+                type: graphType,
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: {display: displayLegend}
+                }
+
+            })
+        }
+        function lastThreeMonths() {
+            const formatter = new Intl.DateTimeFormat('pt-BR', { month: 'short' })
+            const now = new Date()
+            const current = formatter.format(now)
+            const last = formatter.format(subtractMonths(now, 1))
+            const lastButOne = formatter.format(subtractMonths(now, 2))
+            return [lastButOne, last, current]
+        }
+
+        function subtractMonths(date, months) {
+            const dateCopy = new Date(date)
+            dateCopy.setMonth(dateCopy.getMonth() - months)
+            return dateCopy
+        }
+    </g:javascript>
 </body>
 </html>
