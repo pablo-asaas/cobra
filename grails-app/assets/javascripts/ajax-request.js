@@ -33,6 +33,7 @@ class AjaxRequest {
 
                 target.prepend(this.#buildAlertElement(errorMessage, false))
             })
+            .always(() => target[0].scrollIntoView({ behavior: "smooth" }))
     }
 
     static onButtonClick(type, url, data) {
