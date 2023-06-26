@@ -1,6 +1,7 @@
 import cobra.util.CpfCnpjUtils
 import cobra.util.CurrencyUtils
 import cobra.util.DateUtils
+import cobra.util.PhoneUtils
 
 import java.text.SimpleDateFormat
 
@@ -24,5 +25,9 @@ class FormattersTagLib {
 
     def cpfCnpjFormat = { attrs, body ->
         out << body() << CpfCnpjUtils.formatForPublicVisualization(attrs.value)
+    }
+
+    def phoneNumberFormat = { attrs, body ->
+        out << body() << PhoneUtils.format(attrs.value)
     }
 }
