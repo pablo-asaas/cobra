@@ -4,6 +4,7 @@ import cobra.customer.Customer
 import cobra.exception.BusinessException
 import cobra.exception.ResourceNotFoundException
 import cobra.payer.adapter.PayerAdapter
+import cobra.util.MessageUtils
 import cobra.validator.CpfCnpjValidator
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
@@ -25,7 +26,7 @@ class PayerService {
     public Payer findById(Customer customer, Long id){
         Payer payer = Payer.query([id: id, customer: customer]).get()
 
-        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
+        if (!payer) throw new ResourceNotFoundException(MessageUtils.getMessage('default.not.found.message', ['Pagador']))
 
         return payer
     }
@@ -85,7 +86,7 @@ class PayerService {
     public void restore(Customer customer, Long id) {
         Payer payer = Payer.query([customer: customer, id: id, onlyDeleted: true]).get()
 
-        if (!payer) throw new ResourceNotFoundException("Pagador não encontrado")
+        if (!payer) throw new ResourceNotFoundException(MessageUtils.getMessage('default.not.found.message', ['Pagador']))
 
         payer.deleted = false
         payer.save(failOnError: true)
@@ -93,47 +94,47 @@ class PayerService {
 
     private void validateParams(PayerAdapter payerAdapter) {
         if (!payerAdapter.name) {
-            throw new BusinessException("Nome é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Nome']))
         }
         if (!payerAdapter.email){
-            throw new BusinessException("Email é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Endereço de email']))
         }
         if (!(new EmailValidator(false).isValid(payerAdapter.email))) {
-            throw new BusinessException("Email inválido")
+            throw new BusinessException(MessageUtils.getMessage('default.invalid.message', ['Endereço de email']))
         }
         if (!payerAdapter.phoneNumber) {
-            throw new BusinessException("Numero de Telefone é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Número de telefone']))
         }
         if (!payerAdapter.postalCode) {
-            throw new BusinessException("CEP é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['CEP']))
         }
         if (!payerAdapter.streetName){
-            throw new BusinessException("Nome da Rua é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Nome da rua']))
         }
         if (!payerAdapter.buildingNumber) {
-            throw new BusinessException("Número da residência é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Número da residência']))
         }
         if (!payerAdapter.neighborhood) {
-            throw new BusinessException("Bairro é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Bairro']))
         }
         if (!payerAdapter.city) {
-            throw new BusinessException("Cidade é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Cidade']))
         }
         if (!payerAdapter.state) {
-            throw new BusinessException("Estado é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Estado']))
         }
 
     }
 
     private void validateCpfCnpj(Customer customer, String cpfCnpj) {
         if (!cpfCnpj) {
-            throw new BusinessException("CPF/CNPJ é obrigatório")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['CPF/CNPJ']))
         }
         if (!CpfCnpjValidator.validate(cpfCnpj)) {
-            throw new BusinessException("CPF/CNPJ inválido")
+            throw new BusinessException(MessageUtils.getMessage('default.invalid.message', ['CPF/CNPJ']))
         }
         if (Payer.query([exists: true, cpfCnpj: cpfCnpj, customer: customer]).get().asBoolean()) {
-            throw new BusinessException("CPF/CNPJ já cadastrado")
+            throw new BusinessException(MessageUtils.getMessage('default.alreadyExists.message', ['CPF/CNPJ']))
         }
     }
 }

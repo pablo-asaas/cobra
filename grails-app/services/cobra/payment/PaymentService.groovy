@@ -9,6 +9,7 @@ import cobra.payment.adapter.RestorePaymentAdapter
 import cobra.payment.adapter.SavePaymentAdapter
 import cobra.payment.adapter.UpdatePaymentAdapter
 import cobra.util.DateUtils
+import cobra.util.MessageUtils
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
 
@@ -32,7 +33,7 @@ class PaymentService {
         Payment payment = Payment.query([customer: customer, id: id]).get()
 
         if (!payment) {
-            throw new ResourceNotFoundException("Cobrança não encontrada")
+            throw new ResourceNotFoundException(MessageUtils.getMessage('default.not.found.message', ['Cobrança']))
         }
 
         return payment
@@ -59,12 +60,12 @@ class PaymentService {
         Payment payment = findById(customer, id)
 
         if (payment.status == PaymentStatus.PAID) {
-            throw new BusinessException("Não é possível alterar um pagamento que já esteja pago")
+            throw new BusinessException(MessageUtils.getMessage('Payment.updatePaidPayment.message', null))
         }
 
         if (paymentAdapter.dueDate) {
             if (paymentAdapter.dueDate <= DateUtils.getEndOfDay()) {
-                throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
+                throw new BusinessException(MessageUtils.getMessage('Payment.dueDate.priorToEndOfDay.message', null))
             }
 
             payment.dueDate = paymentAdapter.dueDate
@@ -72,7 +73,7 @@ class PaymentService {
 
         if (paymentAdapter.value) {
             if (paymentAdapter.value < Payment.PAYMENT_MINIMUM_VALUE) {
-                throw new BusinessException("Não é possível alterar o valor para menor ou igual a zero")
+                throw new BusinessException(MessageUtils.getMessage('Payment.value.lesserThanMinimumValue.message', null))
             }
 
             payment.value = paymentAdapter.value
@@ -100,15 +101,15 @@ class PaymentService {
         Payment payment = Payment.query([customer: customer, id: id, onlyDeleted: true]).get()
 
         if (!payment) {
-            throw new ResourceNotFoundException("Cobrança não encontrada")
+            throw new ResourceNotFoundException(MessageUtils.getMessage('default.not.found.message', ['Cobrança']))
         }
 
         if (!paymentAdapter.dueDate) {
-            throw new BusinessException("É obrigatório informar uma nova data de vencimento")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Data de vencimento']))
         }
 
         if (paymentAdapter.dueDate <= DateUtils.getEndOfDay()) {
-            throw new BusinessException("Não é possível alterar a data de vencimento para uma data que já esteja vencida")
+            throw new BusinessException(MessageUtils.getMessage('Payment.dueDate.priorToEndOfDay.message', null))
         }
 
         payment.deleted = false
@@ -145,7 +146,7 @@ class PaymentService {
                                          status: PaymentStatus.PAID]).get()
 
         if (!payment) {
-            throw new ResourceNotFoundException("Comprovante não encontrado")
+            throw new ResourceNotFoundException(MessageUtils.getMessage('default.not.found.message', ['Comprovante']))
         }
 
         return payment
@@ -155,7 +156,7 @@ class PaymentService {
         Payment payment = findById(customer, id)
 
         if (payment.status != PaymentStatus.PENDING) {
-            throw new BusinessException("Só é possível confirmar um pagamento se estiver pendente")
+            throw new BusinessException(MessageUtils.getMessage('Payment.notPendingDeposit.message', null))
         }
 
         payment.status = PaymentStatus.PAID
@@ -167,31 +168,31 @@ class PaymentService {
 
     private void validateSaveParams(Customer customer, SavePaymentAdapter paymentAdapter) {
         if (!customer) {
-            throw new BusinessException("É obrigatório informar um cliente")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Cliente']))
         }
 
         if (!paymentAdapter.payerId) {
-            throw new BusinessException("É obrigatório informar um pagador")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Pagador']))
         }
 
         if (!paymentAdapter.type) {
-            throw new BusinessException("É obrigatório informar um tipo")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Tipo de pagamento']))
         }
 
         if (!paymentAdapter.value) {
-            throw new BusinessException("É obrigatório informar um valor")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Valor']))
         }
 
         if (paymentAdapter.value < Payment.PAYMENT_MINIMUM_VALUE) {
-            throw new BusinessException("O valor não pode ser menor ou igual a zero")
+            throw new BusinessException(MessageUtils.getMessage('Payment.value.lesserThanMinimumValue.message', null))
         }
 
         if (!paymentAdapter.dueDate) {
-            throw new BusinessException("É obrigatório informar uma data de vencimento")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Data de vencimento']))
         }
 
         if (paymentAdapter.dueDate <= DateUtils.getEndOfDay()) {
-            throw new BusinessException("A data de vencimento não pode ser anterior ou igual ao dia de hoje")
+            throw new BusinessException(MessageUtils.getMessage('Payment.dueDate.priorToEndOfDay.message', null))
         }
     }
 }

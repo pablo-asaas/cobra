@@ -4,6 +4,7 @@ import cobra.customer.Customer
 import cobra.customer.CustomerService
 import cobra.customer.adapter.CustomerAdapter
 import cobra.exception.BusinessException
+import cobra.util.MessageUtils
 import grails.gorm.transactions.Transactional
 
 @Transactional
@@ -40,13 +41,13 @@ class UserService {
 
     private void validateParams(Map params) {
         if (!params.username) {
-            throw new BusinessException("Nome de usuário inválido")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Nome de usuário']))
         }
         if (!params.password) {
-            throw new BusinessException("Senha inválida")
+            throw new BusinessException(MessageUtils.getMessage('default.mandatory.message', ['Senha']))
         }
         if (User.query([exists: true, username: params.username]).get().asBoolean()) {
-            throw new BusinessException("Nome de usuário já cadastrado")
+            throw new BusinessException(MessageUtils.getMessage('default.alreadyExists.message', ['Nome de usuário']))
         }
     }
 }
