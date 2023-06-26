@@ -82,6 +82,14 @@ class Payment extends BaseDomain {
                     }
                 }
             }
+
+            if (search.containsKey("offset")) {
+                firstResult(search.offset)
+            }
+
+            if (search.containsKey("limit")) {
+                maxResults(search.limit)
+            }
         }
     }
 }
