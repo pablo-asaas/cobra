@@ -2,6 +2,7 @@ package cobra.payer
 
 import cobra.base.BaseController
 import cobra.payer.adapter.PayerAdapter
+import cobra.util.MessageUtils
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
@@ -34,12 +35,14 @@ class PayerController extends BaseController {
 
     def save() {
         payerService.save(getCurrentCustomer(), new PayerAdapter(params))
-        render([message: "Pagador criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+        render([message: MessageUtils.getMessage('default.created.message', ['Pagador'])] as JSON,
+                status: HttpStatus.CREATED.code)
     }
 
     def delete() {
         payerService.delete(getCurrentCustomer(), params.id as Long)
-        render([message: "Pagador deletado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: MessageUtils.getMessage('default.deleted.message', ['Pagador'])] as JSON,
+                status: HttpStatus.OK.code)
     }
 
     def show() {
@@ -48,11 +51,13 @@ class PayerController extends BaseController {
 
     def update() {
         payerService.update(getCurrentCustomer(), params.id as Long, new PayerAdapter(params))
-        render([message: "Pagador editado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: MessageUtils.getMessage('default.updated.message', ['Pagador'])] as JSON,
+                status: HttpStatus.OK.code)
     }
 
     def restore() {
         payerService.restore(getCurrentCustomer(), params.id as Long)
-        render([message: "Pagador restaurado com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: MessageUtils.getMessage('default.restored.message', ['Pagador'])] as JSON,
+                status: HttpStatus.OK.code)
     }
 }

@@ -1,10 +1,10 @@
 package cobra.payment
 
 import cobra.base.BaseController
-import cobra.payment.adapter.BasePaymentAdapter
 import cobra.payment.adapter.RestorePaymentAdapter
 import cobra.payment.adapter.SavePaymentAdapter
 import cobra.payment.adapter.UpdatePaymentAdapter
+import cobra.util.MessageUtils
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
@@ -30,28 +30,33 @@ class PaymentController extends BaseController {
 
     def save() {
         paymentService.save(getCurrentCustomer(), new SavePaymentAdapter(params))
-        render([message: "Cobrança criada com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+        render([message: MessageUtils.getMessage('default.created.message', ['Cobrança'])] as JSON,
+                status: HttpStatus.CREATED.code)
     }
 
     def delete() {
         paymentService.delete(getCurrentCustomer(), params.id as Long)
-        render([message: "Cobrança excluída com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: MessageUtils.getMessage('default.deleted.message', ['Cobrança'])] as JSON,
+                status: HttpStatus.OK.code)
     }
 
     def update() {
         paymentService.update(getCurrentCustomer(), params.id as Long, new UpdatePaymentAdapter(params))
-        render([message: "Cobrança editada com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: MessageUtils.getMessage('default.updated.message', ['Cobrança'])] as JSON,
+                status: HttpStatus.OK.code)
     }
 
     def restore() {
         paymentService.restore(getCurrentCustomer(), params.id as Long, new RestorePaymentAdapter(params))
-        render([message: "Cobrança restaurada com sucesso"] as JSON, status: HttpStatus.OK.code)
+        render([message: MessageUtils.getMessage('default.restored.message', ['Cobrança'])] as JSON,
+                status: HttpStatus.OK.code)
     }
 
     def confirmPayment() {
         if (params.deposit) {
             paymentService.confirmDeposit(getCurrentCustomer(), params.id as Long)
-            render([message: "Pagamento confirmado com sucesso"] as JSON, status: HttpStatus.OK.code)
+            render([message: MessageUtils.getMessage('default.confirmed.message', ['Pagamento'])] as JSON,
+                    status: HttpStatus.OK.code)
         }
     }
 }

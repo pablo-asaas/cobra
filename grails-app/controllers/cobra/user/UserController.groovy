@@ -1,6 +1,7 @@
 package cobra.user
 
 import cobra.base.BaseController
+import cobra.util.MessageUtils
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import io.micronaut.http.HttpStatus
@@ -16,6 +17,7 @@ class UserController extends BaseController {
 
     def save() {
         userService.save(getCurrentCustomer(), params)
-        render([message: "Usuário criado com sucesso"] as JSON, status: HttpStatus.CREATED.code)
+        render([message: MessageUtils.getMessage('default.created.message', ['Usuário'])] as JSON,
+                status: HttpStatus.CREATED.code)
     }
 }
