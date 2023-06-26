@@ -2,10 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+
+    <title>Index</title>
+
     <asset:stylesheet src="grid-table.css"/>
     <asset:stylesheet src="modal.css"/>
-    <title>Index</title>
+
     <asset:javascript src="postalCodeUtils.js"/>
+    <asset:javascript src="payer/payer-index.js"/>
 </head>
 
 <body>
@@ -149,68 +153,5 @@
             </div>
         </div>
     </div>
-<g:javascript>
-    function handleFormSubmit(event){
-        event.preventDefault()
-
-        $.ajax({
-            type: "POST",
-            url: "/payer/save",
-            data: $(event.target).serialize(),
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                location.reload()
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
-        })
-    }
-    function handleRestoreClick(event){
-        const id = $(event.delegateTarget).data("id")
-
-        $.ajax({
-            type: "POST",
-            url: "/payer/restore/" + id,
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                location.reload()
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
-        })
-    }
-    function handleDeleteClick(event){
-        event.preventDefault()
-
-        if (!confirm("Deseja realmente excluir este pagador?")) {
-            return
-        }
-
-        $.ajax({
-            type: "DELETE",
-            url: "/payer/delete",
-            data: {id: $(event.delegateTarget).data("id")},
-            dataType: "json",
-            success: (data) => {
-                alert(data.message)
-                location.reload()
-            },
-            error: (error) => {
-                alert(error.responseJSON.message)
-            }
-        })
-    }
-
-    $(document).ready(() => {
-        $("#createPayerForm").on("submit", handleFormSubmit)
-        $(".restore-button").on("click", handleRestoreClick)
-        $(".delete-button").on("click", handleDeleteClick)
-        $("#postalCode").on("blur", searchAddress)
-    })
-</g:javascript>
 </body>
 </html>
