@@ -19,13 +19,13 @@ class PaymentService {
     PaymentNotificationService paymentNotificationService
 
     @ReadOnly
-    public List<Payment> findAll(Customer customer) {
-        return Payment.query([customer: customer]).list()
+    public List<Payment> findAll(Customer customer, Integer offset, Integer limit) {
+        return Payment.query([customer: customer, offset: offset, limit: limit]).list()
     }
 
     @ReadOnly
-    public List<Payment> findAllDeleted(Customer customer) {
-        return Payment.query([customer: customer, onlyDeleted: true]).list()
+    public List<Payment> findAllDeleted(Customer customer, Integer offset, Integer limit) {
+        return Payment.query([customer: customer, onlyDeleted: true, offset: offset, limit: limit]).list()
     }
 
     public Payment findById(Customer customer, Long id) {
