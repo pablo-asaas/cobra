@@ -71,19 +71,7 @@
         function handleFormSubmit(event){
             event.preventDefault();
 
-            $.ajax({
-                type: "POST",
-                url: "/user/save",
-                data: $(event.target).serialize(),
-                dataType: "json",
-                success: (data) => {
-                    alert(data.message)
-                    location.reload()
-                },
-                error: (error) => {
-                    alert(error.responseJSON.message)
-                }
-            });
+            AjaxRequest.onFormSubmit("POST", "/user/save", $(event.target))
         }
         $(document).ready(() => {
             $("#newUserForm").on("submit", handleFormSubmit)

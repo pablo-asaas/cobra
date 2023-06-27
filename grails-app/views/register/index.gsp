@@ -121,19 +121,7 @@
                 return
             }
 
-            $.ajax({
-                type: "POST",
-                url: "/register/save",
-                data: $(event.target).serialize(),
-                dataType: "json",
-                success: (data) => {
-                    alert(data.message)
-                    location.reload()
-                },
-                error: (error) => {
-                    alert(error.responseJSON.message)
-                }
-            })
+            AjaxRequest.onFormSubmit("POST", "/register/save", $(event.target), "/login")
         }
 
         $(document).ready(() => {
