@@ -1,7 +1,7 @@
 package cobra.payment
 
 import cobra.base.BaseController
-import cobra.payment.adapter.BasePaymentAdapter
+import cobra.customer.Customer
 import cobra.payment.adapter.RestorePaymentAdapter
 import cobra.payment.adapter.SavePaymentAdapter
 import cobra.payment.adapter.UpdatePaymentAdapter
@@ -17,11 +17,19 @@ class PaymentController extends BaseController {
     static allowedMethods = [index: 'GET', save: 'POST', update: 'PATCH', delete: 'DELETE', restore: 'POST']
 
     def index() {
+        Customer currentCustomer = getCurrentCustomer()
+
         if (params.deleted) {
-            return [paymentList: paymentService.findAllDeleted(getCurrentCustomer())]
+            return [paymentList: paymentService.findAllDeleted(currentCustomer,
+                                                               params.offset as Integer,
+                                                               params.max as Integer ?: DEFAULT_PAGINATION_LIMIT),
+                    paymentCount: paymentService.countDeleted(currentCustomer)]
         }
 
-        return [paymentList: paymentService.findAll(getCurrentCustomer())]
+        return [paymentList: paymentService.findAll(currentCustomer,
+                                                    params.offset as Integer,
+                                                    params.max as Integer ?: DEFAULT_PAGINATION_LIMIT),
+                paymentCount: paymentService.count(currentCustomer)]
     }
 
     def show() {
